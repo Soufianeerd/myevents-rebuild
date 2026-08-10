@@ -10,10 +10,23 @@ Ce projet est une reconstruction complète de l'application **MyEvent's**.
 4. **Accessibilité** : Cible WCAG 2.2 AA.
 5. **Design** : "Quiet luxury" (Bordeaux, Ivoire, Doré, Neutres chauds). Les composants doivent être pixel-perfect.
 
-## Commandes
+## Commandes de Validation
 
-- `pnpm dev` : Lancer en local
-- `pnpm check` : Validation complète (Prettier, ESLint, TypeScript, Tests Unitaires, Build)
-- `pnpm format:check`, `pnpm lint`, `pnpm typecheck`
+**Validation standard :**
+
+```bash
+pnpm check
+```
+
+Exécute : `format:check`, `lint`, `typecheck`, `unit tests` et `build`.
+
+**Validation complète avant clôture d'une session :**
+
+```bash
+pnpm check
+pnpm test:integration
+pnpm test:e2e
+git diff --check
+```
 
 Veuillez consulter le dossier `docs/` pour l'ensemble des principes architecturaux et la roadmap.

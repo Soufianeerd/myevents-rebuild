@@ -13,3 +13,9 @@
 - **Dette**: Aucune.
 - **État Git**: Dépôt git propre avec un seul commit initial.
 - **Prochaine session**: Session 01 - Design system pixel-perfect.
+
+## Corrections post-bootstrap
+
+- **Zod** déplacé en dépendance d'exécution (runtime) dans `package.json`.
+- **README.md** remplacé pour décrire spécifiquement le produit, l'architecture et les commandes du projet.
+- **CLAUDE.md** clarifié avec le vocabulaire de validation précis (`pnpm check` vs validation complète).

@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MyEvent's
 
-## Getting Started
+Plateforme événementielle premium (Local-First Bootstrap).
 
-First, run the development server:
+## État actuel : Reconstruction / Session 00
+
+Le projet est en cours de refonte totale avec une architecture rigoureuse, en commençant par des fondations strictement local-first.
+
+## Stack technique
+
+- **Node.js** : v22.22.3
+- **Gestionnaire de paquets** : pnpm (10.34.5)
+- **Framework** : Next.js (App Router)
+- **UI** : React, Tailwind CSS
+- **Langage** : TypeScript (mode strict)
+
+## Lancement
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+L'application démarre avec `APP_MODE=local`. **Aucune API externe n'est requise** à ce stade (conformément au principe local-first).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Le flux de données standard est le suivant :
 
-## Learn More
+`UI → Server Action / Route Handler → Domain Service → Provider Contract → Adapter`
 
-To learn more about Next.js, take a look at the following resources:
+### Principaux dossiers
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/core/` : Logique métier pure, types de domaine et schémas Zod.
+- `src/providers/contracts/` : Interfaces pour les services externes.
+- `src/providers/local/` : Implémentations locales de ces contrats.
+- `src/features/` : Logique applicative par fonctionnalité.
+- `src/components/ui/` : Design system.
+- `src/components/invitation/` : Renderer de l'invitation.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Commandes disponibles
 
-## Deploy on Vercel
+- `pnpm dev` : Démarrer le serveur de développement.
+- `pnpm build` : Construire pour la production.
+- `pnpm start` : Démarrer l'application construite.
+- `pnpm format:check` : Vérifier le formatage (Prettier).
+- `pnpm lint` : Analyser le code (ESLint).
+- `pnpm typecheck` : Vérifier les types TypeScript.
+- `pnpm check` : Validation standard (format, lint, typecheck, tests unitaires, build).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Stratégie de tests
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+L'application utilise :
+
+- **Vitest** pour les tests unitaires (`pnpm test:unit`) et d'intégration (`pnpm test:integration`).
+- **Playwright** pour les tests End-to-End (`pnpm test:e2e`).
+
+## Documentation et Roadmap
+
+Consultez le dossier [`docs/`](./docs) pour les principes détaillés : architecture, vision, conventions, sécurité et accessibilité.
+
+### Macro-Roadmap
+
+- **Session 00** : Fondations
+- **Session 01** : Design system pixel-perfect
+- **Session 02** : AppShell / Sidebar / Topbar
+- **Session 03** : Architecture domaine + providers local-first
+- (Voir `docs/07-ROADMAP.md` pour la suite).
