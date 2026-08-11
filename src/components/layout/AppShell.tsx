@@ -12,6 +12,7 @@ interface AppShellProps {
 
 export const AppShell = ({ children }: AppShellProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const menuTriggerRef = React.useRef<HTMLButtonElement>(null);
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background">
@@ -24,11 +25,15 @@ export const AppShell = ({ children }: AppShellProps) => {
       <MobileNavigation
         open={isMobileMenuOpen}
         onOpenChange={setIsMobileMenuOpen}
+        returnFocusRef={menuTriggerRef}
       />
 
       {/* Main Content Area */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <Topbar onMenuClick={() => setIsMobileMenuOpen(true)} />
+        <Topbar
+          onMenuClick={() => setIsMobileMenuOpen(true)}
+          menuTriggerRef={menuTriggerRef}
+        />
         <main
           id="main-content"
           className="flex-1 overflow-y-auto outline-none p-4 md:p-7"

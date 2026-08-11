@@ -4,15 +4,17 @@ import * as React from 'react';
 import { UserMenu } from './UserMenu';
 
 interface TopbarProps {
-  onMenuClick?: () => void;
+  onMenuClick: () => void;
+  menuTriggerRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
-export const Topbar = ({ onMenuClick }: TopbarProps) => {
+export const Topbar = ({ onMenuClick, menuTriggerRef }: TopbarProps) => {
   return (
     <header className="flex h-[68px] shrink-0 items-center justify-between border-b border-neutral-200 bg-white px-4 md:px-7">
       <div className="flex items-center gap-2">
         <button
           type="button"
+          ref={menuTriggerRef}
           onClick={onMenuClick}
           className="mr-2 flex h-8 w-8 items-center justify-center rounded-md md:hidden hover:bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
           aria-label="Ouvrir le menu"

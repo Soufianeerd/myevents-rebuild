@@ -33,17 +33,22 @@ Le projet contenait uniquement un Design System testable, strict et documenté (
   - Test E2E Desktop (visibilité éléments de base).
   - Test E2E SkipLink (focus programmatique via Enter).
   - Snapshot visuel Golden Baseline enregistré.
-  - Test E2E Mobile Drawer désactivé/retiré en raison des lenteurs d'hydratation (Next.js Dev Server) qui entravaient la fiabilité du clic dans Playwright, bien que la fonctionnalité reste testée fonctionnellement.
+  - Test E2E Mobile Drawer fonctionnel sur un build de production (tester l'ouverture, a11y, fermeture avec Echap, et focus trapping).
+  - Test E2E UserMenu (navigation clavier complète implémentant Radix).
 
 ## Problèmes rencontrés & Correctifs
 
 1. **Couleurs de fond (Tailwind)** : Oubli du préfixe `bg-brand-ink` conduisant à des faux positifs de background. Correction effectuée et alignement validé (WCAG).
-2. **Hydratation Playwright** : Sur le clic du `Drawer` en mode mobile. Une attente stricte (`waitForLoadState('networkidle')`) ne suffit pas toujours avec le HMR Next.js. Option de simplicité prise (ignorer temporairement ce test click e2e et se fier au rendu visuel et tests manuels clavier).
+2. **Hydratation Playwright** : Sur le clic du `Drawer` en mode mobile avec `next dev`. Résolu en modifiant le webServer de Playwright pour utiliser un build de production (`pnpm build && pnpm start`), stabilisant complètement les tests.
 
 ## Dette & Limites
 
 - Les données présentes (Jean Dupont, Mariage, 12 Septembre) sont codées en dur.
-- L'URL active pour la `Sidebar` repose sur `startsWith`, qui pourra présenter des limitations si des routes se chevauchent de manière non prévue. Une future fonction de matching robuste (`isActiveRoute(href, pathname, matchExact)`) pourra être centralisée.
+
+## Correctifs post-clôture
+
+- **Centralisation de la navigation** : Mise en place de `isActiveRoute` avec support _exact_ et _prefix_ match, couverte par des tests unitaires (`tests/unit/utils/navigation.test.ts`).
+- **Stabilisation E2E** : Configuration de Playwright pour tourner sur un environnement de production local (`next start`), résolvant toutes les instabilités d'hydratation (HMR) et permettant une couverture E2E totale sur la navigation clavier, les drawers et les menus (Radix).
 
 ## Prochaine Session
 

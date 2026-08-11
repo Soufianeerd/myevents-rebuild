@@ -13,17 +13,27 @@ import { Sidebar } from './Sidebar';
 interface MobileNavigationProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  returnFocusRef?: React.RefObject<HTMLElement | null>;
 }
 
 export const MobileNavigation = ({
   open,
   onOpenChange,
+  returnFocusRef,
 }: MobileNavigationProps) => {
   // Removed useEffect to prevent immediate closing during tests
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="w-[268px] overflow-hidden border-none bg-brand-ink p-0">
+      <DrawerContent
+        className="w-[268px] overflow-hidden border-none bg-brand-ink p-0"
+        onCloseAutoFocus={(e) => {
+          if (returnFocusRef?.current) {
+            e.preventDefault();
+            returnFocusRef.current.focus();
+          }
+        }}
+      >
         <div className="sr-only">
           <DrawerTitle>Menu de navigation</DrawerTitle>
           <DrawerDescription>

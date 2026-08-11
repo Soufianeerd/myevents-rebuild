@@ -30,24 +30,31 @@ test.describe('AppShell - Session 02', () => {
     // Set viewport to mobile
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/dashboard');
-    await page.waitForLoadState('networkidle');
 
     // Check that sidebar is hidden by default
     const sidebar = page.locator('aside').first();
     await expect(sidebar).toBeHidden();
 
-    // Click hamburger - disabled temporarily due to Playwright/Radix hydration flakiness
+    // Focus and press enter on hamburger to ensure Radix captures focus origin
     const hamburger = page.locator('button[aria-label="Ouvrir le menu"]');
     await expect(hamburger).toBeVisible();
+    await hamburger.focus();
+    await hamburger.press('Enter');
 
-    /*
-    await page.waitForTimeout(2000); // Give Next.js time to hydrate
-    await hamburger.click();
-    
     const drawer = page.locator('[role="dialog"]');
     await expect(drawer).toBeVisible();
     await expect(drawer).toHaveText(/Gestion/);
-    */
+
+    // Check a11y on opened drawer
+    const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+    expect(accessibilityScanResults.violations).toEqual([]);
+
+    // Check escape closes it
+    await page.keyboard.press('Escape');
+    await expect(drawer).toBeHidden();
+
+    // Check focus returns to trigger
+    await expect(hamburger).toBeFocused();
   });
 
   test('SkipLink functionality', async ({ page }) => {
@@ -58,5 +65,36 @@ test.describe('AppShell - Session 02', () => {
     await skipLink.press('Enter');
     const mainContent = page.locator('#main-content');
     await expect(mainContent).toBeFocused();
+  });
+
+  test('UserMenu keyboard navigation', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.goto('/dashboard');
+
+    const trigger = page.locator('button[aria-label="Menu utilisateur"]');
+    await expect(trigger).toBeVisible();
+
+    // Open via keyboard
+    await trigger.focus();
+    await page.keyboard.press('Enter');
+
+    const menu = page.locator('[role="menu"]');
+    await expect(menu).toBeVisible();
+
+    // Radix DropdownMenu auto-focuses the first item when opened via keyboard
+    const firstItem = page.locator('[role="menuitem"]').first();
+    await expect(firstItem).toBeFocused();
+
+    // Move focus inside to second item
+    await page.keyboard.press('ArrowDown');
+    const secondItem = page.locator('[role="menuitem"]').nth(1);
+    await expect(secondItem).toBeFocused();
+
+    // Close with Escape
+    await page.keyboard.press('Escape');
+    await expect(menu).toBeHidden();
+
+    // Focus should return to trigger
+    await expect(trigger).toBeFocused();
   });
 });

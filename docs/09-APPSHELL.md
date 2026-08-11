@@ -25,7 +25,8 @@ La structure Next.js garantit que l'`AppShell` n'enveloppe **que** les routes ap
 
 ## État Actif de Navigation
 
-L'état actif (`isActive`) dans la Sidebar est calculé via `pathname.startsWith(item.href)`. Cette logique "prefix match" permet d'illuminer correctement le parent si l'utilisateur navigue dans des sous-routes (ex: `/dashboard/analytics`). Si un exact match strict s'avère nécessaire pour des routes racinaires comme `/`, une fonction utilitaire sera implémentée.
+L'état actif (`isActive`) dans la Sidebar et MobileNavigation repose sur une utilitaire `isActiveRoute()` qui détermine si un lien est actif en comparant la route actuelle (`pathname`) à sa destination (`href`).
+La logique gère à la fois les correspondances exactes ("exact match", ex: pour éviter que `/` s'allume partout) et les correspondances de section ("prefix match", ex: `/dashboard/settings` allume `/dashboard`).
 
 ## Séparation des Préoccupations
 
