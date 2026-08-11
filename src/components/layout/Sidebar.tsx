@@ -4,6 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
+import { isActiveRoute } from '@/lib/utils/navigation';
 
 /* Icons SVG placehodlers */
 function HomeIcon() {
@@ -238,7 +239,7 @@ export const Sidebar = ({ className }: { className?: string }) => {
             </div>
             <div className="flex flex-col gap-1">
               {group.items.map((item) => {
-                const isActive = pathname.startsWith(item.href);
+                const isActive = isActiveRoute(pathname, item.href);
                 return (
                   <Link
                     key={item.href}
