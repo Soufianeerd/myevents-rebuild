@@ -1,7 +1,11 @@
 import { z } from 'zod';
 
 const envSchema = z.object({
-  APP_MODE: z.enum(['local', 'production', 'test']).default('local'),
+  NODE_ENV: z
+    .enum(['development', 'production', 'test'])
+    .default('development'),
+  APP_MODE: z.enum(['local']).default('local'),
+  LOCAL_DATA_DIR: z.string().default('.data'),
 });
 
 const _env = envSchema.safeParse(process.env);
