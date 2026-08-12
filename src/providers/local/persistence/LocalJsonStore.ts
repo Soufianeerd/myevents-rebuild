@@ -11,8 +11,10 @@ export interface LocalJsonStoreConfig<T> {
 
 export class LocalJsonStore<T> {
   private readonly config: LocalJsonStoreConfig<T>;
-  // simple queue to prevent concurrent writes on the same store instance in the same process
-  private writeQueue: Promise<void> = Promise.resolve();
+
+  // Static map of queues to prevent concurrent writes on the SAME FILE across MULTIPLE instances
+  // Note: This is an intra-process lock, not inter-process.
+  private static writeQueues = new Map<string, Promise<void>>();
 
   constructor(config: LocalJsonStoreConfig<T>) {
     this.config = config;
@@ -24,12 +26,29 @@ export class LocalJsonStore<T> {
   private getFilePath(): string {
     const { baseDir, collectionName } = this.config;
 
+    // 1. Strict regex validation for the logical collection name
+    if (
+      !/^[a-zA-Z0-9_.-]+$/.test(collectionName) ||
+      collectionName === '.' ||
+      collectionName === '..'
+    ) {
+      throw new LocalPersistenceError(
+        'INVALID_PATH',
+        `Invalid collection name: ${collectionName}`,
+      );
+    }
+
     // Normalize and resolve the absolute paths
     const resolvedBase = path.resolve(baseDir);
     const resolvedTarget = path.resolve(baseDir, `${collectionName}.json`);
 
-    // Ensure the target is actually inside the base directory
-    if (!resolvedTarget.startsWith(resolvedBase)) {
+    // 2. Strict relative path verification
+    const relative = path.relative(resolvedBase, resolvedTarget);
+    if (
+      path.isAbsolute(relative) ||
+      relative === '..' ||
+      relative.startsWith('..' + path.sep)
+    ) {
       throw new LocalPersistenceError(
         'INVALID_PATH',
         `Path traversal detected. Cannot access path outside base directory: ${collectionName}`,
@@ -140,8 +159,13 @@ export class LocalJsonStore<T> {
       }
     };
 
-    // Serialize writes sequentially
-    this.writeQueue = this.writeQueue.then(task, task);
-    return this.writeQueue;
+    // Serialize writes sequentially by file path
+    const filePath = this.getFilePath();
+    const currentQueue =
+      LocalJsonStore.writeQueues.get(filePath) || Promise.resolve();
+    const nextQueue = currentQueue.then(task, task);
+
+    LocalJsonStore.writeQueues.set(filePath, nextQueue);
+    return nextQueue;
   }
 }

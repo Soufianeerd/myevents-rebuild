@@ -39,7 +39,7 @@ describe('createContainer Integration', () => {
   });
 
   it('11. should fail explicitly when APP_MODE is unknown', async () => {
-    env.APP_MODE = 'unknown-mode' as any;
+    env.APP_MODE = 'unknown-mode' as 'local';
     const { createContainer, __resetContainer } =
       await import('../../../../src/server/container');
     __resetContainer();

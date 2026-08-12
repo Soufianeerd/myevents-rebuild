@@ -50,7 +50,8 @@ describe('Architecture Rules', () => {
         for (const forbidden of forbiddenImports) {
           // A simple regex to catch import statements.
           // Note: This is pragmatic and doesn't build a full AST, but it works for our strict codebase.
-          const importRegex = new RegExp(`from\\s+['"]${forbidden}['"]`);
+          // It handles `import ... from 'forbidden'` and `import ... from 'forbidden/subpath'`
+          const importRegex = new RegExp(`from\\s+['"]${forbidden}(/.*)?['"]`);
           expect(content).not.toMatch(importRegex);
         }
       }

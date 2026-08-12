@@ -4,7 +4,7 @@ Cette session établit le cœur de métier (Core) et l'infrastructure locale (Lo
 
 ## Objectifs atteints
 
-1. **Primitives du Core (`src/core`)** : 
+1. **Primitives du Core (`src/core`)** :
    - `OpaqueId` pour un typage strict des identifiants (`UserId`, `TenantId`).
    - Pattern `Result<T, E>` pour une gestion d'erreurs prédictible sans exceptions.
    - `AppError` avec des codes standards.
@@ -33,3 +33,11 @@ Cette session établit le cœur de métier (Core) et l'infrastructure locale (Lo
 ## Prochaines étapes
 
 Le socle technique et l'injection de dépendance sont prêts. La prochaine session se concentrera sur l'implémentation du premier domaine métier (Event) et ses cas d'usage, en utilisant ce conteneur.
+
+## Hardening post-session
+
+Suite aux retours, le Core a été durci (hardening) avec :
+- **test:architecture obligatoire** : Exécution stricte et systématique dans le CI/CD (`pnpm check`) des limites du domaine.
+- **Protection path traversal finale** : Utilisation d'une validation de nom stricte et de `path.relative` au lieu d'un simple `startsWith`.
+- **Concurrence intra-processus entre instances** : La sérialisation concurrente protège maintenant le fichier de manière globale par processus, évitant les collisions si deux instances du `LocalJsonStore` écrivent dans le même fichier.
+- **Limite explicite** : Rappel que la persistance locale actuelle n'inclut pas de locking inter-processus robuste, ce qui est documenté en limitation volontaire de cette architecture `local-first`.

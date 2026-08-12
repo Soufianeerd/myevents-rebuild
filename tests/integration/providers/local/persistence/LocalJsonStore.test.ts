@@ -109,22 +109,36 @@ describe('LocalJsonStore Integration', () => {
     ).rejects.toHaveProperty('reason', 'INVALID_DATA');
   });
 
-  it('7. should reject path traversal', async () => {
-    const traversalStore = new LocalJsonStore({
-      baseDir,
-      collectionName: '../outside_collection',
-      schema: testSchema,
-    });
+  it('7. should reject path traversal and invalid characters', async () => {
+    const badNames = [
+      '../secret',
+      '../../secret',
+      '/absolute/path',
+      'nested/file',
+      'nested\\\\file',
+      '..',
+      '.',
+    ];
 
-    await expect(traversalStore.read()).rejects.toThrow(LocalPersistenceError);
-    await expect(traversalStore.read()).rejects.toHaveProperty(
-      'reason',
-      'INVALID_PATH',
-    );
+    for (const name of badNames) {
+      const traversalStore = new LocalJsonStore({
+        baseDir,
+        collectionName: name,
+        schema: testSchema,
+      });
 
-    await expect(traversalStore.write({ name: 'a', value: 1 })).rejects.toThrow(
-      LocalPersistenceError,
-    );
+      await expect(traversalStore.read()).rejects.toThrow(
+        LocalPersistenceError,
+      );
+      await expect(traversalStore.read()).rejects.toHaveProperty(
+        'reason',
+        'INVALID_PATH',
+      );
+
+      await expect(
+        traversalStore.write({ name: 'a', value: 1 }),
+      ).rejects.toThrow(LocalPersistenceError);
+    }
   });
 
   it('8. should handle two successive writes correctly', async () => {
@@ -148,5 +162,33 @@ describe('LocalJsonStore Integration', () => {
     expect(data).toBeDefined();
     expect(data?.name).toContain('concurrent_');
     expect(typeof data?.value).toBe('number');
+  });
+  it('10. should handle concurrent writes across MULTIPLE instances of the same file safely', async () => {
+    const storeA = new LocalJsonStore({
+      baseDir,
+      collectionName: 'shared_collection',
+      schema: testSchema,
+    });
+    const storeB = new LocalJsonStore({
+      baseDir,
+      collectionName: 'shared_collection',
+      schema: testSchema,
+    });
+
+    const promises = [];
+    for (let i = 0; i < 25; i++) {
+      promises.push(storeA.write({ name: `storeA_${i}`, value: i }));
+      promises.push(storeB.write({ name: `storeB_${i}`, value: i }));
+    }
+
+    await Promise.all(promises);
+
+    const dataA = await storeA.read();
+    const dataB = await storeB.read();
+
+    expect(dataA).toBeDefined();
+    expect(dataB).toBeDefined();
+    expect(dataA).toEqual(dataB); // Should read the exact same valid state
+    expect(dataA?.name).toMatch(/store(A|B)_/);
   });
 });
