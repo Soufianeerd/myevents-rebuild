@@ -37,6 +37,7 @@ Le socle technique et l'injection de dépendance sont prêts. La prochaine sessi
 ## Hardening post-session
 
 Suite aux retours, le Core a été durci (hardening) avec :
+
 - **test:architecture obligatoire** : Exécution stricte et systématique dans le CI/CD (`pnpm check`) des limites du domaine.
 - **Protection path traversal finale** : Utilisation d'une validation de nom stricte et de `path.relative` au lieu d'un simple `startsWith`.
 - **Concurrence intra-processus entre instances** : La sérialisation concurrente protège maintenant le fichier de manière globale par processus, évitant les collisions si deux instances du `LocalJsonStore` écrivent dans le même fichier.

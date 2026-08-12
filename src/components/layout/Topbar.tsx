@@ -2,13 +2,15 @@
 
 import * as React from 'react';
 import { UserMenu } from './UserMenu';
+import type { SafeUser } from '@/core/auth';
 
 interface TopbarProps {
   onMenuClick: () => void;
   menuTriggerRef?: React.RefObject<HTMLButtonElement | null>;
+  user: SafeUser;
 }
 
-export const Topbar = ({ onMenuClick, menuTriggerRef }: TopbarProps) => {
+export const Topbar = ({ onMenuClick, menuTriggerRef, user }: TopbarProps) => {
   return (
     <header className="flex h-[68px] shrink-0 items-center justify-between border-b border-neutral-200 bg-white px-4 md:px-7">
       <div className="flex items-center gap-2">
@@ -51,7 +53,7 @@ export const Topbar = ({ onMenuClick, menuTriggerRef }: TopbarProps) => {
         {/* Vertical Divider */}
         <div className="mx-1 hidden h-6 w-px bg-neutral-200 md:block" />
 
-        <UserMenu />
+        <UserMenu user={user} />
       </div>
     </header>
   );

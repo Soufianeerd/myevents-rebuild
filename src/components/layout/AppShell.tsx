@@ -5,12 +5,14 @@ import { SkipLink } from './SkipLink';
 import { Sidebar } from './Sidebar';
 import { Topbar } from './Topbar';
 import { MobileNavigation } from './MobileNavigation';
+import type { SafeUser } from '@/core/auth';
 
 interface AppShellProps {
   children: React.ReactNode;
+  user: SafeUser;
 }
 
-export const AppShell = ({ children }: AppShellProps) => {
+export const AppShell = ({ children, user }: AppShellProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const menuTriggerRef = React.useRef<HTMLButtonElement>(null);
 
@@ -33,6 +35,7 @@ export const AppShell = ({ children }: AppShellProps) => {
         <Topbar
           onMenuClick={() => setIsMobileMenuOpen(true)}
           menuTriggerRef={menuTriggerRef}
+          user={user}
         />
         <main
           id="main-content"

@@ -2,10 +2,20 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 test.describe('AppShell - Session 02', () => {
+  test.beforeEach(async ({ page }) => {
+    const suffix = Math.floor(Math.random() * 1000000);
+    const email = `appshell.${suffix}@example.com`;
+    await page.goto('/inscription');
+    await page.fill('input[name="displayName"]', 'Test User');
+    await page.fill('input[name="email"]', email);
+    await page.fill('input[name="password"]', 'SecurePassword123!');
+    await page.click('button[type="submit"]');
+    await expect(page).toHaveURL('/dashboard');
+  });
+
   test('Desktop layout displays sidebar and topbar', async ({ page }) => {
     // Set viewport to desktop
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto('/dashboard');
 
     // Check that sidebar is visible
     const sidebar = page.locator('aside');
@@ -23,13 +33,13 @@ test.describe('AppShell - Session 02', () => {
     // Golden snapshot for appshell desktop
     await expect(page).toHaveScreenshot('appshell-desktop-baseline.png', {
       fullPage: true,
+      maxDiffPixelRatio: 0.01, // Allow 1% difference for anti-aliasing
     });
   });
 
   test('Mobile layout displays hamburger menu and drawer', async ({ page }) => {
     // Set viewport to mobile
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/dashboard');
 
     // Check that sidebar is hidden by default
     const sidebar = page.locator('aside').first();
@@ -58,7 +68,6 @@ test.describe('AppShell - Session 02', () => {
   });
 
   test('SkipLink functionality', async ({ page }) => {
-    await page.goto('/dashboard');
     const skipLink = page.locator('a[href="#main-content"]');
     await skipLink.focus();
     await expect(skipLink).toBeFocused();
@@ -69,7 +78,6 @@ test.describe('AppShell - Session 02', () => {
 
   test('UserMenu keyboard navigation', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto('/dashboard');
 
     const trigger = page.locator('button[aria-label="Menu utilisateur"]');
     await expect(trigger).toBeVisible();

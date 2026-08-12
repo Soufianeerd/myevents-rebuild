@@ -168,4 +168,64 @@ export class LocalJsonStore<T> {
     LocalJsonStore.writeQueues.set(filePath, nextQueue);
     return nextQueue;
   }
+
+  /**
+   * Performs an atomic read-modify-write operation.
+   * This guarantees that concurrent updates don't overwrite each other.
+   */
+  async update(updater: (data: T | null) => T): Promise<void> {
+    const task = async () => {
+      // 1. Read the latest data inside the lock
+      let currentData: T | null = null;
+      try {
+        currentData = await this.read();
+      } catch (e) {
+        // We will just let the read error bubble up if it's not ENOENT
+        throw e;
+      }
+
+      // 2. Apply the updater function
+      const newData = updater(currentData);
+
+      // 3. Write the new data
+      const filePath = this.getFilePath();
+      const tempFilePath = `${filePath}.tmp.${Date.now()}.${Math.random().toString(36).slice(2)}`;
+
+      await fs.mkdir(path.dirname(filePath), { recursive: true });
+
+      let serialized: string;
+      try {
+        const validated = this.config.schema.parse(newData);
+        serialized = JSON.stringify(validated, null, 2);
+      } catch (e) {
+        throw new LocalPersistenceError(
+          'INVALID_DATA',
+          'Attempted to write invalid data during update',
+          e,
+        );
+      }
+
+      try {
+        await fs.writeFile(tempFilePath, serialized, 'utf-8');
+        await fs.rename(tempFilePath, filePath);
+      } catch (e) {
+        try {
+          await fs.unlink(tempFilePath);
+        } catch {}
+        throw new LocalPersistenceError(
+          'IO_ERROR',
+          'Failed to perform atomic write',
+          e,
+        );
+      }
+    };
+
+    const filePath = this.getFilePath();
+    const currentQueue =
+      LocalJsonStore.writeQueues.get(filePath) || Promise.resolve();
+    const nextQueue = currentQueue.then(task, task);
+
+    LocalJsonStore.writeQueues.set(filePath, nextQueue);
+    return nextQueue;
+  }
 }

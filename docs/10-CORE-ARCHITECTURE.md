@@ -32,7 +32,8 @@ Le `createContainer` (`src/server/container`) assemble l'application en instanci
 ## Hardening post-session
 
 Suite à la mise en place initiale de l'architecture, un durcissement (hardening) a été effectué :
+
 - **test:architecture obligatoire** : Un script spécifique `pnpm test:architecture` a été ajouté au pipeline global `check` pour garantir que l'isolation du Core est vérifiée en continu.
 - **Protection path traversal finale** : La vérification du `LocalJsonStore` utilise non seulement une validation par regex stricte (seulement caractères alphanumériques, tiret, underscore, point, avec interdiction de `/`, `\`, `.` seul et `..`) mais aussi `path.relative` pour s'assurer que le chemin résolu ne sort pas du dossier de base (pas de résultat absolu, de `..` ou commençant par `../`).
-- **Concurrence intra-processus entre instances** : Le système de file d'attente a été transformé d'une file d'attente par *instance* à une file d'attente par *fichier* (via une Map statique) pour garantir la sécurité et l'atomicité lors de l'instanciation multiple pointant vers la même ressource.
+- **Concurrence intra-processus entre instances** : Le système de file d'attente a été transformé d'une file d'attente par _instance_ à une file d'attente par _fichier_ (via une Map statique) pour garantir la sécurité et l'atomicité lors de l'instanciation multiple pointant vers la même ressource.
 - **Limite explicite** : Le verrou mis en place est uniquement local au processus JS (intra-process). Il n'y a **pas** de locking inter-processus (ex: Redis lock, file lock OS).

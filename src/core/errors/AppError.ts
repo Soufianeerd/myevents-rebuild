@@ -10,13 +10,13 @@ export type AppErrorCode =
 export interface AppError {
   code: AppErrorCode;
   message: string;
-  details?: Record<string, unknown>;
+  details?: Record<string, unknown> | number | string;
 }
 
 export const createAppError = (
   code: AppErrorCode,
   message: string,
-  details?: Record<string, unknown>,
+  details?: Record<string, unknown> | number | string,
 ): AppError => ({
   code,
   message,
