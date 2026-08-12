@@ -1,10 +1,10 @@
-import * as crypto from 'node:crypto';
 import {
   UserRepository,
   SessionRepository,
   PasswordResetRepository,
 } from '../../../providers/contracts/auth/AuthRepositories';
 import { PasswordHasher } from '../../../providers/contracts/auth/PasswordHasher';
+import { TokenHasher } from '../../../providers/contracts/auth/TokenHasher';
 import { Clock } from '../../../providers/contracts/Clock';
 import { validatePasswordPolicy } from '../utils/PasswordPolicy';
 import { Result, ok, err } from '../../result';
@@ -21,6 +21,7 @@ export class ResetPasswordUseCase {
     private sessionRepository: SessionRepository,
     private passwordResetRepository: PasswordResetRepository,
     private passwordHasher: PasswordHasher,
+    private tokenHasher: TokenHasher,
     private clock: Clock,
   ) {}
 
@@ -33,27 +34,19 @@ export class ResetPasswordUseCase {
       400,
     );
 
-    const tokenHash = crypto
-      .createHash('sha256')
-      .update(command.rawResetToken)
-      .digest('base64');
-
-    // 1. Find token
-    const token = await this.passwordResetRepository.findByTokenHash(tokenHash);
-    if (!token) {
-      return err(genericError);
-    }
-
-    // 2. Check if used
-    if (token.usedAt) {
-      return err(genericError);
-    }
-
-    // 3. Check expiry
+    const tokenHash = this.tokenHasher.hashToken(command.rawResetToken);
     const now = this.clock.now().toISOString();
-    if (token.expiresAt < now) {
+
+    // 1-3. Find token, check if used, check expiry, and consume it atomically
+    const consumeResult = await this.passwordResetRepository.consumeValidToken(
+      tokenHash,
+      now,
+    );
+    if (!consumeResult.ok) {
+      // Return generic error for any token issue
       return err(genericError);
     }
+    const token = consumeResult.value;
 
     // 4. Validate new password
     const pwdResult = validatePasswordPolicy(command.newPassword);
@@ -82,8 +75,7 @@ export class ResetPasswordUseCase {
       return err(updateResult.error);
     }
 
-    // 7. Mark token as used
-    await this.passwordResetRepository.markAsUsed(token.id, now);
+    // 7. Token was already marked as used atomically in step 1-3
 
     // 8. Revoke all existing sessions for the user to force re-login
     await this.sessionRepository.revokeAllUserSessions(user.id);

@@ -1,4 +1,3 @@
-import * as crypto from 'node:crypto';
 import { createContainer } from '../container';
 import { getSessionCookie } from './session';
 import {
@@ -14,12 +13,10 @@ export async function getCurrentAccessContext(): Promise<AccessContext> {
     return createAnonymousContext();
   }
 
-  const { sessionRepository, userRepository, clock } = createContainer();
+  const { sessionRepository, userRepository, clock, tokenHasher } =
+    createContainer();
 
-  const tokenHash = crypto
-    .createHash('sha256')
-    .update(rawSessionToken)
-    .digest('base64');
+  const tokenHash = tokenHasher.hashToken(rawSessionToken);
 
   const session = await sessionRepository.findByTokenHash(tokenHash);
   if (!session) {
@@ -59,7 +56,9 @@ export async function getCurrentSafeUser() {
 
   return {
     id: user.id,
-    displayName: user.displayName,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    displayName: `${user.firstName} ${user.lastName}`.trim(),
     email: user.email,
   };
 }

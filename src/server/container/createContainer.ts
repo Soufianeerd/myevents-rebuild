@@ -8,6 +8,9 @@ import {
   LocalSessionRepository,
   LocalPasswordResetRepository,
   LocalMailProvider,
+  NodeTokenHasher,
+  NodeSecretTokenProvider,
+  EnvAppUrlProvider,
 } from '../../providers/local';
 import type { AppContainer } from './types';
 
@@ -25,7 +28,10 @@ export const createContainer = (): AppContainer => {
     );
   }
 
-  const dataDir = path.resolve(process.cwd(), '.data');
+  const dataDir = path.resolve(
+    process.cwd(),
+    process.env.LOCAL_DATA_DIR || '.data',
+  );
 
   const clock = new SystemClock();
   const idGenerator = new CryptoIdGenerator();
@@ -36,6 +42,9 @@ export const createContainer = (): AppContainer => {
   const passwordResetRepository = new LocalPasswordResetRepository(dataDir);
 
   const mailProvider = new LocalMailProvider(dataDir, clock);
+  const tokenHasher = new NodeTokenHasher();
+  const secretTokenProvider = new NodeSecretTokenProvider();
+  const appUrlProvider = new EnvAppUrlProvider();
 
   containerInstance = {
     clock,
@@ -45,6 +54,9 @@ export const createContainer = (): AppContainer => {
     passwordResetRepository,
     passwordHasher,
     mailProvider,
+    tokenHasher,
+    secretTokenProvider,
+    appUrlProvider,
   };
 
   return containerInstance;

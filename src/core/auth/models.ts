@@ -13,7 +13,8 @@ export interface User {
   id: UserId;
   tenantId: TenantId; // The individual tenant created for this B2C user
   email: string; // Normalized lowercase
-  displayName: string;
+  firstName: string;
+  lastName: string;
 
   // Security
   passwordHash: string; // The hashed scrypt derived key
@@ -29,6 +30,8 @@ export interface User {
 
 export interface SafeUser {
   id: UserId;
+  firstName: string;
+  lastName: string;
   displayName: string;
   email: string;
 }

@@ -165,8 +165,14 @@ export class LocalJsonStore<T> {
       LocalJsonStore.writeQueues.get(filePath) || Promise.resolve();
     const nextQueue = currentQueue.then(task, task);
 
-    LocalJsonStore.writeQueues.set(filePath, nextQueue);
-    return nextQueue;
+    const wrappedQueue = nextQueue.finally(() => {
+      if (LocalJsonStore.writeQueues.get(filePath) === wrappedQueue) {
+        LocalJsonStore.writeQueues.delete(filePath);
+      }
+    });
+
+    LocalJsonStore.writeQueues.set(filePath, wrappedQueue);
+    return wrappedQueue;
   }
 
   /**
@@ -225,7 +231,13 @@ export class LocalJsonStore<T> {
       LocalJsonStore.writeQueues.get(filePath) || Promise.resolve();
     const nextQueue = currentQueue.then(task, task);
 
-    LocalJsonStore.writeQueues.set(filePath, nextQueue);
-    return nextQueue;
+    const wrappedQueue = nextQueue.finally(() => {
+      if (LocalJsonStore.writeQueues.get(filePath) === wrappedQueue) {
+        LocalJsonStore.writeQueues.delete(filePath);
+      }
+    });
+
+    LocalJsonStore.writeQueues.set(filePath, wrappedQueue);
+    return wrappedQueue;
   }
 }

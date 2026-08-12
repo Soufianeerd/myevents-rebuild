@@ -47,27 +47,53 @@ export class LocalPasswordResetRepository implements PasswordResetRepository {
     return ok(undefined);
   }
 
-  async markAsUsed(
-    id: string,
-    usedAt: string,
-  ): Promise<Result<void, AppError>> {
-    let notFoundError: AppError | null = null;
+  async consumeValidToken(
+    tokenHash: string,
+    now: string,
+  ): Promise<Result<PasswordResetToken, AppError>> {
+    let consumedToken: PasswordResetToken | null = null;
+    let failureError: AppError | null = null;
+
     await this.store.update((data) => {
       const resets = data || {};
-      const token = resets[id];
+      const token = Object.values(resets).find(
+        (t) => t.tokenHash === tokenHash,
+      );
 
       if (!token) {
-        notFoundError = createAppError('NOT_FOUND', 'Reset token not found.');
+        failureError = createAppError('NOT_FOUND', 'Token not found.');
         return resets;
       }
 
-      token.usedAt = usedAt;
+      if (token.usedAt) {
+        failureError = createAppError(
+          'VALIDATION_ERROR',
+          'Token already used.',
+          400,
+        );
+        return resets;
+      }
+
+      if (token.expiresAt < now) {
+        failureError = createAppError(
+          'VALIDATION_ERROR',
+          'Token expired.',
+          400,
+        );
+        return resets;
+      }
+
+      // Mark as used
+      token.usedAt = now;
+      consumedToken = { ...token };
       return resets;
     });
 
-    if (notFoundError) {
-      return err(notFoundError);
+    if (failureError) {
+      return err(failureError);
     }
-    return ok(undefined);
+
+    // We know consumedToken is not null here if there's no failureError
+    return ok(consumedToken!);
   }
 }

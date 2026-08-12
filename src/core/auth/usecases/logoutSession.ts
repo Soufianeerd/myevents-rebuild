@@ -1,16 +1,16 @@
-import * as crypto from 'node:crypto';
 import { SessionRepository } from '../../../providers/contracts/auth/AuthRepositories';
+import { TokenHasher } from '../../../providers/contracts/auth/TokenHasher';
 import { Result, ok, err } from '../../result';
 import { AppError } from '../../errors';
 
 export class LogoutSessionUseCase {
-  constructor(private sessionRepository: SessionRepository) {}
+  constructor(
+    private sessionRepository: SessionRepository,
+    private tokenHasher: TokenHasher,
+  ) {}
 
   async execute(rawSessionToken: string): Promise<Result<void, AppError>> {
-    const tokenHash = crypto
-      .createHash('sha256')
-      .update(rawSessionToken)
-      .digest('base64');
+    const tokenHash = this.tokenHasher.hashToken(rawSessionToken);
 
     const session = await this.sessionRepository.findByTokenHash(tokenHash);
     if (!session) {

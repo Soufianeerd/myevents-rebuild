@@ -6,6 +6,7 @@ const envSchema = z.object({
     .default('development'),
   APP_MODE: z.enum(['local']).default('local'),
   LOCAL_DATA_DIR: z.string().default('.data'),
+  APP_URL: z.string().optional(),
 });
 
 const _env = envSchema.safeParse(process.env);

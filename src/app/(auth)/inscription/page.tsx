@@ -31,29 +31,56 @@ export default function RegisterPage() {
           </div>
         )}
 
-        <div className="space-y-2">
-          <label
-            className="block text-sm font-medium text-neutral-700 mb-1"
-            htmlFor="displayName"
-          >
-            Nom complet
-          </label>
-          <Input
-            id="displayName"
-            name="displayName"
-            type="text"
-            autoComplete="name"
-            required
-            aria-invalid={!!state.fieldErrors?.displayName}
-            aria-describedby={
-              state.fieldErrors?.displayName ? 'displayName-error' : undefined
-            }
-          />
-          {state.fieldErrors?.displayName && (
-            <p id="displayName-error" className="text-sm text-danger mt-1">
-              {state.fieldErrors.displayName[0]}
-            </p>
-          )}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label
+              className="block text-sm font-medium text-neutral-700 mb-1"
+              htmlFor="firstName"
+            >
+              Prénom
+            </label>
+            <Input
+              id="firstName"
+              name="firstName"
+              type="text"
+              autoComplete="given-name"
+              required
+              aria-invalid={!!state.fieldErrors?.firstName}
+              aria-describedby={
+                state.fieldErrors?.firstName ? 'firstName-error' : undefined
+              }
+            />
+            {state.fieldErrors?.firstName && (
+              <p id="firstName-error" className="text-sm text-danger mt-1">
+                {state.fieldErrors.firstName[0]}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label
+              className="block text-sm font-medium text-neutral-700 mb-1"
+              htmlFor="lastName"
+            >
+              Nom
+            </label>
+            <Input
+              id="lastName"
+              name="lastName"
+              type="text"
+              autoComplete="family-name"
+              required
+              aria-invalid={!!state.fieldErrors?.lastName}
+              aria-describedby={
+                state.fieldErrors?.lastName ? 'lastName-error' : undefined
+              }
+            />
+            {state.fieldErrors?.lastName && (
+              <p id="lastName-error" className="text-sm text-danger mt-1">
+                {state.fieldErrors.lastName[0]}
+              </p>
+            )}
+          </div>
         </div>
 
         <div className="space-y-2">
@@ -100,11 +127,41 @@ export default function RegisterPage() {
             }
           />
           <p className="text-xs text-neutral-500 mt-1">
-            Au moins 8 caractères.
+            Au moins 15 caractères.
           </p>
           {state.fieldErrors?.password && (
             <p id="password-error" className="text-sm text-danger mt-1">
               {state.fieldErrors.password[0]}
+            </p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <label
+            className="block text-sm font-medium text-neutral-700 mb-1"
+            htmlFor="passwordConfirmation"
+          >
+            Confirmation du mot de passe
+          </label>
+          <Input
+            id="passwordConfirmation"
+            name="passwordConfirmation"
+            type="password"
+            autoComplete="new-password"
+            required
+            aria-invalid={!!state.fieldErrors?.passwordConfirmation}
+            aria-describedby={
+              state.fieldErrors?.passwordConfirmation
+                ? 'passwordConfirmation-error'
+                : undefined
+            }
+          />
+          {state.fieldErrors?.passwordConfirmation && (
+            <p
+              id="passwordConfirmation-error"
+              className="text-sm text-danger mt-1"
+            >
+              {state.fieldErrors.passwordConfirmation[0]}
             </p>
           )}
         </div>

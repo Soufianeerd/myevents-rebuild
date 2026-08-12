@@ -18,7 +18,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm run start',
+    command: 'LOCAL_DATA_DIR=.data-e2e pnpm run start',
     url: 'http://127.0.0.1:3000',
     reuseExistingServer: !process.env.CI,
   },

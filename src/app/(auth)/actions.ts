@@ -14,8 +14,11 @@ import {
 export async function logoutAction() {
   const sessionToken = await getSessionCookie();
   if (sessionToken) {
-    const { sessionRepository } = createContainer();
-    const logoutUseCase = new LogoutSessionUseCase(sessionRepository);
+    const { sessionRepository, tokenHasher } = createContainer();
+    const logoutUseCase = new LogoutSessionUseCase(
+      sessionRepository,
+      tokenHasher,
+    );
     await logoutUseCase.execute(sessionToken);
   }
 
@@ -52,6 +55,8 @@ export async function loginAction(
     userRepository,
     sessionRepository,
     passwordHasher,
+    tokenHasher,
+    secretTokenProvider,
     idGenerator,
     clock,
   } = createContainer();
@@ -59,6 +64,8 @@ export async function loginAction(
     userRepository,
     sessionRepository,
     passwordHasher,
+    tokenHasher,
+    secretTokenProvider,
     idGenerator,
     clock,
   );
@@ -75,13 +82,22 @@ export async function loginAction(
   redirect('/dashboard');
 }
 
-const RegisterSchema = z.object({
-  displayName: z.string().min(2, 'Le nom doit contenir au moins 2 caractères.'),
-  email: z.string().email('Adresse e-mail invalide.'),
-  password: z
-    .string()
-    .min(8, 'Le mot de passe doit contenir au moins 8 caractères.'),
-});
+const RegisterSchema = z
+  .object({
+    firstName: z
+      .string()
+      .min(2, 'Le prénom doit contenir au moins 2 caractères.'),
+    lastName: z.string().min(2, 'Le nom doit contenir au moins 2 caractères.'),
+    email: z.string().email('Adresse e-mail invalide.'),
+    password: z
+      .string()
+      .min(15, 'Le mot de passe doit contenir au moins 15 caractères.'),
+    passwordConfirmation: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: 'Les mots de passe ne correspondent pas.',
+    path: ['passwordConfirmation'],
+  });
 
 export async function registerAction(
   prevState: ActionState,
@@ -98,6 +114,8 @@ export async function registerAction(
     userRepository,
     sessionRepository,
     passwordHasher,
+    tokenHasher,
+    secretTokenProvider,
     idGenerator,
     clock,
   } = createContainer();
@@ -105,6 +123,8 @@ export async function registerAction(
     userRepository,
     sessionRepository,
     passwordHasher,
+    tokenHasher,
+    secretTokenProvider,
     idGenerator,
     clock,
   );
@@ -140,6 +160,9 @@ export async function forgotPasswordAction(
     userRepository,
     passwordResetRepository,
     mailProvider,
+    tokenHasher,
+    secretTokenProvider,
+    appUrlProvider,
     idGenerator,
     clock,
   } = createContainer();
@@ -147,6 +170,9 @@ export async function forgotPasswordAction(
     userRepository,
     passwordResetRepository,
     mailProvider,
+    tokenHasher,
+    secretTokenProvider,
+    appUrlProvider,
     idGenerator,
     clock,
   );
@@ -180,6 +206,7 @@ export async function resetPasswordAction(
     sessionRepository,
     passwordResetRepository,
     passwordHasher,
+    tokenHasher,
     clock,
   } = createContainer();
   const useCase = new ResetPasswordUseCase(
@@ -187,6 +214,7 @@ export async function resetPasswordAction(
     sessionRepository,
     passwordResetRepository,
     passwordHasher,
+    tokenHasher,
     clock,
   );
 

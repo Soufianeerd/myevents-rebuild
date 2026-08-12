@@ -15,21 +15,19 @@ const scryptAsync = promisify(crypto.scrypt) as (
 export class ScryptPasswordHasher implements PasswordHasher {
   // OWASP recommended settings for scrypt (as of 2023)
   private readonly defaultParams = {
-    N: 16384, // CPU/memory cost parameter (must be power of 2)
+    N: 65536, // CPU/memory cost parameter (2^16)
     r: 8, // Block size parameter
-    p: 1, // Parallelization parameter
+    p: 2, // Parallelization parameter
   };
   private readonly keyLength = 64; // 64 bytes for scrypt derived key
 
   async hash(password: string): Promise<PasswordHashInfo> {
     const salt = crypto.randomBytes(32).toString('base64');
 
-    const derivedKey = (await scryptAsync(
-      password,
-      salt,
-      this.keyLength,
-      this.defaultParams,
-    )) as Buffer;
+    const derivedKey = (await scryptAsync(password, salt, this.keyLength, {
+      ...this.defaultParams,
+      maxmem: 268435456,
+    })) as Buffer;
 
     return {
       hash: derivedKey.toString('base64'),
@@ -49,7 +47,7 @@ export class ScryptPasswordHasher implements PasswordHasher {
         password,
         stored.salt,
         this.keyLength,
-        stored.params,
+        { ...stored.params, maxmem: 268435456 },
       )) as Buffer;
       const storedKey = Buffer.from(stored.hash, 'base64');
 

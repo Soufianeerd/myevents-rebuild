@@ -1,9 +1,10 @@
-import * as crypto from 'node:crypto';
 import {
   UserRepository,
   SessionRepository,
 } from '../../../providers/contracts/auth/AuthRepositories';
 import { PasswordHasher } from '../../../providers/contracts/auth/PasswordHasher';
+import { TokenHasher } from '../../../providers/contracts/auth/TokenHasher';
+import { SecretTokenProvider } from '../../../providers/contracts/auth/SecretTokenProvider';
 import { IdGenerator } from '../../../providers/contracts/IdGenerator';
 import { Clock } from '../../../providers/contracts/Clock';
 import { User, Session, SafeUser } from '../models';
@@ -17,7 +18,9 @@ import { SessionId } from '../models';
 export interface RegisterUserCommand {
   email: string;
   password: string;
-  displayName: string;
+  passwordConfirmation: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface RegisterUserResult {
@@ -31,6 +34,8 @@ export class RegisterUserUseCase {
     private userRepository: UserRepository,
     private sessionRepository: SessionRepository,
     private passwordHasher: PasswordHasher,
+    private tokenHasher: TokenHasher,
+    private secretTokenProvider: SecretTokenProvider,
     private idGenerator: IdGenerator,
     private clock: Clock,
   ) {}
@@ -46,9 +51,18 @@ export class RegisterUserUseCase {
     const pwdResult = validatePasswordPolicy(command.password);
     if (!pwdResult.ok) return err(pwdResult.error);
 
-    if (!command.displayName.trim()) {
+    if (command.password !== command.passwordConfirmation) {
       return err(
-        createAppError('VALIDATION_ERROR', 'Le nom affiché est requis.'),
+        createAppError(
+          'VALIDATION_ERROR',
+          'Les mots de passe ne correspondent pas.',
+        ),
+      );
+    }
+
+    if (!command.firstName.trim() || !command.lastName.trim()) {
+      return err(
+        createAppError('VALIDATION_ERROR', 'Le prénom et le nom sont requis.'),
       );
     }
 
@@ -71,13 +85,16 @@ export class RegisterUserUseCase {
     const userId = this.idGenerator.generate() as UserId;
     const tenantId = this.idGenerator.generate() as TenantId;
     const now = this.clock.now().toISOString();
+    const firstName = command.firstName.trim();
+    const lastName = command.lastName.trim();
 
     // 5. Create User
     const user: User = {
       id: userId,
       tenantId,
       email: normalizedEmail,
-      displayName: command.displayName.trim(),
+      firstName,
+      lastName,
       passwordHash: hashInfo.hash,
       passwordSalt: hashInfo.salt,
       passwordAlgorithm: hashInfo.algorithm,
@@ -91,15 +108,14 @@ export class RegisterUserUseCase {
     if (!userCreateResult.ok) return err(userCreateResult.error);
 
     // 6. Create Session
-    const rawSessionToken = crypto.randomBytes(32).toString('base64url');
-    const tokenHash = crypto
-      .createHash('sha256')
-      .update(rawSessionToken)
-      .digest('base64');
+    const rawSessionToken = this.secretTokenProvider.generateToken();
+    const tokenHash = this.tokenHasher.hashToken(rawSessionToken);
 
     // 30 days expiration
     const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
-    const expiresAt = new Date(Date.now() + thirtyDaysMs).toISOString();
+    const expiresAt = new Date(
+      this.clock.now().getTime() + thirtyDaysMs,
+    ).toISOString();
 
     const session: Session = {
       id: this.idGenerator.generate() as SessionId,
@@ -118,7 +134,9 @@ export class RegisterUserUseCase {
 
     const safeUser: SafeUser = {
       id: user.id,
-      displayName: user.displayName,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      displayName: `${user.firstName} ${user.lastName}`.trim(),
       email: user.email,
     };
 

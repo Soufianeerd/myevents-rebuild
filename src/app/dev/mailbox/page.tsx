@@ -10,7 +10,8 @@ export default async function DevMailboxPage() {
     notFound();
   }
 
-  const mailDir = path.resolve(process.cwd(), '.data', 'mail');
+  const dataDir = process.env.LOCAL_DATA_DIR || '.data';
+  const mailDir = path.resolve(process.cwd(), dataDir, 'mail');
 
   let files: string[] = [];
   try {

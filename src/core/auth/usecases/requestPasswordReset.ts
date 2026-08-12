@@ -1,9 +1,11 @@
-import * as crypto from 'node:crypto';
 import {
   UserRepository,
   PasswordResetRepository,
 } from '../../../providers/contracts/auth/AuthRepositories';
 import { MailProvider } from '../../../providers/contracts/auth/MailProvider';
+import { TokenHasher } from '../../../providers/contracts/auth/TokenHasher';
+import { SecretTokenProvider } from '../../../providers/contracts/auth/SecretTokenProvider';
+import { AppUrlProvider } from '../../../providers/contracts/auth/AppUrlProvider';
 import { IdGenerator } from '../../../providers/contracts/IdGenerator';
 import { Clock } from '../../../providers/contracts/Clock';
 import { PasswordResetToken } from '../models';
@@ -21,6 +23,9 @@ export class RequestPasswordResetUseCase {
     private userRepository: UserRepository,
     private passwordResetRepository: PasswordResetRepository,
     private mailProvider: MailProvider,
+    private tokenHasher: TokenHasher,
+    private secretTokenProvider: SecretTokenProvider,
+    private appUrlProvider: AppUrlProvider,
     private idGenerator: IdGenerator,
     private clock: Clock,
   ) {}
@@ -41,16 +46,15 @@ export class RequestPasswordResetUseCase {
     }
 
     // Generate reset token
-    const rawResetToken = crypto.randomBytes(32).toString('base64url');
-    const tokenHash = crypto
-      .createHash('sha256')
-      .update(rawResetToken)
-      .digest('base64');
+    const rawResetToken = this.secretTokenProvider.generateToken();
+    const tokenHash = this.tokenHasher.hashToken(rawResetToken);
 
     const now = this.clock.now().toISOString();
     // 30 minutes expiration
     const thirtyMinsMs = 30 * 60 * 1000;
-    const expiresAt = new Date(Date.now() + thirtyMinsMs).toISOString();
+    const expiresAt = new Date(
+      this.clock.now().getTime() + thirtyMinsMs,
+    ).toISOString();
 
     const token: PasswordResetToken = {
       id: this.idGenerator.generate() as PasswordResetTokenId,
@@ -64,7 +68,7 @@ export class RequestPasswordResetUseCase {
     if (!createResult.ok) return err(createResult.error);
 
     // Provide the reset link that points to our local app
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const baseUrl = this.appUrlProvider.getAppUrl() || 'http://localhost:3000';
     const resetLink = `${baseUrl}/reinitialiser-mot-de-passe?token=${rawResetToken}`;
 
     await this.mailProvider.sendPasswordResetEmail(user.email, resetLink);

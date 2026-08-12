@@ -6,6 +6,9 @@ import type {
   PasswordResetRepository,
   PasswordHasher,
   MailProvider,
+  TokenHasher,
+  SecretTokenProvider,
+  AppUrlProvider,
 } from '../../providers/contracts';
 
 export interface AppContainer {
@@ -16,4 +19,7 @@ export interface AppContainer {
   passwordResetRepository: PasswordResetRepository;
   passwordHasher: PasswordHasher;
   mailProvider: MailProvider;
+  tokenHasher: TokenHasher;
+  secretTokenProvider: SecretTokenProvider;
+  appUrlProvider: AppUrlProvider;
 }

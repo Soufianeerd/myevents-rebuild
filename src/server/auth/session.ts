@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import { env } from '../../lib/env';
 
 export const SESSION_COOKIE_NAME = 'myevents_session';
 
@@ -9,7 +10,7 @@ export async function setSessionCookie(
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE_NAME, rawSessionToken, {
     httpOnly: true,
-    secure: false, // Local-first session always runs on HTTP locally
+    secure: env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
     expires: expiresAt,

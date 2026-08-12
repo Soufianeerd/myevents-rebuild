@@ -37,6 +37,8 @@ describe('Architecture Rules', () => {
         'fs',
         'node:path',
         'path',
+        'node:crypto',
+        'crypto',
         '../../providers/local',
         '../providers/local',
         '../../components',
@@ -49,11 +51,15 @@ describe('Architecture Rules', () => {
         const content = await fs.readFile(file, 'utf-8');
         for (const forbidden of forbiddenImports) {
           // A simple regex to catch import statements.
-          // Note: This is pragmatic and doesn't build a full AST, but it works for our strict codebase.
-          // It handles `import ... from 'forbidden'` and `import ... from 'forbidden/subpath'`
           const importRegex = new RegExp(`from\\s+['"]${forbidden}(/.*)?['"]`);
           expect(content).not.toMatch(importRegex);
         }
+
+        // Ensure process.env is never accessed directly in Core
+        expect(content).not.toMatch(/process\.env/);
+
+        // Ensure Date.now() is not used (should use Clock)
+        expect(content).not.toMatch(/Date\.now\(\)/);
       }
     });
   });

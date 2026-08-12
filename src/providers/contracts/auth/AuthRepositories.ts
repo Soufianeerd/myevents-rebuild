@@ -22,5 +22,8 @@ export interface SessionRepository {
 export interface PasswordResetRepository {
   findByTokenHash(tokenHash: string): Promise<PasswordResetToken | null>;
   create(token: PasswordResetToken): Promise<Result<void, AppError>>;
-  markAsUsed(id: string, usedAt: string): Promise<Result<void, AppError>>;
+  consumeValidToken(
+    tokenHash: string,
+    now: string,
+  ): Promise<Result<PasswordResetToken, AppError>>;
 }
