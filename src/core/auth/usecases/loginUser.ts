@@ -54,8 +54,14 @@ export class LoginUserUseCase {
     let isPasswordValid = false;
 
     if (!user) {
-      // Dummy hash to prevent timing enumeration attacks
-      await this.passwordHasher.hash('dummy_timing_protection_password');
+      // Dummy hash verify to prevent timing enumeration attacks.
+      // We pass the provided password and a dummy hash info matching our scrypt profile.
+      await this.passwordHasher.verify(command.password, {
+        hash: 'dummy_hash',
+        salt: 'dummy_salt',
+        algorithm: 'scrypt',
+        params: { N: 65536, r: 8, p: 2 },
+      });
       return err(genericAuthError);
     } else {
       isPasswordValid = await this.passwordHasher.verify(command.password, {

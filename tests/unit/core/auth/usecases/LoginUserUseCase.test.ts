@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, type Mocked } from 'vitest';
 import { User } from '../../../../../src/core/auth/models';
-import { PasswordHashInfo } from '../../../../../src/providers/contracts/auth/PasswordHasher';
+
 import { LoginUserUseCase } from '../../../../../src/core/auth/usecases/loginUser';
 import { UserId } from '../../../../../src/core/ids';
 import {
@@ -90,20 +90,21 @@ describe('LoginUserUseCase', () => {
     expect(mockSessionRepo.create).toHaveBeenCalled();
   });
 
-  it('should perform dummy hash and return error when user not found', async () => {
+  it('should perform dummy hash verify and return error when user not found', async () => {
     mockUserRepo.findByEmail.mockResolvedValue(null);
-    mockPasswordHasher.hash.mockResolvedValue(
-      {} as unknown as PasswordHashInfo,
-    );
+    mockPasswordHasher.verify.mockResolvedValue(false);
 
     const result = await useCase.execute({
       email: 'test@example.com',
       password: 'password123',
     });
     expect(result.ok).toBe(false);
-    expect(mockPasswordHasher.hash).toHaveBeenCalledWith(
-      'dummy_timing_protection_password',
-    );
+    expect(mockPasswordHasher.verify).toHaveBeenCalledWith('password123', {
+      hash: 'dummy_hash',
+      salt: 'dummy_salt',
+      algorithm: 'scrypt',
+      params: { N: 65536, r: 8, p: 2 },
+    });
   });
 
   it('should return error when password is wrong', async () => {
