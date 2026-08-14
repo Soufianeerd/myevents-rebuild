@@ -22,13 +22,18 @@ describe('LocalMailProvider', () => {
   });
 
   it('should write an email to the store', async () => {
-    await provider.sendPasswordResetEmail('test@example.com', 'http://reset');
+    await provider.sendPasswordResetEmail(
+      'test@example.com',
+      'http://reset.link',
+    );
 
     const mailDir = path.join(dataDir, 'mail');
     const files = fs.readdirSync(mailDir);
-    expect(files.length).toBeGreaterThan(0);
+
+    expect(files).toHaveLength(1);
+    expect(files[0]).toContain('test_example_com');
 
     const content = fs.readFileSync(path.join(mailDir, files[0]), 'utf8');
-    expect(content).toContain('test@example.com');
+    expect(content).toContain('http://reset.link');
   });
 });

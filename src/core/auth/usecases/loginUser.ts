@@ -24,6 +24,20 @@ export interface LoginUserResult {
   rawSessionToken: string;
 }
 
+// A pre-computed valid scrypt hash used for timing enumeration protection.
+// This is not a secret. It uses the exact same N=65536, r=8, p=2 parameters as real passwords.
+const DUMMY_SCRYPT_HASH = {
+  hash: 'hdj8SXweni9EX1i3oM7pCLu4lCDcltDbBgmD0pCDDa5q/RCAmKr3UcqsneXLGrlORegy+yF7Mba9/roNeKFBBw==',
+  salt: 'MuxM+TZllfX7MPqu7gkQWg==',
+  algorithm: 'scrypt' as const,
+  params: {
+    N: 65536,
+    r: 8,
+    p: 2,
+    maxmem: 268435456,
+  },
+};
+
 export class LoginUserUseCase {
   constructor(
     private userRepository: UserRepository,
@@ -54,14 +68,9 @@ export class LoginUserUseCase {
     let isPasswordValid = false;
 
     if (!user) {
-      // Dummy hash verify to prevent timing enumeration attacks.
-      // We pass the provided password and a dummy hash info matching our scrypt profile.
-      await this.passwordHasher.verify(command.password, {
-        hash: 'dummy_hash',
-        salt: 'dummy_salt',
-        algorithm: 'scrypt',
-        params: { N: 65536, r: 8, p: 2 },
-      });
+      // Execute a real verify against a pre-computed dummy hash to perfectly
+      // mirror the execution time of a valid user lookup.
+      await this.passwordHasher.verify(command.password, DUMMY_SCRYPT_HASH);
       return err(genericAuthError);
     } else {
       isPasswordValid = await this.passwordHasher.verify(command.password, {
@@ -82,6 +91,7 @@ export class LoginUserUseCase {
 
     // 30 days expiration
     const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+    // @authorized: new Date() is only used to compute an expiration date from the injected clock.
     const expiresAt = new Date(
       this.clock.now().getTime() + thirtyDaysMs,
     ).toISOString();

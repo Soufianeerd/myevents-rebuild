@@ -52,6 +52,7 @@ export class RequestPasswordResetUseCase {
     const now = this.clock.now().toISOString();
     // 30 minutes expiration
     const thirtyMinsMs = 30 * 60 * 1000;
+    // @authorized: new Date() is only used to compute an expiration date from the injected clock.
     const expiresAt = new Date(
       this.clock.now().getTime() + thirtyMinsMs,
     ).toISOString();

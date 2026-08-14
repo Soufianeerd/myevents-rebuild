@@ -113,6 +113,7 @@ export class RegisterUserUseCase {
 
     // 30 days expiration
     const thirtyDaysMs = 30 * 24 * 60 * 60 * 1000;
+    // @authorized: new Date() is only used to compute an expiration date from the injected clock.
     const expiresAt = new Date(
       this.clock.now().getTime() + thirtyDaysMs,
     ).toISOString();

@@ -32,7 +32,12 @@ describe('ResetPasswordUseCase', () => {
       deleteExpired: vi.fn(),
     };
     const mockPassHasher: PasswordHasher = {
-      hash: vi.fn().mockResolvedValue({ hash: 'new_hash' }),
+      hash: vi.fn().mockResolvedValue({
+        hash: 'new_hash',
+        salt: 'salt',
+        algorithm: 'scrypt',
+        params: {},
+      }),
       verify: vi.fn(),
     };
     const mockTokenHasher: TokenHasher = {

@@ -23,12 +23,12 @@ describe('RequestPasswordResetUseCase', () => {
       update: vi.fn(),
     };
     const mockResetRepo: PasswordResetRepository = {
+      findByTokenHash: vi.fn(),
       create: vi.fn().mockResolvedValue(ok(undefined)),
       consumeValidToken: vi.fn(),
-      findByTokenHash: vi.fn(),
     };
     const mockMail: MailProvider = {
-      sendPasswordResetEmail: vi.fn().mockResolvedValue(undefined),
+      sendPasswordResetEmail: vi.fn().mockResolvedValue(ok(undefined)),
     };
     const mockSecret: SecretTokenProvider = {
       generateToken: vi.fn().mockReturnValue('secret_token'),
@@ -70,15 +70,15 @@ describe('RequestPasswordResetUseCase', () => {
       update: vi.fn(),
     };
     const mockResetRepo: PasswordResetRepository = {
+      findByTokenHash: vi.fn(),
       create: vi.fn(),
       consumeValidToken: vi.fn(),
-      findByTokenHash: vi.fn(),
     };
     const mockMail: MailProvider = { sendPasswordResetEmail: vi.fn() };
     const mockSecret: SecretTokenProvider = { generateToken: vi.fn() };
     const mockHasher: TokenHasher = { hashToken: vi.fn() };
     const mockUrl: AppUrlProvider = { getAppUrl: vi.fn() };
-    const mockClock: Clock = { now: vi.fn().mockReturnValue(new Date(100000)) };
+    const mockClock: Clock = { now: vi.fn() };
     const mockId: IdGenerator = { generate: vi.fn() };
 
     const usecase = new RequestPasswordResetUseCase(

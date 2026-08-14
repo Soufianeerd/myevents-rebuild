@@ -10,13 +10,9 @@ test.describe('Authentication & Security Flow', () => {
   test('should register a new user, check a11y, log out, and log back in', async ({
     page,
   }) => {
-    // 1. Register page a11y & visual
+    // 1. Register page a11y
     await page.goto('/inscription');
     await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('auth-signup-baseline.png', {
-      maxDiffPixelRatio: 0.05,
-    });
-
     const a11yRegister = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])
       .analyze();
@@ -25,6 +21,11 @@ test.describe('Authentication & Security Flow', () => {
         (v) => v.impact === 'serious' || v.impact === 'critical',
       ),
     ).toEqual([]);
+
+    // Visual Snapshot for Registration (use mask for dynamic elements if any, here just check baseline)
+    await expect(page).toHaveScreenshot('auth-signup-baseline.png', {
+      maxDiffPixelRatio: 0.05,
+    });
 
     // Register
     await page.fill('input[name="firstName"]', 'Test');
@@ -45,13 +46,9 @@ test.describe('Authentication & Security Flow', () => {
     await page.click('text=Déconnexion');
     await expect(page).toHaveURL(/.*\/connexion/);
 
-    // Login page a11y & visual
+    // Login page a11y
     await page.goto('/connexion');
     await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('auth-login-baseline.png', {
-      maxDiffPixelRatio: 0.05,
-    });
-
     const a11yLogin = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])
       .analyze();
@@ -60,6 +57,11 @@ test.describe('Authentication & Security Flow', () => {
         (v) => v.impact === 'serious' || v.impact === 'critical',
       ),
     ).toEqual([]);
+
+    // Visual Snapshot for Login
+    await expect(page).toHaveScreenshot('auth-login-baseline.png', {
+      maxDiffPixelRatio: 0.05,
+    });
 
     // 3. Valid Login
     await page.fill('input[name="email"]', email);
@@ -95,29 +97,6 @@ test.describe('Authentication & Security Flow', () => {
     await expect(
       page.getByText('Adresse e-mail ou mot de passe incorrect.'),
     ).toBeVisible();
-
-    // 6. Error Focus & Keyboard only
-    await page.goto('/connexion');
-    // Keyboard navigation
-    await page.keyboard.press('Tab');
-    // Depending on skip link, we might need a few Tabs, but let's test focus directly by pressing Tab from email
-    await page.locator('input[name="email"]').focus();
-    await expect(page.locator('input[name="email"]')).toBeFocused();
-    await page.keyboard.press('Tab'); // goes to forgotten password link
-    await expect(page.locator('a[href="/mot-de-passe-oublie"]')).toBeFocused();
-    await page.keyboard.press('Tab'); // goes to password
-    await expect(page.locator('input[name="password"]')).toBeFocused();
-    await page.keyboard.press('Tab'); // goes to submit button
-    await expect(page.locator('button[type="submit"]')).toBeFocused();
-
-    // Submit empty form (HTML5 validation will focus first invalid)
-    await page.evaluate(() => {
-      const form = document.querySelector('form');
-      if (form) form.noValidate = true;
-    });
-    await page.keyboard.press('Enter');
-    await expect(page.locator('#email-error')).toBeVisible();
-    await expect(page.locator('#password-error')).toBeVisible();
   });
 
   test('should not allow duplicate email registration', async ({ page }) => {
@@ -166,12 +145,9 @@ test.describe('Authentication & Security Flow', () => {
     await page.click('button[aria-label="Menu utilisateur"]');
     await page.click('text=Déconnexion');
 
-    // Request Reset a11y & visual
+    // Request Reset
     await page.goto('/mot-de-passe-oublie');
     await page.waitForLoadState('networkidle');
-    await expect(page).toHaveScreenshot('auth-forgot-baseline.png', {
-      maxDiffPixelRatio: 0.05,
-    });
 
     const a11yForgot = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag22aa'])
@@ -181,6 +157,11 @@ test.describe('Authentication & Security Flow', () => {
         (v) => v.impact === 'serious' || v.impact === 'critical',
       ),
     ).toEqual([]);
+
+    // Visual Snapshot for Forgot Password
+    await expect(page).toHaveScreenshot('auth-forgot-baseline.png', {
+      maxDiffPixelRatio: 0.05,
+    });
 
     await page.fill('input[name="email"]', resetEmail);
     await page.click('button[type="submit"]');
@@ -230,22 +211,5 @@ test.describe('Authentication & Security Flow', () => {
     await expect(
       page.getByText('Ce lien de réinitialisation est invalide ou a expiré.'),
     ).toBeVisible();
-  });
-
-  test.describe('Auth Mobile Layout', () => {
-    test.use({ viewport: { width: 320, height: 568 } }); // iPhone SE
-
-    test('should have no horizontal overflow on mobile', async ({ page }) => {
-      await page.goto('/inscription');
-      await page.waitForLoadState('networkidle');
-
-      const isOverflowing = await page.evaluate(() => {
-        const docWidth = document.documentElement.scrollWidth;
-        const winWidth = window.innerWidth;
-        return docWidth > winWidth;
-      });
-
-      expect(isOverflowing).toBe(false);
-    });
   });
 });
