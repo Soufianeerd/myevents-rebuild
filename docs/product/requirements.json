@@ -1,0 +1,110 @@
+{
+  "requirements": [
+    {
+      "id": "UI-001",
+      "title": "Sidebar dimensions",
+      "statement": "La Sidebar desktop mesure 268px.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/ds.css",
+        "section": "Sidebar"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(app)/_components/layout/Sidebar.tsx"],
+      "tests": ["tests/e2e/appshell.test.ts"],
+      "screens": ["13", "14", "15", "16"],
+      "notes": ["Partially verified visually"]
+    },
+    {
+      "id": "AUTH-001",
+      "title": "Surfaces Auth",
+      "statement": "La surface Auth comprend Connexion, Inscription et Mot de passe oublié.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/MyEvents-carrousel.html",
+        "section": "Screens 09-11"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "verified",
+      "implementation": [
+        "src/app/(auth)/connexion/page.tsx",
+        "src/app/(auth)/inscription/page.tsx",
+        "src/app/(auth)/mot-de-passe-oublie/page.tsx"
+      ],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["09", "10", "11"],
+      "notes": []
+    },
+    {
+      "id": "STUDIO-001",
+      "title": "Interface Studio",
+      "statement": "Le Studio expose une liste de sections, une preview centrale et un panneau de propriétés.",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/MyEvents-carrousel.html",
+        "section": "Screens 19-21"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["19", "20", "21"],
+      "notes": []
+    },
+    {
+      "id": "BILLING-001",
+      "title": "Pricing Packages",
+      "statement": "Le produit propose un paiement unique: Invitation (14,99 €), + Photo/Vidéo (29,99 €), + Audio (39,99 €).",
+      "category": "BILLING",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/MyEvents-carrousel.html",
+        "section": "Screen 05"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["05", "34"],
+      "notes": []
+    },
+    {
+      "id": "AUTH-002",
+      "title": "Secure Password Policy",
+      "statement": "Minimum 15 caractères, pas de limite de répétitions (NIST).",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "NIST SP 800-63B",
+        "section": "Passwords"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "verified",
+      "implementation": ["src/core/auth/utils/PasswordPolicy.ts"],
+      "tests": ["tests/unit/core/auth/PasswordPolicy.test.ts"],
+      "screens": ["10", "11"],
+      "notes": []
+    },
+    {
+      "id": "AUTH-003",
+      "title": "Visual Baseline Auth",
+      "statement": "Le rendu UI de l'authentification correspond strictement au Design System.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/MyEvents-carrousel.html",
+        "section": "Screens 09-11"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "verified",
+      "implementation": [],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["09", "10", "11"],
+      "notes": ["Baseline verified manually against carrousel."]
+    }
+  ]
+}
