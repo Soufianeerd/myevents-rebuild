@@ -2,8 +2,8 @@
   "requirements": [
     {
       "id": "PROD-01-001",
-      "title": "Structure de l'écran 01 (Homepage)",
-      "statement": "L'écran 01 doit respecter la structure et les informations du carrousel.",
+      "title": "Homepage - Navigation principale...",
+      "statement": "Navigation principale",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -15,18 +15,283 @@
       "implementation": [],
       "tests": [],
       "screens": ["01"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-002",
+      "title": "Homepage - Hero avec CTA...",
+      "statement": "Hero avec CTA",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-003",
+      "title": "Homepage - Bandeau des clients...",
+      "statement": "Bandeau des clients",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-004",
+      "title": "Homepage - Étapes de fonctionnement (1 à ...",
+      "statement": "Étapes de fonctionnement (1 à 4)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-005",
+      "title": "Homepage - Mise en avant Studio...",
+      "statement": "Mise en avant Studio",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-006",
+      "title": "Homepage - Gestion invités & RSVP...",
+      "statement": "Gestion invités & RSVP",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-007",
+      "title": "Homepage - Souvenirs (QR codes)...",
+      "statement": "Souvenirs (QR codes)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-008",
+      "title": "Homepage - Galerie de templates...",
+      "statement": "Galerie de templates",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-009",
+      "title": "Homepage - Témoignages...",
+      "statement": "Témoignages",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-010",
+      "title": "Homepage - Grille de tarifs...",
+      "statement": "Grille de tarifs",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-011",
+      "title": "Homepage - FAQ cliquable...",
+      "statement": "FAQ cliquable",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-01-012",
+      "title": "Homepage - Footer complet...",
+      "statement": "Footer complet",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["01"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "PROD-02-001",
-      "title": "Structure de l'écran 02 (Fonctionnalités)",
-      "statement": "L'écran 02 doit respecter la structure et les informations du carrousel.",
+      "title": "Fonctionnalités - Aperçu détaillé des 8 modules ...",
+      "statement": "Aperçu détaillé des 8 modules (Invitation, Studio, Invités, RSVP, QR, Audio, Photo, Stats)",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -38,18 +303,91 @@
       "implementation": [],
       "tests": [],
       "screens": ["02"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-02-002",
+      "title": "Fonctionnalités - Démonstration visuelle Studio...",
+      "statement": "Démonstration visuelle Studio",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 02"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["02"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-02-003",
+      "title": "Fonctionnalités - Démonstration visuelle Invités...",
+      "statement": "Démonstration visuelle Invités",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 02"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["02"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-02-004",
+      "title": "Fonctionnalités - Démonstration visuelle Envois...",
+      "statement": "Démonstration visuelle Envois",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 02"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["02"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "PROD-03-001",
-      "title": "Structure de l'écran 03 (Galerie de templates)",
-      "statement": "L'écran 03 doit respecter la structure et les informations du carrousel.",
+      "title": "Galerie de templates - Filtres par catégorie (Orienta...",
+      "statement": "Filtres par catégorie (Oriental, Moderne, Floral, etc.)",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -61,18 +399,91 @@
       "implementation": [],
       "tests": [],
       "screens": ["03"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-03-002",
+      "title": "Galerie de templates - Tri par popularité...",
+      "statement": "Tri par popularité",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 03"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["03"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-03-003",
+      "title": "Galerie de templates - Affichage des vignettes avec c...",
+      "statement": "Affichage des vignettes avec couleurs et typos",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 03"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["03"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-03-004",
+      "title": "Galerie de templates - Aperçu et sélection de modèle...",
+      "statement": "Aperçu et sélection de modèle",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 03"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["03"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "PROD-04-001",
-      "title": "Structure de l'écran 04 (Détail d’un template)",
-      "statement": "L'écran 04 doit respecter la structure et les informations du carrousel.",
+      "title": "Détail d’un template - Prévisualisation mobile du mod...",
+      "statement": "Prévisualisation mobile du modèle",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -84,18 +495,139 @@
       "implementation": [],
       "tests": [],
       "screens": ["04"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-04-002",
+      "title": "Détail d’un template - Informations du modèle (nom, d...",
+      "statement": "Informations du modèle (nom, description)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 04"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["04"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-04-003",
+      "title": "Détail d’un template - Sélecteur de variantes de coul...",
+      "statement": "Sélecteur de variantes de couleurs",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 04"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["04"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-04-004",
+      "title": "Détail d’un template - Liste des sections incluses...",
+      "statement": "Liste des sections incluses",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 04"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["04"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-04-005",
+      "title": "Détail d’un template - Switcher Mobile/Tablette/Deskt...",
+      "statement": "Switcher Mobile/Tablette/Desktop",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 04"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["04"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-04-006",
+      "title": "Détail d’un template - Actions: Utiliser, Aperçu plei...",
+      "statement": "Actions: Utiliser, Aperçu plein écran, Favori",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 04"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["04"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "PROD-05-001",
-      "title": "Structure de l'écran 05 (Tarifs)",
-      "statement": "L'écran 05 doit respecter la structure et les informations du carrousel.",
+      "title": "Tarifs - Comparatif des offres (Digital...",
+      "statement": "Comparatif des offres (Digital, Photo/Vidéo, +Audio)",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -107,18 +639,91 @@
       "implementation": [],
       "tests": [],
       "screens": ["05"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-05-002",
+      "title": "Tarifs - Pricing unique par événement...",
+      "statement": "Pricing unique par événement",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 05"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["05"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-05-003",
+      "title": "Tarifs - Détail exhaustif des fonctionn...",
+      "statement": "Détail exhaustif des fonctionnalités incluses par offre",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 05"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["05"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-05-004",
+      "title": "Tarifs - FAQ dédiée à la facturation...",
+      "statement": "FAQ dédiée à la facturation",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 05"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["05"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "PROD-06-001",
-      "title": "Structure de l'écran 06 (Wedding planners (B2B))",
-      "statement": "L'écran 06 doit respecter la structure et les informations du carrousel.",
+      "title": "Wedding planners (B2B) - Démonstration des formats de s...",
+      "statement": "Démonstration des formats de souvenirs",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -130,18 +735,91 @@
       "implementation": [],
       "tests": [],
       "screens": ["06"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-06-002",
+      "title": "Wedding planners (B2B) - Concept de modération avant pu...",
+      "statement": "Concept de modération avant publication",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 06"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["06"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-06-003",
+      "title": "Wedding planners (B2B) - Stockage privé 10 Go...",
+      "statement": "Stockage privé 10 Go",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 06"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["06"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-06-004",
+      "title": "Wedding planners (B2B) - Accessibilité post-événement (...",
+      "statement": "Accessibilité post-événement (12 mois)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 06"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["06"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "PROD-07-001",
-      "title": "Structure de l'écran 07 (Exemples & inspiration)",
-      "statement": "L'écran 07 doit respecter la structure et les informations du carrousel.",
+      "title": "Exemples & inspiration - Aperçu d'un espace organisateu...",
+      "statement": "Aperçu d'un espace organisateur réel (Dashboard, Envois, Statistiques)",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -153,18 +831,43 @@
       "implementation": [],
       "tests": [],
       "screens": ["07"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-07-002",
+      "title": "Exemples & inspiration - Présentation de scénarios d'us...",
+      "statement": "Présentation de scénarios d'usage (Mariage, Fiançailles, Henné)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 07"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["07"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "PROD-08-001",
-      "title": "Structure de l'écran 08 (FAQ)",
-      "statement": "L'écran 08 doit respecter la structure et les informations du carrousel.",
+      "title": "FAQ - Liste complète des questions/r...",
+      "statement": "Liste complète des questions/réponses",
       "category": "PROD",
       "level": "MUST",
       "source": {
@@ -176,18 +879,67 @@
       "implementation": [],
       "tests": [],
       "screens": ["08"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-08-002",
+      "title": "FAQ - Support client...",
+      "statement": "Support client",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 08"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["08"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-08-003",
+      "title": "FAQ - Formulaire de contact...",
+      "statement": "Formulaire de contact",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 08"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["08"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "AUTH-09-001",
-      "title": "Structure de l'écran 09 (Connexion)",
-      "statement": "L'écran 09 doit respecter la structure et les informations du carrousel.",
+      "title": "Connexion - Formulaire de connexion (Email...",
+      "statement": "Formulaire de connexion (Email, Mot de passe)",
       "category": "AUTH",
       "level": "MUST",
       "source": {
@@ -196,21 +948,112 @@
       },
       "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/..."],
+      "implementation": [
+        "src/app/(auth)/connexion/page.tsx",
+        "src/core/auth/usecases/loginUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/LoginUserUseCase.test.ts"
+      ],
+      "screens": ["09"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "AUTH-09-002",
+      "title": "Connexion - Lien mot de passe oublié...",
+      "statement": "Lien mot de passe oublié",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 09"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/(auth)/connexion/page.tsx",
+        "src/core/auth/usecases/loginUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/LoginUserUseCase.test.ts"
+      ],
+      "screens": ["09"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "AUTH-09-003",
+      "title": "Connexion - Bouton Google Auth...",
+      "statement": "Bouton Google Auth",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 09"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
       "tests": [],
       "screens": ["09"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "AUTH-09-004",
+      "title": "Connexion - Lien vers inscription...",
+      "statement": "Lien vers inscription",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 09"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/(auth)/connexion/page.tsx",
+        "src/core/auth/usecases/loginUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/LoginUserUseCase.test.ts"
+      ],
+      "screens": ["09"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "AUTH-10-001",
-      "title": "Structure de l'écran 10 (Inscription)",
-      "statement": "L'écran 10 doit respecter la structure et les informations du carrousel.",
+      "title": "Inscription - Champ Prénom...",
+      "statement": "Champ Prénom",
       "category": "AUTH",
       "level": "MUST",
       "source": {
@@ -219,183 +1062,262 @@
       },
       "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/..."],
-      "tests": [],
-      "screens": ["10"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
-      },
-      "notes": []
-    },
-    {
-      "id": "AUTH-REG-001",
-      "title": "Champ Prénom",
-      "statement": "Le formulaire comprend un champ Prénom.",
-      "category": "AUTH",
-      "level": "MUST",
-      "source": {
-        "document": "docs/myevents/s-app.js",
-        "section": "Screen 10"
-      },
-      "appliesTo": ["local"],
-      "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
       "screens": ["10"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
-      "id": "AUTH-REG-002",
-      "title": "Champ Nom",
-      "statement": "Le formulaire comprend un champ Nom.",
+      "id": "AUTH-10-002",
+      "title": "Inscription - Champ Nom...",
+      "statement": "Champ Nom",
       "category": "AUTH",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
         "section": "Screen 10"
       },
-      "appliesTo": ["local"],
+      "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
       "screens": ["10"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
-      "id": "AUTH-REG-003",
-      "title": "Champ e-mail",
-      "statement": "Le formulaire comprend un champ e-mail.",
+      "id": "AUTH-10-003",
+      "title": "Inscription - Champ e-mail...",
+      "statement": "Champ e-mail",
       "category": "AUTH",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
         "section": "Screen 10"
       },
-      "appliesTo": ["local"],
+      "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
       "screens": ["10"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
-      "id": "AUTH-REG-004",
-      "title": "Champ mot de passe",
-      "statement": "Le formulaire comprend un champ mot de passe.",
+      "id": "AUTH-10-004",
+      "title": "Inscription - Champ mot de passe...",
+      "statement": "Champ mot de passe",
       "category": "AUTH",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
         "section": "Screen 10"
       },
-      "appliesTo": ["local"],
+      "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
       "screens": ["10"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
-      "id": "AUTH-REG-005",
-      "title": "Confirmation mot de passe",
-      "statement": "Le formulaire comprend un champ confirmation mot de passe.",
+      "id": "AUTH-10-005",
+      "title": "Inscription - Confirmation mot de passe...",
+      "statement": "Confirmation mot de passe",
       "category": "AUTH",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
         "section": "Screen 10"
       },
-      "appliesTo": ["local"],
+      "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
       "screens": ["10"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
-      "id": "AUTH-REG-006",
-      "title": "Acceptation conditions",
-      "statement": "Case à cocher pour accepter conditions et confidentialité.",
+      "id": "AUTH-10-006",
+      "title": "Inscription - Acceptation conditions (checkb...",
+      "statement": "Acceptation conditions (checkbox)",
       "category": "AUTH",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
         "section": "Screen 10"
       },
-      "appliesTo": ["local"],
+      "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
       "screens": ["10"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
-      "id": "AUTH-REG-007",
-      "title": "CTA Créer",
-      "statement": "Bouton principal Créer mon compte.",
+      "id": "AUTH-10-007",
+      "title": "Inscription - Bouton Créer...",
+      "statement": "Bouton Créer",
       "category": "AUTH",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
         "section": "Screen 10"
       },
-      "appliesTo": ["local"],
+      "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
       "screens": ["10"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
-      "id": "AUTH-REG-008",
-      "title": "Lien Se connecter",
-      "statement": "Lien de redirection vers la connexion.",
+      "id": "AUTH-10-008",
+      "title": "Inscription - Bouton Google Auth...",
+      "statement": "Bouton Google Auth",
       "category": "AUTH",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
         "section": "Screen 10"
       },
-      "appliesTo": ["local"],
-      "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/inscription/page.tsx"],
-      "tests": ["tests/e2e/auth.test.ts"],
-      "screens": ["10"],
-      "evidence": {},
-      "notes": []
-    },
-    {
-      "id": "AUTH-REG-009",
-      "title": "Google Auth",
-      "statement": "Bouton Google présent dans référence mais non implémenté localement.",
-      "category": "AUTH",
-      "level": "MUST",
-      "source": {
-        "document": "docs/myevents/s-app.js",
-        "section": "Screen 10"
-      },
-      "appliesTo": ["connected"],
+      "appliesTo": ["local", "connected"],
       "status": "planned",
       "implementation": [],
       "tests": [],
       "screens": ["10"],
       "evidence": {},
-      "notes": ["Google Auth adapter required"]
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "AUTH-10-009",
+      "title": "Inscription - Lien Se connecter...",
+      "statement": "Lien Se connecter",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/(auth)/inscription/page.tsx",
+        "src/core/auth/usecases/registerUser.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+      ],
+      "screens": ["10"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
     },
     {
       "id": "AUTH-11-001",
-      "title": "Structure de l'écran 11 (Mot de passe oublié / Réinitialisation)",
-      "statement": "L'écran 11 doit respecter la structure et les informations du carrousel.",
+      "title": "Mot de passe oublié / Réinitialisation - Champ e-mail pour réinitialisa...",
+      "statement": "Champ e-mail pour réinitialisation",
       "category": "AUTH",
       "level": "MUST",
       "source": {
@@ -404,22 +1326,89 @@
       },
       "appliesTo": ["local", "connected"],
       "status": "implemented_unverified",
-      "implementation": ["src/app/(auth)/..."],
-      "tests": [],
+      "implementation": [
+        "src/app/(auth)/mot-de-passe-oublie/page.tsx",
+        "src/core/auth/usecases/requestPasswordReset.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RequestPasswordResetUseCase.test.ts"
+      ],
       "screens": ["11"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-12a-001",
-      "title": "Structure de l'écran 12a (Onboarding · 1. Type d’événement)",
-      "statement": "L'écran 12a doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "AUTH-11-002",
+      "title": "Mot de passe oublié / Réinitialisation - Bouton Envoyer le lien...",
+      "statement": "Bouton Envoyer le lien",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 11"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/(auth)/mot-de-passe-oublie/page.tsx",
+        "src/core/auth/usecases/requestPasswordReset.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RequestPasswordResetUseCase.test.ts"
+      ],
+      "screens": ["11"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "AUTH-11-003",
+      "title": "Mot de passe oublié / Réinitialisation - Lien Retour à la connexion...",
+      "statement": "Lien Retour à la connexion",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 11"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/(auth)/mot-de-passe-oublie/page.tsx",
+        "src/core/auth/usecases/requestPasswordReset.ts"
+      ],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/core/auth/usecases/RequestPasswordResetUseCase.test.ts"
+      ],
+      "screens": ["11"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12a-001",
+      "title": "Onboarding · 1. Type d’événement - Choix du type d'événement...",
+      "statement": "Choix du type d'événement",
+      "category": "PROD",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -430,19 +1419,116 @@
       "implementation": [],
       "tests": [],
       "screens": ["12a"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-12b-001",
-      "title": "Structure de l'écran 12b (Onboarding · 2. Date)",
-      "statement": "L'écran 12b doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "PROD-12a-002",
+      "title": "Onboarding · 1. Type d’événement - Choix parmi les types affichés...",
+      "statement": "Choix parmi les types affichés (Mariage, Henné, etc.)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12a"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12a"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12a-003",
+      "title": "Onboarding · 1. Type d’événement - État sélectionné...",
+      "statement": "État sélectionné",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12a"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12a"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12a-004",
+      "title": "Onboarding · 1. Type d’événement - Information multi-cérémonies...",
+      "statement": "Information multi-cérémonies",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12a"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12a"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12a-005",
+      "title": "Onboarding · 1. Type d’événement - Boutons Retour, Passer, Contin...",
+      "statement": "Boutons Retour, Passer, Continuer",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12a"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12a"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12b-001",
+      "title": "Onboarding · 2. Date - Saisie du titre ou des noms...",
+      "statement": "Saisie du titre ou des noms",
+      "category": "PROD",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -453,19 +1539,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["12b"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-12c-001",
-      "title": "Structure de l'écran 12c (Onboarding · 4. Style)",
-      "statement": "L'écran 12c doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "PROD-12b-002",
+      "title": "Onboarding · 2. Date - Date de l'événement...",
+      "statement": "Date de l'événement",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12b"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12b"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12b-003",
+      "title": "Onboarding · 2. Date - Boutons Retour, Passer, Contin...",
+      "statement": "Boutons Retour, Passer, Continuer",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12b"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12b"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12c-001",
+      "title": "Onboarding · 4. Style - Proposition de templates basés...",
+      "statement": "Proposition de templates basés sur le type",
+      "category": "PROD",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -476,19 +1611,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["12c"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-12d-001",
-      "title": "Structure de l'écran 12d (Onboarding · 6. Votre première invitation)",
-      "statement": "L'écran 12d doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "PROD-12c-002",
+      "title": "Onboarding · 4. Style - Variantes de couleurs...",
+      "statement": "Variantes de couleurs",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12c"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12c"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12c-003",
+      "title": "Onboarding · 4. Style - Boutons Retour, Continuer...",
+      "statement": "Boutons Retour, Continuer",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12c"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12c"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-12d-001",
+      "title": "Onboarding · 6. Votre première invitation - Génération en cours (Loading s...",
+      "statement": "Génération en cours (Loading state)",
+      "category": "PROD",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -499,19 +1683,72 @@
       "implementation": [],
       "tests": [],
       "screens": ["12d"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-13-001",
-      "title": "Structure de l'écran 13 (Dashboard principal)",
-      "statement": "L'écran 13 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "PROD-12d-002",
+      "title": "Onboarding · 6. Votre première invitation - Messages de progression...",
+      "statement": "Messages de progression",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12d"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12d"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-13-001",
+      "title": "Dashboard principal - Navigation AppShell (Sidebar, ...",
+      "statement": "Navigation AppShell (Sidebar, Topbar)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 13"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/components/layout/AppShell.tsx",
+        "src/components/layout/Sidebar.tsx",
+        "src/components/layout/Topbar.tsx"
+      ],
+      "tests": ["tests/e2e/appshell.test.ts"],
+      "screens": ["13"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-13-002",
+      "title": "Dashboard principal - Bandeau des prochaines étapes...",
+      "statement": "Bandeau des prochaines étapes",
+      "category": "PROD",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -522,19 +1759,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["13"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-14-001",
-      "title": "Structure de l'écran 14 (Mes événements)",
-      "statement": "L'écran 14 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "PROD-13-003",
+      "title": "Dashboard principal - Fil d'actualité récent (Notifi...",
+      "statement": "Fil d'actualité récent (Notifications)",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 13"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["13"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-13-004",
+      "title": "Dashboard principal - Sélection de l'événement coura...",
+      "statement": "Sélection de l'événement courant",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 13"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["13"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-14-001",
+      "title": "Mes événements - Liste des événements associés ...",
+      "statement": "Liste des événements associés au compte",
+      "category": "EVENT",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -545,19 +1831,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["14"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-15-001",
-      "title": "Structure de l'écran 15 (Créer un événement)",
-      "statement": "L'écran 15 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "EVENT-14-002",
+      "title": "Mes événements - Statut de chaque événement (Br...",
+      "statement": "Statut de chaque événement (Brouillon, Publié)",
+      "category": "EVENT",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 14"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["14"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-14-003",
+      "title": "Mes événements - Créer un nouvel événement...",
+      "statement": "Créer un nouvel événement",
+      "category": "EVENT",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 14"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["14"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-15-001",
+      "title": "Créer un événement - Paramètres globaux de l'événem...",
+      "statement": "Paramètres globaux de l'événement",
+      "category": "EVENT",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -568,19 +1903,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["15"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-16-001",
-      "title": "Structure de l'écran 16 (Détail événement)",
-      "statement": "L'écran 16 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "EVENT-15-002",
+      "title": "Créer un événement - Choix du slug/URL...",
+      "statement": "Choix du slug/URL",
+      "category": "EVENT",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 15"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["15"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-15-003",
+      "title": "Créer un événement - Visibilité et accès restreint...",
+      "statement": "Visibilité et accès restreint",
+      "category": "EVENT",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 15"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["15"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-16-001",
+      "title": "Détail événement - Aperçu analytique (Ouvertures,...",
+      "statement": "Aperçu analytique (Ouvertures, RSVP)",
+      "category": "EVENT",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -591,19 +1975,44 @@
       "implementation": [],
       "tests": [],
       "screens": ["16"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-17-001",
-      "title": "Structure de l'écran 17 (Programme & sous-événements)",
-      "statement": "L'écran 17 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "EVENT-16-002",
+      "title": "Détail événement - Raccourcis rapides (Gérer invi...",
+      "statement": "Raccourcis rapides (Gérer invités, Envoyer)",
+      "category": "EVENT",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 16"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["16"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-17-001",
+      "title": "Programme & sous-événements - Liste des sous-événements (Mai...",
+      "statement": "Liste des sous-événements (Mairie, Dîner, etc.)",
+      "category": "EVENT",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-app.js",
@@ -614,18 +2023,67 @@
       "implementation": [],
       "tests": [],
       "screens": ["17"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-17-002",
+      "title": "Programme & sous-événements - Horaires et lieux de chaque so...",
+      "statement": "Horaires et lieux de chaque sous-événement",
+      "category": "EVENT",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 17"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["17"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "EVENT-17-003",
+      "title": "Programme & sous-événements - Capacité et restriction d'invi...",
+      "statement": "Capacité et restriction d'invités",
+      "category": "EVENT",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 17"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["17"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "STUDIO-18-001",
-      "title": "Structure de l'écran 18 (Studio · Sélection du template)",
-      "statement": "L'écran 18 doit respecter la structure et les informations du carrousel.",
+      "title": "Studio · Sélection du template - Aperçu Canvas central...",
+      "statement": "Aperçu Canvas central",
       "category": "STUDIO",
       "level": "MUST",
       "source": {
@@ -637,18 +2095,115 @@
       "implementation": [],
       "tests": [],
       "screens": ["18"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-18-002",
+      "title": "Studio · Sélection du template - Panneau des modèles (Changer d...",
+      "statement": "Panneau des modèles (Changer de modèle)",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 18"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["18"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-18-003",
+      "title": "Studio · Sélection du template - Panneau des réglages...",
+      "statement": "Panneau des réglages",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 18"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["18"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-18-004",
+      "title": "Studio · Sélection du template - Bouton Publier...",
+      "statement": "Bouton Publier",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 18"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["18"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-18-005",
+      "title": "Studio · Sélection du template - Switcher de vue (Mobile/Tablet...",
+      "statement": "Switcher de vue (Mobile/Tablette/Desktop)",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 18"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["18"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "STUDIO-19-001",
-      "title": "Structure de l'écran 19 (Studio principal)",
-      "statement": "L'écran 19 doit respecter la structure et les informations du carrousel.",
+      "title": "Studio principal - Panneau des sections réorganis...",
+      "statement": "Panneau des sections réorganisables",
       "category": "STUDIO",
       "level": "MUST",
       "source": {
@@ -660,18 +2215,115 @@
       "implementation": [],
       "tests": [],
       "screens": ["19"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-19-002",
+      "title": "Studio principal - Ajouter/supprimer une section...",
+      "statement": "Ajouter/supprimer une section",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 19"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["19"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-19-003",
+      "title": "Studio principal - Contenu: Sur-titre, Noms, Text...",
+      "statement": "Contenu: Sur-titre, Noms, Texte, Date",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 19"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["19"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-19-004",
+      "title": "Studio principal - Style: Palette, Typo...",
+      "statement": "Style: Palette, Typo",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 19"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["19"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-19-005",
+      "title": "Studio principal - Animation: type d'apparition...",
+      "statement": "Animation: type d'apparition",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 19"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["19"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "STUDIO-20-001",
-      "title": "Structure de l'écran 20 (Studio · Style global)",
-      "statement": "L'écran 20 doit respecter la structure et les informations du carrousel.",
+      "title": "Studio · Style global - Palettes de couleurs prédéfini...",
+      "statement": "Palettes de couleurs prédéfinies",
       "category": "STUDIO",
       "level": "MUST",
       "source": {
@@ -683,18 +2335,163 @@
       "implementation": [],
       "tests": [],
       "screens": ["20"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-20-002",
+      "title": "Studio · Style global - Typographies globales...",
+      "statement": "Typographies globales",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 20"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["20"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-20-003",
+      "title": "Studio · Style global - Arrière-plan...",
+      "statement": "Arrière-plan",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 20"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["20"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-20-004",
+      "title": "Studio · Style global - Motifs...",
+      "statement": "Motifs",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 20"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["20"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-20-005",
+      "title": "Studio · Style global - Boutons (rayons, espacement)...",
+      "statement": "Boutons (rayons, espacement)",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 20"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["20"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-20-006",
+      "title": "Studio · Style global - Preview centrale...",
+      "statement": "Preview centrale",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 20"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["20"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-20-007",
+      "title": "Studio · Style global - Navigation Studio...",
+      "statement": "Navigation Studio",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 20"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["20"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "STUDIO-21-001",
-      "title": "Structure de l'écran 21 (Studio · Animations)",
-      "statement": "L'écran 21 doit respecter la structure et les informations du carrousel.",
+      "title": "Studio · Animations - Paramétrage des animations (Fo...",
+      "statement": "Paramétrage des animations (Fondu, Glissement, Portes)",
       "category": "STUDIO",
       "level": "MUST",
       "source": {
@@ -706,18 +2503,43 @@
       "implementation": [],
       "tests": [],
       "screens": ["21"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-21-002",
+      "title": "Studio · Animations - Durée et délai...",
+      "statement": "Durée et délai",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 21"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["21"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "STUDIO-22-001",
-      "title": "Structure de l'écran 22 (Studio · Historique de versions)",
-      "statement": "L'écran 22 doit respecter la structure et les informations du carrousel.",
+      "title": "Studio · Historique de versions - Historique des modifications...",
+      "statement": "Historique des modifications",
       "category": "STUDIO",
       "level": "MUST",
       "source": {
@@ -729,18 +2551,91 @@
       "implementation": [],
       "tests": [],
       "screens": ["22"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-22-002",
+      "title": "Studio · Historique de versions - Versions nommées...",
+      "statement": "Versions nommées",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 22"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["22"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-22-003",
+      "title": "Studio · Historique de versions - Bouton de restauration...",
+      "statement": "Bouton de restauration",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 22"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["22"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-22-004",
+      "title": "Studio · Historique de versions - Auteur et date de modification...",
+      "statement": "Auteur et date de modification",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 22"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["22"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "GUEST-23-001",
-      "title": "Structure de l'écran 23 (Invités (CRM))",
-      "statement": "L'écran 23 doit respecter la structure et les informations du carrousel.",
+      "title": "Invités (CRM) - KPIs invités (Présents, En att...",
+      "statement": "KPIs invités (Présents, En attente, etc.)",
       "category": "GUEST",
       "level": "MUST",
       "source": {
@@ -752,18 +2647,115 @@
       "implementation": [],
       "tests": [],
       "screens": ["23"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-23-002",
+      "title": "Invités (CRM) - Liste des invités (Nom, Foyer,...",
+      "statement": "Liste des invités (Nom, Foyer, RSVP, Accompagnants)",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 23"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["23"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-23-003",
+      "title": "Invités (CRM) - Filtres et recherche...",
+      "statement": "Filtres et recherche",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 23"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["23"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-23-004",
+      "title": "Invités (CRM) - Sélection multiple...",
+      "statement": "Sélection multiple",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 23"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["23"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-23-005",
+      "title": "Invités (CRM) - Action: Ajouter, Importer...",
+      "statement": "Action: Ajouter, Importer",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 23"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["23"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "GUEST-24-001",
-      "title": "Structure de l'écran 24 (Fiche invité (drawer))",
-      "statement": "L'écran 24 doit respecter la structure et les informations du carrousel.",
+      "title": "Fiche invité (drawer) - Ajout manuel d'un invité...",
+      "statement": "Ajout manuel d'un invité",
       "category": "GUEST",
       "level": "MUST",
       "source": {
@@ -775,18 +2767,91 @@
       "implementation": [],
       "tests": [],
       "screens": ["24"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-24-002",
+      "title": "Fiche invité (drawer) - Saisie Nom, Prénom, Email, Tél...",
+      "statement": "Saisie Nom, Prénom, Email, Téléphone",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 24"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["24"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-24-003",
+      "title": "Fiche invité (drawer) - Assignation foyer et sous-évén...",
+      "statement": "Assignation foyer et sous-événements",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 24"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["24"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-24-004",
+      "title": "Fiche invité (drawer) - Nombre d'accompagnants autoris...",
+      "statement": "Nombre d'accompagnants autorisés",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 24"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["24"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "GUEST-25-001",
-      "title": "Structure de l'écran 25 (Foyers & groupes)",
-      "statement": "L'écran 25 doit respecter la structure et les informations du carrousel.",
+      "title": "Foyers & groupes - Détail complet d'un foyer...",
+      "statement": "Détail complet d'un foyer",
       "category": "GUEST",
       "level": "MUST",
       "source": {
@@ -798,18 +2863,67 @@
       "implementation": [],
       "tests": [],
       "screens": ["25"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-25-002",
+      "title": "Foyers & groupes - Membres du foyer...",
+      "statement": "Membres du foyer",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 25"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["25"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-25-003",
+      "title": "Foyers & groupes - Historique d'envoi et RSVP du ...",
+      "statement": "Historique d'envoi et RSVP du foyer",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 25"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["25"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "GUEST-26-001",
-      "title": "Structure de l'écran 26 (Import CSV (assistant))",
-      "statement": "L'écran 26 doit respecter la structure et les informations du carrousel.",
+      "title": "Import CSV (assistant) - Import CSV...",
+      "statement": "Import CSV",
       "category": "GUEST",
       "level": "MUST",
       "source": {
@@ -821,18 +2935,91 @@
       "implementation": [],
       "tests": [],
       "screens": ["26"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-26-002",
+      "title": "Import CSV (assistant) - Mapping des colonnes (Prénom, ...",
+      "statement": "Mapping des colonnes (Prénom, Foyer, etc.)",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 26"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["26"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-26-003",
+      "title": "Import CSV (assistant) - Aperçu avant import...",
+      "statement": "Aperçu avant import",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 26"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["26"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-26-004",
+      "title": "Import CSV (assistant) - Validation et erreurs de donné...",
+      "statement": "Validation et erreurs de données",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 26"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["26"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "RSVP-27-001",
-      "title": "Structure de l'écran 27 (Gestion RSVP)",
-      "statement": "L'écran 27 doit respecter la structure et les informations du carrousel.",
+      "title": "Gestion RSVP - Liste des RSVP reçus...",
+      "statement": "Liste des RSVP reçus",
       "category": "RSVP",
       "level": "MUST",
       "source": {
@@ -844,19 +3031,116 @@
       "implementation": [],
       "tests": [],
       "screens": ["27"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-28-001",
-      "title": "Structure de l'écran 28 (Centre d’envois)",
-      "statement": "L'écran 28 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "RSVP-27-002",
+      "title": "Gestion RSVP - Statut global par foyer...",
+      "statement": "Statut global par foyer",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 27"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["27"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-27-003",
+      "title": "Gestion RSVP - Détail par accompagnant (prése...",
+      "statement": "Détail par accompagnant (présent/absent)",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 27"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["27"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-27-004",
+      "title": "Gestion RSVP - Sous-événements confirmés...",
+      "statement": "Sous-événements confirmés",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 27"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["27"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-27-005",
+      "title": "Gestion RSVP - Filtres (Présent, Absent, Atte...",
+      "statement": "Filtres (Présent, Absent, Attente)",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 27"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["27"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "SEND-28-001",
+      "title": "Centre d’envois - Liste des campagnes d'envoi...",
+      "statement": "Liste des campagnes d'envoi",
+      "category": "SEND",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-guests.js",
@@ -867,19 +3151,116 @@
       "implementation": [],
       "tests": [],
       "screens": ["28"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-29-001",
-      "title": "Structure de l'écran 29 (Statistiques)",
-      "statement": "L'écran 29 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "SEND-28-002",
+      "title": "Centre d’envois - Statut (Envoyée, Programmée)...",
+      "statement": "Statut (Envoyée, Programmée)",
+      "category": "SEND",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 28"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["28"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "SEND-28-003",
+      "title": "Centre d’envois - Statistiques (Envoyé, Ouvert, ...",
+      "statement": "Statistiques (Envoyé, Ouvert, Répondu)",
+      "category": "SEND",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 28"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["28"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "SEND-28-004",
+      "title": "Centre d’envois - Créer une campagne...",
+      "statement": "Créer une campagne",
+      "category": "SEND",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 28"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["28"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "SEND-28-005",
+      "title": "Centre d’envois - Relance sans réponse...",
+      "statement": "Relance sans réponse",
+      "category": "SEND",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 28"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["28"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-29-001",
+      "title": "Statistiques - Graphiques d'ouverture des inv...",
+      "statement": "Graphiques d'ouverture des invitations",
+      "category": "PROD",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-guests.js",
@@ -890,19 +3271,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["29"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-30-001",
-      "title": "Structure de l'écran 30 (QR Codes)",
-      "statement": "L'écran 30 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "PROD-29-002",
+      "title": "Statistiques - Évolution des RSVP...",
+      "statement": "Évolution des RSVP",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 29"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["29"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-29-003",
+      "title": "Statistiques - Répartition des invités...",
+      "statement": "Répartition des invités",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 29"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["29"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "QR-30-001",
+      "title": "QR Codes - Génération de QR Codes (Invita...",
+      "statement": "Génération de QR Codes (Invitation, RSVP, Photos, Audio, Galerie)",
+      "category": "QR",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -913,19 +3343,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["30"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-31-001",
-      "title": "Structure de l'écran 31 (Photos & vidéos)",
-      "statement": "L'écran 31 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "QR-30-002",
+      "title": "QR Codes - Téléchargement (PNG, SVG)...",
+      "statement": "Téléchargement (PNG, SVG)",
+      "category": "QR",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 30"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["30"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "QR-30-003",
+      "title": "QR Codes - Statistiques de scan par QR...",
+      "statement": "Statistiques de scan par QR",
+      "category": "QR",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 30"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["30"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-31-001",
+      "title": "Photos & vidéos - Galerie de photos et vidéos...",
+      "statement": "Galerie de photos et vidéos",
+      "category": "MEDIA",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -936,19 +3415,92 @@
       "implementation": [],
       "tests": [],
       "screens": ["31"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-32-001",
-      "title": "Structure de l'écran 32 (Livre d’or audio)",
-      "statement": "L'écran 32 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "MEDIA-31-002",
+      "title": "Photos & vidéos - Grille de médias...",
+      "statement": "Grille de médias",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 31"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["31"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-31-003",
+      "title": "Photos & vidéos - Modération (Accepter/Refuser)...",
+      "statement": "Modération (Accepter/Refuser)",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 31"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["31"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-31-004",
+      "title": "Photos & vidéos - Espace de stockage restant...",
+      "statement": "Espace de stockage restant",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 31"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["31"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-32-001",
+      "title": "Livre d’or audio - Liste des messages vocaux...",
+      "statement": "Liste des messages vocaux",
+      "category": "MEDIA",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -959,19 +3511,140 @@
       "implementation": [],
       "tests": [],
       "screens": ["32"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-33-001",
-      "title": "Structure de l'écran 33 (Éditeur carte de remerciement)",
-      "statement": "L'écran 33 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "MEDIA-32-002",
+      "title": "Livre d’or audio - Waveform audio...",
+      "statement": "Waveform audio",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 32"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["32"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-32-003",
+      "title": "Livre d’or audio - Lecteur play/pause...",
+      "statement": "Lecteur play/pause",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 32"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["32"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-32-004",
+      "title": "Livre d’or audio - Durée et date...",
+      "statement": "Durée et date",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 32"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["32"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-32-005",
+      "title": "Livre d’or audio - Nom de l'invité...",
+      "statement": "Nom de l'invité",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 32"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["32"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-32-006",
+      "title": "Livre d’or audio - Action: Supprimer/Accepter...",
+      "statement": "Action: Supprimer/Accepter",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 32"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["32"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "SEND-33-001",
+      "title": "Éditeur carte de remerciement - Modèles de cartes de remerciem...",
+      "statement": "Modèles de cartes de remerciement",
+      "category": "SEND",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -982,18 +3655,67 @@
       "implementation": [],
       "tests": [],
       "screens": ["33"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "SEND-33-002",
+      "title": "Éditeur carte de remerciement - Sélection de la photo principa...",
+      "statement": "Sélection de la photo principale",
+      "category": "SEND",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 33"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["33"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "SEND-33-003",
+      "title": "Éditeur carte de remerciement - Génération d'export...",
+      "statement": "Génération d'export",
+      "category": "SEND",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 33"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["33"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "BILLING-34-001",
-      "title": "Structure de l'écran 34 (Offres & produits)",
-      "statement": "L'écran 34 doit respecter la structure et les informations du carrousel.",
+      "title": "Offres & produits - Sélection de l'offre (Digitale...",
+      "statement": "Sélection de l'offre (Digitale, Photo, Audio)",
       "category": "BILLING",
       "level": "MUST",
       "source": {
@@ -1005,19 +3727,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["34"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-35-001",
-      "title": "Structure de l'écran 35 (Profil & préférences)",
-      "statement": "L'écran 35 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "BILLING-34-002",
+      "title": "Offres & produits - Détail des inclusions...",
+      "statement": "Détail des inclusions",
+      "category": "BILLING",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 34"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["34"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "BILLING-34-003",
+      "title": "Offres & produits - Processus de paiement (Checkou...",
+      "statement": "Processus de paiement (Checkout)",
+      "category": "BILLING",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 34"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["34"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-35-001",
+      "title": "Profil & préférences - Affichage des informations du ...",
+      "statement": "Affichage des informations du profil (Nom, Email)",
+      "category": "PROD",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -1028,19 +3799,92 @@
       "implementation": [],
       "tests": [],
       "screens": ["35"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-36-001",
-      "title": "Structure de l'écran 36 (Équipe & rôles)",
-      "statement": "L'écran 36 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "PROD-35-002",
+      "title": "Profil & préférences - Modification des informations ...",
+      "statement": "Modification des informations du profil",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 35"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["35"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-35-003",
+      "title": "Profil & préférences - Préférences de notifications...",
+      "statement": "Préférences de notifications",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 35"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["35"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-35-004",
+      "title": "Profil & préférences - Gestion de la langue...",
+      "statement": "Gestion de la langue",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 35"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["35"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "B2B-36-001",
+      "title": "Équipe & rôles - Gestion de l'équipe (B2B)...",
+      "statement": "Gestion de l'équipe (B2B)",
+      "category": "B2B",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -1051,19 +3895,92 @@
       "implementation": [],
       "tests": [],
       "screens": ["36"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-37-001",
-      "title": "Structure de l'écran 37 (Facturation & achats)",
-      "statement": "L'écran 37 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "B2B-36-002",
+      "title": "Équipe & rôles - Rôles (Owner, Admin, Editor)...",
+      "statement": "Rôles (Owner, Admin, Editor)",
+      "category": "B2B",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 36"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["36"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "B2B-36-003",
+      "title": "Équipe & rôles - Inviter un collaborateur...",
+      "statement": "Inviter un collaborateur",
+      "category": "B2B",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 36"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["36"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "B2B-36-004",
+      "title": "Équipe & rôles - Date de dernière connexion...",
+      "statement": "Date de dernière connexion",
+      "category": "B2B",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 36"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["36"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "BILLING-37-001",
+      "title": "Facturation & achats - Historique des factures...",
+      "statement": "Historique des factures",
+      "category": "BILLING",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -1074,19 +3991,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["37"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-38-001",
-      "title": "Structure de l'écran 38 (Confidentialité & données)",
-      "statement": "L'écran 38 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "BILLING-37-002",
+      "title": "Facturation & achats - Téléchargement PDF...",
+      "statement": "Téléchargement PDF",
+      "category": "BILLING",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 37"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["37"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "BILLING-37-003",
+      "title": "Facturation & achats - Détail du paiement (Montant, D...",
+      "statement": "Détail du paiement (Montant, Date, Événement)",
+      "category": "BILLING",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 37"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["37"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "LEGAL-38-001",
+      "title": "Confidentialité & données - Paramètres du compte...",
+      "statement": "Paramètres du compte",
+      "category": "LEGAL",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-memories.js",
@@ -1097,19 +4063,92 @@
       "implementation": [],
       "tests": [],
       "screens": ["38"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "GUEST-39-001",
-      "title": "Structure de l'écran 39 (Invitation publiée (invité))",
-      "statement": "L'écran 39 doit respecter la structure et les informations du carrousel.",
-      "category": "GUEST",
+      "id": "LEGAL-38-002",
+      "title": "Confidentialité & données - Informations personnelles...",
+      "statement": "Informations personnelles",
+      "category": "LEGAL",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 38"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["38"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "LEGAL-38-003",
+      "title": "Confidentialité & données - Suppression du compte...",
+      "statement": "Suppression du compte",
+      "category": "LEGAL",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 38"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["38"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "LEGAL-38-004",
+      "title": "Confidentialité & données - Consentements RGPD...",
+      "statement": "Consentements RGPD",
+      "category": "LEGAL",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 38"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["38"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PUBLIC-39-001",
+      "title": "Invitation publiée (invité) - Invitation Mobile: Affichage h...",
+      "statement": "Invitation Mobile: Affichage hero (porte ou fade)",
+      "category": "PUBLIC",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-mobile.js",
@@ -1120,19 +4159,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["39"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "GUEST-40-001",
-      "title": "Structure de l'écran 40 (RSVP invité)",
-      "statement": "L'écran 40 doit respecter la structure et les informations du carrousel.",
-      "category": "GUEST",
+      "id": "PUBLIC-39-002",
+      "title": "Invitation publiée (invité) - Informations mariés et date...",
+      "statement": "Informations mariés et date",
+      "category": "PUBLIC",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 39"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["39"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "PUBLIC-39-003",
+      "title": "Invitation publiée (invité) - Bouton principal Répondre...",
+      "statement": "Bouton principal Répondre",
+      "category": "PUBLIC",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 39"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["39"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-40-001",
+      "title": "RSVP invité - RSVP Mobile: Household salutat...",
+      "statement": "RSVP Mobile: Household salutation",
+      "category": "RSVP",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-mobile.js",
@@ -1143,19 +4231,116 @@
       "implementation": [],
       "tests": [],
       "screens": ["40"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "GUEST-41-001",
-      "title": "Structure de l'écran 41 (QR Livre d’or audio · enregistrement)",
-      "statement": "L'écran 41 doit respecter la structure et les informations du carrousel.",
-      "category": "GUEST",
+      "id": "RSVP-40-002",
+      "title": "RSVP invité - Liste des membres du foyer...",
+      "statement": "Liste des membres du foyer",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 40"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["40"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-40-003",
+      "title": "RSVP invité - Présence/absence par membre...",
+      "statement": "Présence/absence par membre",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 40"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["40"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-40-004",
+      "title": "RSVP invité - Deadline RSVP...",
+      "statement": "Deadline RSVP",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 40"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["40"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-40-005",
+      "title": "RSVP invité - Bouton Valider...",
+      "statement": "Bouton Valider",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 40"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["40"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-41-001",
+      "title": "QR Livre d’or audio · enregistrement - Collecte Souvenirs Mobile: Upl...",
+      "statement": "Collecte Souvenirs Mobile: Uploader une photo/vidéo",
+      "category": "MEDIA",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-mobile.js",
@@ -1166,19 +4351,68 @@
       "implementation": [],
       "tests": [],
       "screens": ["41"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "GUEST-42-001",
-      "title": "Structure de l'écran 42 (QR Photos & vidéos · dépôt)",
-      "statement": "L'écran 42 doit respecter la structure et les informations du carrousel.",
-      "category": "GUEST",
+      "id": "MEDIA-41-002",
+      "title": "QR Livre d’or audio · enregistrement - Upload progress...",
+      "statement": "Upload progress",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 41"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["41"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-41-003",
+      "title": "QR Livre d’or audio · enregistrement - Validation du dépôt...",
+      "statement": "Validation du dépôt",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 41"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["41"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-42-001",
+      "title": "QR Photos & vidéos · dépôt - Livre Audio Mobile: Interface ...",
+      "statement": "Livre Audio Mobile: Interface d'enregistrement",
+      "category": "MEDIA",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-mobile.js",
@@ -1189,19 +4423,92 @@
       "implementation": [],
       "tests": [],
       "screens": ["42"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "GUEST-43-001",
-      "title": "Structure de l'écran 43 (Galerie privée (invité))",
-      "statement": "L'écran 43 doit respecter la structure et les informations du carrousel.",
-      "category": "GUEST",
+      "id": "MEDIA-42-002",
+      "title": "QR Photos & vidéos · dépôt - Bouton Record...",
+      "statement": "Bouton Record",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 42"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["42"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-42-003",
+      "title": "QR Photos & vidéos · dépôt - Waveform dynamique...",
+      "statement": "Waveform dynamique",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 42"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["42"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-42-004",
+      "title": "QR Photos & vidéos · dépôt - Re-record ou Valider...",
+      "statement": "Re-record ou Valider",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 42"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["42"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-43-001",
+      "title": "Galerie privée (invité) - Galerie Invités Mobile: Grille...",
+      "statement": "Galerie Invités Mobile: Grille masonry des photos approuvées",
+      "category": "MEDIA",
       "level": "MUST",
       "source": {
         "document": "docs/myevents/s-mobile.js",
@@ -1212,41 +4519,67 @@
       "implementation": [],
       "tests": [],
       "screens": ["43"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
-      "id": "UI-44-001",
-      "title": "Structure de l'écran 44 (Planche des états UI)",
-      "statement": "L'écran 44 doit respecter la structure et les informations du carrousel.",
-      "category": "UI",
+      "id": "MEDIA-43-002",
+      "title": "Galerie privée (invité) - Bouton plein écran...",
+      "statement": "Bouton plein écran",
+      "category": "MEDIA",
       "level": "MUST",
       "source": {
-        "document": "docs/myevents/s-states.js",
-        "section": "Screen 44"
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 43"
       },
       "appliesTo": ["local", "connected"],
       "status": "planned",
       "implementation": [],
       "tests": [],
-      "screens": ["44"],
-      "evidence": {
-        "visual": "",
-        "a11y": "",
-        "security": "",
-        "manual": ""
+      "screens": ["43"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "notes": []
+    },
+    {
+      "id": "MEDIA-43-003",
+      "title": "Galerie privée (invité) - Téléchargement...",
+      "statement": "Téléchargement",
+      "category": "MEDIA",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 43"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["43"],
+      "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
       "notes": []
     },
     {
       "id": "UX-44-001",
-      "title": "UI State: skeleton loading",
-      "statement": "Appliquer le design pattern \"skeleton loading\" défini à l'écran 44.",
+      "title": "Planche des états UI - Design patterns UI: Skeleton l...",
+      "statement": "Design patterns UI: Skeleton loading",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1259,12 +4592,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-002",
-      "title": "UI State: no full-screen spinner",
-      "statement": "Appliquer le design pattern \"no full-screen spinner\" défini à l'écran 44.",
+      "title": "Planche des états UI - Aucun full-screen spinner (sau...",
+      "statement": "Aucun full-screen spinner (sauf initialisation)",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1277,12 +4616,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-003",
-      "title": "UI State: autosave states",
-      "statement": "Appliquer le design pattern \"autosave states\" défini à l'écran 44.",
+      "title": "Planche des états UI - Autosave avec indicateur discr...",
+      "statement": "Autosave avec indicateur discret",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1295,12 +4640,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-004",
-      "title": "UI State: long operation progress quantified",
-      "statement": "Appliquer le design pattern \"long operation progress quantified\" défini à l'écran 44.",
+      "title": "Planche des états UI - Opérations longues quantifiées...",
+      "statement": "Opérations longues quantifiées",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1313,12 +4664,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-005",
-      "title": "UI State: useful empty states",
-      "statement": "Appliquer le design pattern \"useful empty states\" défini à l'écran 44.",
+      "title": "Planche des états UI - Empty states illustrés avec CT...",
+      "statement": "Empty states illustrés avec CTA",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1331,12 +4688,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-006",
-      "title": "UI State: no-result recovery",
-      "statement": "Appliquer le design pattern \"no-result recovery\" défini à l'écran 44.",
+      "title": "Planche des états UI - Recovery sur recherche infruct...",
+      "statement": "Recovery sur recherche infructueuse",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1349,12 +4712,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-007",
-      "title": "UI State: corrective form errors",
-      "statement": "Appliquer le design pattern \"corrective form errors\" défini à l'écran 44.",
+      "title": "Planche des états UI - Erreurs de formulaire in-line...",
+      "statement": "Erreurs de formulaire in-line",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1367,12 +4736,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-008",
-      "title": "UI State: locked feature state",
-      "statement": "Appliquer le design pattern \"locked feature state\" défini à l'écran 44.",
+      "title": "Planche des états UI - États verrouillés / Upgrade...",
+      "statement": "États verrouillés / Upgrade",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1385,12 +4760,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-009",
-      "title": "UI State: upgrade state",
-      "statement": "Appliquer le design pattern \"upgrade state\" défini à l'écran 44.",
+      "title": "Planche des états UI - Entitlement badges...",
+      "statement": "Entitlement badges",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1403,12 +4784,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-010",
-      "title": "UI State: entitlement badges",
-      "statement": "Appliquer le design pattern \"entitlement badges\" défini à l'écran 44.",
+      "title": "Planche des états UI - Modale de confirmation destruc...",
+      "statement": "Modale de confirmation destructive",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1421,12 +4808,18 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
       "notes": []
     },
     {
       "id": "UX-44-011",
-      "title": "UI State: destructive confirmation",
-      "statement": "Appliquer le design pattern \"destructive confirmation\" défini à l'écran 44.",
+      "title": "Planche des états UI - Toasts de succès/erreur...",
+      "statement": "Toasts de succès/erreur",
       "category": "UX",
       "level": "MUST",
       "source": {
@@ -1439,24 +4832,12 @@
       "tests": [],
       "screens": ["44"],
       "evidence": {},
-      "notes": []
-    },
-    {
-      "id": "UX-44-012",
-      "title": "UI State: toast/state vocabulary",
-      "statement": "Appliquer le design pattern \"toast/state vocabulary\" défini à l'écran 44.",
-      "category": "UX",
-      "level": "MUST",
-      "source": {
-        "document": "docs/myevents/s-states.js",
-        "section": "Screen 44"
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
       },
-      "appliesTo": ["local", "connected"],
-      "status": "planned",
-      "implementation": [],
-      "tests": [],
-      "screens": ["44"],
-      "evidence": {},
       "notes": []
     }
   ]

@@ -23,6 +23,12 @@ interface Requirement {
     security?: string;
     manual?: string;
   };
+  coverage?: {
+    structural: boolean;
+    actions: boolean;
+    states: boolean;
+    dataShown: boolean;
+  };
   notes?: string[];
 }
 
@@ -83,9 +89,9 @@ describe('Product Contract Governance', () => {
     expect(Object.keys(extractedScreens).length).toBe(47);
   });
 
-  it('each screen from source must exist in SCREEN-MATRIX.md with correct width, height, and file', () => {
+  it('each screen from source must exist in SCREEN-MATRIX.md with correct IDs', () => {
     const regex =
-      /^\|\s*([\w]+)\s*\|\s*[\w-]+\s*\|\s*[^|]+\s*\|\s*[^|]+\s*\|\s*([^|]+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|/gm;
+      /^\|\s*([\w]+)\s*\|\s*[^|]+\s*\|\s*[^|]+\s*\|\s*([^|]+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([^|]+)\s*\|\s*[^|]+\s*\|\s*[^|]+\s*\|\s*[^|]+\s*\|\s*([^|]+)\s*\|/gm;
     let match;
     let parsedScreensCount = 0;
     while ((match = regex.exec(screenMatrixContent)) !== null) {
@@ -94,11 +100,30 @@ describe('Product Contract Governance', () => {
       const file = match[2].trim();
       const w = match[3];
       const h = match[4];
+      const route = match[5].trim();
+      const reqIdsStr = match[6].trim();
 
       expect(extractedScreens).toHaveProperty(n);
       expect(extractedScreens[n].file).toBe(file);
       expect(extractedScreens[n].w).toBe(w);
       expect(extractedScreens[n].h).toBe(h);
+
+      // Intended route check
+      if (route !== 'TBD') {
+        expect(route.startsWith('/')).toBe(true);
+      }
+
+      // Req IDs check
+      const matrixIds = reqIdsStr
+        .split(',')
+        .map((s) => s.trim())
+        .filter((s) => s !== 'Aucune');
+      const jsonIds = requirementsData.requirements
+        .filter((r) => r.screens.includes(n))
+        .map((r) => r.id);
+
+      expect(matrixIds.sort()).toEqual(jsonIds.sort());
+
       parsedScreensCount++;
     }
     expect(parsedScreensCount).toBe(47);
@@ -110,10 +135,17 @@ describe('Product Contract Governance', () => {
     expect(uniqueIds.size).toBe(ids.length);
   });
 
-  it('each screen must have at least one requirement associated', () => {
+  it('each screen must have exhaustive requirements with full coverage declared', () => {
     const screensWithReqs = new Set<string>();
     requirementsData.requirements.forEach((req) => {
       req.screens.forEach((s) => screensWithReqs.add(s));
+
+      // Verification of coverage
+      expect(req.coverage).toBeDefined();
+      expect(req.coverage?.structural).toBe(true);
+      expect(req.coverage?.actions).toBe(true);
+      expect(req.coverage?.states).toBe(true);
+      expect(req.coverage?.dataShown).toBe(true);
     });
 
     Object.keys(extractedScreens).forEach((screenId) => {
@@ -121,7 +153,7 @@ describe('Product Contract Governance', () => {
     });
   });
 
-  it('each requirement must have valid attributes and prefix', () => {
+  it('each requirement must have valid attributes, real paths, and correct prefix', () => {
     const validCategories = [
       'PROD',
       'UX',
@@ -143,7 +175,7 @@ describe('Product Contract Governance', () => {
       'I18N',
       'DATA',
       'B2B',
-      'TEST',
+      'LEGAL',
     ];
     const validLevels = ['MUST', 'SHOULD', 'MAY'];
     const validStatuses = [
@@ -174,30 +206,41 @@ describe('Product Contract Governance', () => {
       }
 
       req.implementation.forEach((implPath) => {
-        if (!implPath.endsWith('...')) {
-          // handle partial markers
-          const fullPath = path.resolve(__dirname, '../../', implPath);
-          expect(fs.existsSync(fullPath)).toBe(true);
-        }
+        expect(
+          implPath.includes('...'),
+          `Impl path contains placeholder: ${implPath}`,
+        ).toBe(false); // NO PLACEHOLDERS
+        const fullPath = path.resolve(__dirname, '../../', implPath);
+        expect(fs.existsSync(fullPath), `Impl file missing: ${implPath}`).toBe(
+          true,
+        );
       });
 
       req.tests.forEach((testPath) => {
+        expect(
+          testPath.includes('...'),
+          `Test path contains placeholder: ${testPath}`,
+        ).toBe(false); // NO PLACEHOLDERS
         const fullPath = path.resolve(__dirname, '../../', testPath);
-        expect(fs.existsSync(fullPath)).toBe(true);
+        expect(fs.existsSync(fullPath), `Test file missing: ${testPath}`).toBe(
+          true,
+        );
       });
 
       if (req.status === 'verified') {
         expect(req.evidence).toBeDefined();
-        // If UI/visual requirement, visual evidence must not be empty
         if (
           req.category === 'UI' ||
           req.category === 'UX' ||
           req.category === 'AUTH'
         ) {
-          // If it's verified, we expect real visual comparison with the carrousel
           expect(req.evidence?.visual).toBeDefined();
           expect(req.evidence?.visual?.length).toBeGreaterThan(0);
         }
+      }
+
+      if (req.status === 'planned') {
+        expect(req.implementation.length).toBe(0);
       }
     });
   });

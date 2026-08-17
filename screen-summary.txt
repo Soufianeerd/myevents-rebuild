@@ -1,0 +1,47 @@
+[01] col g12 | row g12 aic | ${n} | ${ic(i, 'i18')} | ${t} | b dim | ${d} | `;    const feat = (i, t, d) =>     ` | fcard | ${ic(i, 'i20')} | `;    const testi = (q, n, r) => ` | card pad | row g4 | ic i14 | 0 0 24 24
+[02] mic muted | SECTIONS | col g5 mt8 | ${[         'Introduction',         'Familles &amp; noms',         'Citation',         'Programme',         'Compte à rebours',         'RSVP',       ]         .map(           (s, i) => ` | row g7 aic | ${s} | `,         )         .join('')} | device-phone | ${invThumb(122, 216, 122 / 390)} | PROPRIÉTÉS | row g8 mt8 | Contenu | Style | Anim. | col g8 mt10
+[03] Tous | Oriental | Moderne | Minimaliste | Floral | Classique | Civil | Henné | Anniversaire | Andalouse | #F6F1E7 | #7A1F2B | script | Minéral | #EFEDE7
+[04] 
+[05] Invitation personnalisable | Studio complet (sections, styles, animations) | Gestion des invités, foyers &amp; accompagnants | RSVP par personne et par sous-événement | Envois par lien, e-mail et SMS | QR code d’invitation | Statistiques &amp; relances | QR code photos &amp; vidéos | Stockage souvenirs | 10 Go | Modération des contenus | Galerie privée invités | QR code livre d’or audio | Messages vocaux illimités | Export audio &amp; album
+[06] 
+[07] Yasmine &amp; Adam | Mariage oriental · Aix-en-Provence | #F6F1E7 | #7A1F2B | 126 invités · 94 % de réponses | Léa &amp; Antoine | Mariage civil · Annecy | #EFEDE7 | #46413A | 78 invités · 88 % de réponses | Sarah &amp; Reda | Henné · Casablanca | #F3E9DC | #5F1822 | 210 invités · 91 % de réponses
+[08] Avant de commencer | Faut-il un abonnement ? | Non. MyEvent’s se paie une fois, par événement. Vos accès restent ouverts 12 mois après la date de l’événement, le temps de récupérer tous vos souvenirs. | Puis-je essayer avant de payer ? | Oui. Vous créez votre événement, choisissez un template et personnalisez tout dans le Studio gratuitement. Le paiement n’intervient qu’au moment de publier. | MyEvent’s convient-il à autre chose qu’un mariage ? | Oui : fiançailles, henné, anniversaire, baby shower, baptême, soirée privée, événement professionnel et conférence. Les templates et le vocabulaire s’adaptent au type choisi. | Invitations &amp; Studio | Puis-je modifier mon invitation après l’envoi ? | Oui, à tout moment. Le lien reste le même et vos invités voient immédiatement la dernière version. Chaque modification est enregistrée dans l’historique de versions. | L’invitation est-elle multilingue ? | Vous pouvez mélanger les langues dans une même invitation — français, arabe, anglais — y compris les textes en écriture droite-à-gauche. | Invités &amp; RSVP | Mes invités doivent-ils créer un compte ? | Jamais. Ils ouvrent un lien ou scannent un QR code. Rien à installer, rien à retenir.
+[09] 
+[10] 
+[11] 
+[12a] Mariage | ring | Fiançailles | heart | Henné | leaf | Anniversaire | cake | Baby shower | baby | Baptême | sparkle | Événement professionnel | briefcase | Autre
+[12b] ${i}
+[12c] Andalouse | #F6F1E7 | #7A1F2B | Minéral | #EFEDE7 | #46413A | Camélia | #F7EEEA | #8E2836 | Nuit d’or | #231A18 | #D4B07B
+[12d] 
+[13] Choisir le template | Personnaliser l’invitation | Importer la liste d’invités | Publier l’invitation | Envoyer la première vague | Relancer les foyers sans réponse | Imprimer les QR codes de table | Préparer la carte de remerciement | Amina Cherkaoui a confirmé sa présence | il y a 12 min | checkc | 3 nouveaux messages audio déposés | il y a 1 h | Relance envoyée à 18 foyers | il y a 3 h
+[14] Yasmine &amp; Adam | Mariage | 6 juin 2026 | Publiée | #F6F1E7 | #7A1F2B | Henné de Yasmine | Henné | 5 juin 2026 | #F3E9DC | #5F1822 | Brunch du lendemain | Réception | 7 juin 2026 | Brouillon
+[15] 
+[16] Vue d’ensemble | Programme | Lieux | Invitation | Invités | RSVP | Envois | Souvenirs | Statistiques
+[17] Mairie d’Aix-en-Provence | Cérémonie civile | 14:00 — 15:00 | Place de l’Hôtel de Ville, 13100 Aix-en-Provence | 54 invités · Proches uniquement | Domaine des Oliviers | Cérémonie laïque | 16:30 — 17:30 | 340 route de Cézanne, Le Tholonet | 126 invités · Tous | Cocktail &amp; vin d’honneur | 18:00 — 20:00 | Jardin d’hiver | Dîner &amp; soirée | 20:00 — 03:00
+[18] Andalouse | Oriental | #F6F1E7 | #7A1F2B | Zellige | #F2EFE6 | #9C7742 | Minéral | Minimaliste | #EFEDE7 | #46413A | Camélia | Floral | #F7EEEA | #8E2836
+[19] Typographie | Couleurs | Espacement | Arrière-plan | Effets
+[20] Bordeaux &amp; ivoire | #7A1F2B | #D4B07B | #F6F1E7 | #2A1214 | Nuit &amp; or | #231A18 | #F3EFE7 | #0F0B0A | Terracotta | #9C4A2F | #E0A87E | #F7EFE6 | #3A2018 | Vert olive
+[21] Fondu | Apparition en opacité | sparkle | Révélation | Le contenu se dévoile par le bas | Glissement doux | Translation latérale légère | aright | Ouverture de portes | Deux volets s’écartent | maximize | Aucune | Affichage immédiat | close
+[22] Aujourd’hui · 09:42 | Version actuelle | Adam F. | Modification des noms des mariés | auto | Aujourd’hui · 09:31 | ,       false, | ,     ],     [
+[23] 
+[24] row between aic | cap muted | ${l} | capm | ${v}
+[25] Famille Benali | Yassine Benali | 5 personnes | En attente | warn | Mairie · Dîner | Famille Dupont | Claire Dupont | 3 personnes | Absente | Dîner | Amis université | Karim Haddad | 8 personnes | Partiel
+[26] Colonne A | Prénom | Colonne B | Colonne C | Email | Adresse e-mail | Colonne D | Téléphone | Colonne E | Famille | Foyer | Colonne F | Nb accomp. | Accompagnants autorisés | Colonne G
+[27] Foyer Nadari | 4 / 4 | Présente | Tous | 2 sans gluten | il y a 2 h | Famille Benali | 0 / 5 | En attente | warn | Mairie · Dîner | Famille Dupont | 3 / 3 | Absente | Dîner
+[28] Première invitation | Tous les foyers · 42 | E-mail + SMS | Envoyée | 12 janvier 2026 · 09:00 | Rappel programme | Foyers ayant répondu · 31 | E-mail | 2 mars 2026 · 18:00 | Relance sans réponse | 11 foyers · 30 invités | Programmée | info | 20 mars 2026 · 10:00 | Dernier rappel
+[29] card pad | row between ais | ${t} | cap dim mt6 | ${d} | ${btn(cta, 'sec', null, 'sm')}
+[30] Invitation | myevents.app/yasmine-adam | Actif | 12 janvier 2026 | RSVP | myevents.app/…/rsvp | Livre d’or audio | myevents.app/…/audio | 12 mars 2026 | Photos &amp; vidéos | myevents.app/…/photos | Galerie invités | myevents.app/…/galerie | Programmé | info
+[31] photo | video | warn
+[32] Amina Cherkaoui | 0:48 | il y a 12 min | Karim Haddad | 1:22 | il y a 3 h | Nour Belkacem | 0:36 | il y a 5 h | warn | Leïla Amrani | 2:04 | hier · 22:14 | Yassine Benali | 0:55
+[33] Ivoire &amp; or | Bordeaux | Photo pleine page | Minimal | Floral | Calligraphie
+[34] Invitation digitale | 14,99 € | Invitation personnalisable | Studio complet | Invités &amp; RSVP | Envois illimités | QR d’invitation | Possédé | Invitation + Photo/Vidéo | 29,99 € | Tout le pack Invitation | QR photos &amp; vidéos | 10 Go de stockage | Modération | Galerie privée
+[35] 
+[36] Adam Ferrand | adam.ferrand@exemple.com | Owner | Il y a 4 min | Yasmine Nadari | yasmine@exemple.com | Il y a 2 h | Nadia Benkirane | nadia@planner-co.fr | Admin | Hier · 18:22 | Julie Marchand | julie@planner-co.fr | Editor | info
+[37] 12 janvier 2026 | Invitation + Photo/Vidéo | Mariage Yasmine &amp; Adam | 29,99 € | Payé | FAC-2026-0412 | Impression 100 QR de table | 24,99 € | FAC-2026-0413 | 12 mars 2026 | Invitation digitale | Les 30 ans de Nour | 14,99 € | FAC-2026-0188 | 8 févr. 2026
+[38] 
+[39] 
+[40] card | row g10 aic | ${ini} | ${n} | ${note ? ` | mic muted mt2 | font-weight:400 | ${note} | ` : ''} | row g8 mt12 | ${state === 'ok' ? ic('check', 'i14') : ''}Présent(e) | ${state === 'bad' ? ic('close', 'i14') : ''}Absent(e)
+[41] 
+[42] 
+[43] 
+[44] card pad | box-shadow:none | row between aic | sk mt16 | sk mt10 | sk mt6 | row g10 mt16 | ${[1, 2, 3].map(() => ` | `).join('')} | `;    const autosave = ` | row g14 | row g8 aic card | cap dim | Enregistrement… | Enregistré · il y a 4 s

@@ -1,0 +1,1158 @@
+{
+  "10": {
+    "title": "Inscription",
+    "requirements": [
+      {
+        "text": "Champ Prénom"
+      },
+      {
+        "text": "Champ Nom"
+      },
+      {
+        "text": "Champ e-mail"
+      },
+      {
+        "text": "Champ mot de passe"
+      },
+      {
+        "text": "Confirmation mot de passe"
+      },
+      {
+        "text": "Acceptation conditions (checkbox)"
+      },
+      {
+        "text": "Bouton Créer"
+      },
+      {
+        "text": "Bouton Google Auth"
+      },
+      {
+        "text": "Lien Se connecter"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "11": {
+    "title": "Mot de passe oublié / Réinitialisation",
+    "requirements": [
+      {
+        "text": "Champ e-mail pour réinitialisation"
+      },
+      {
+        "text": "Bouton Envoyer le lien"
+      },
+      {
+        "text": "Lien Retour à la connexion"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "13": {
+    "title": "Dashboard principal",
+    "requirements": [
+      {
+        "text": "Navigation AppShell (Sidebar, Topbar)"
+      },
+      {
+        "text": "Bandeau des prochaines étapes"
+      },
+      {
+        "text": "Fil d'actualité récent (Notifications)"
+      },
+      {
+        "text": "Sélection de l'événement courant"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "14": {
+    "title": "Mes événements",
+    "requirements": [
+      {
+        "text": "Liste des événements associés au compte"
+      },
+      {
+        "text": "Statut de chaque événement (Brouillon, Publié)"
+      },
+      {
+        "text": "Créer un nouvel événement"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "15": {
+    "title": "Créer un événement",
+    "requirements": [
+      {
+        "text": "Paramètres globaux de l'événement"
+      },
+      {
+        "text": "Choix du slug/URL"
+      },
+      {
+        "text": "Visibilité et accès restreint"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "16": {
+    "title": "Détail événement",
+    "requirements": [
+      {
+        "text": "Aperçu analytique (Ouvertures, RSVP)"
+      },
+      {
+        "text": "Raccourcis rapides (Gérer invités, Envoyer)"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "17": {
+    "title": "Programme & sous-événements",
+    "requirements": [
+      {
+        "text": "Liste des sous-événements (Mairie, Dîner, etc.)"
+      },
+      {
+        "text": "Horaires et lieux de chaque sous-événement"
+      },
+      {
+        "text": "Capacité et restriction d'invités"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "18": {
+    "title": "Studio · Sélection du template",
+    "requirements": [
+      {
+        "text": "Aperçu Canvas central"
+      },
+      {
+        "text": "Panneau des modèles (Changer de modèle)"
+      },
+      {
+        "text": "Panneau des réglages"
+      },
+      {
+        "text": "Bouton Publier"
+      },
+      {
+        "text": "Switcher de vue (Mobile/Tablette/Desktop)"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "19": {
+    "title": "Studio principal",
+    "requirements": [
+      {
+        "text": "Panneau des sections réorganisables"
+      },
+      {
+        "text": "Ajouter/supprimer une section"
+      },
+      {
+        "text": "Contenu: Sur-titre, Noms, Texte, Date"
+      },
+      {
+        "text": "Style: Palette, Typo"
+      },
+      {
+        "text": "Animation: type d'apparition"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "20": {
+    "title": "Studio · Style global",
+    "requirements": [
+      {
+        "text": "Palettes de couleurs prédéfinies"
+      },
+      {
+        "text": "Typographies globales"
+      },
+      {
+        "text": "Arrière-plan"
+      },
+      {
+        "text": "Motifs"
+      },
+      {
+        "text": "Boutons (rayons, espacement)"
+      },
+      {
+        "text": "Preview centrale"
+      },
+      {
+        "text": "Navigation Studio"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "21": {
+    "title": "Studio · Animations",
+    "requirements": [
+      {
+        "text": "Paramétrage des animations (Fondu, Glissement, Portes)"
+      },
+      {
+        "text": "Durée et délai"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "22": {
+    "title": "Studio · Historique de versions",
+    "requirements": [
+      {
+        "text": "Historique des modifications"
+      },
+      {
+        "text": "Versions nommées"
+      },
+      {
+        "text": "Bouton de restauration"
+      },
+      {
+        "text": "Auteur et date de modification"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "23": {
+    "title": "Invités (CRM)",
+    "requirements": [
+      {
+        "text": "KPIs invités (Présents, En attente, etc.)"
+      },
+      {
+        "text": "Liste des invités (Nom, Foyer, RSVP, Accompagnants)"
+      },
+      {
+        "text": "Filtres et recherche"
+      },
+      {
+        "text": "Sélection multiple"
+      },
+      {
+        "text": "Action: Ajouter, Importer"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "24": {
+    "title": "Fiche invité (drawer)",
+    "requirements": [
+      {
+        "text": "Ajout manuel d'un invité"
+      },
+      {
+        "text": "Saisie Nom, Prénom, Email, Téléphone"
+      },
+      {
+        "text": "Assignation foyer et sous-événements"
+      },
+      {
+        "text": "Nombre d'accompagnants autorisés"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "25": {
+    "title": "Foyers & groupes",
+    "requirements": [
+      {
+        "text": "Détail complet d'un foyer"
+      },
+      {
+        "text": "Membres du foyer"
+      },
+      {
+        "text": "Historique d'envoi et RSVP du foyer"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "26": {
+    "title": "Import CSV (assistant)",
+    "requirements": [
+      {
+        "text": "Import CSV"
+      },
+      {
+        "text": "Mapping des colonnes (Prénom, Foyer, etc.)"
+      },
+      {
+        "text": "Aperçu avant import"
+      },
+      {
+        "text": "Validation et erreurs de données"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "27": {
+    "title": "Gestion RSVP",
+    "requirements": [
+      {
+        "text": "Liste des RSVP reçus"
+      },
+      {
+        "text": "Statut global par foyer"
+      },
+      {
+        "text": "Détail par accompagnant (présent/absent)"
+      },
+      {
+        "text": "Sous-événements confirmés"
+      },
+      {
+        "text": "Filtres (Présent, Absent, Attente)"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "28": {
+    "title": "Centre d’envois",
+    "requirements": [
+      {
+        "text": "Liste des campagnes d'envoi"
+      },
+      {
+        "text": "Statut (Envoyée, Programmée)"
+      },
+      {
+        "text": "Statistiques (Envoyé, Ouvert, Répondu)"
+      },
+      {
+        "text": "Créer une campagne"
+      },
+      {
+        "text": "Relance sans réponse"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "29": {
+    "title": "Statistiques",
+    "requirements": [
+      {
+        "text": "Graphiques d'ouverture des invitations"
+      },
+      {
+        "text": "Évolution des RSVP"
+      },
+      {
+        "text": "Répartition des invités"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "30": {
+    "title": "QR Codes",
+    "requirements": [
+      {
+        "text": "Génération de QR Codes (Invitation, RSVP, Photos, Audio, Galerie)"
+      },
+      {
+        "text": "Téléchargement (PNG, SVG)"
+      },
+      {
+        "text": "Statistiques de scan par QR"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "31": {
+    "title": "Photos & vidéos",
+    "requirements": [
+      {
+        "text": "Galerie de photos et vidéos"
+      },
+      {
+        "text": "Grille de médias"
+      },
+      {
+        "text": "Modération (Accepter/Refuser)"
+      },
+      {
+        "text": "Espace de stockage restant"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "32": {
+    "title": "Livre d’or audio",
+    "requirements": [
+      {
+        "text": "Liste des messages vocaux"
+      },
+      {
+        "text": "Waveform audio"
+      },
+      {
+        "text": "Lecteur play/pause"
+      },
+      {
+        "text": "Durée et date"
+      },
+      {
+        "text": "Nom de l'invité"
+      },
+      {
+        "text": "Action: Supprimer/Accepter"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "33": {
+    "title": "Éditeur carte de remerciement",
+    "requirements": [
+      {
+        "text": "Modèles de cartes de remerciement"
+      },
+      {
+        "text": "Sélection de la photo principale"
+      },
+      {
+        "text": "Génération d'export"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "34": {
+    "title": "Offres & produits",
+    "requirements": [
+      {
+        "text": "Sélection de l'offre (Digitale, Photo, Audio)"
+      },
+      {
+        "text": "Détail des inclusions"
+      },
+      {
+        "text": "Processus de paiement (Checkout)"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "35": {
+    "requirements": [
+      {
+        "text": "Affichage des informations du profil (Nom, Email)"
+      },
+      {
+        "text": "Modification des informations du profil"
+      },
+      {
+        "text": "Préférences de notifications"
+      },
+      {
+        "text": "Gestion de la langue"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    }
+  },
+  "36": {
+    "title": "Équipe & rôles",
+    "requirements": [
+      {
+        "text": "Gestion de l'équipe (B2B)"
+      },
+      {
+        "text": "Rôles (Owner, Admin, Editor)"
+      },
+      {
+        "text": "Inviter un collaborateur"
+      },
+      {
+        "text": "Date de dernière connexion"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "37": {
+    "title": "Facturation & achats",
+    "requirements": [
+      {
+        "text": "Historique des factures"
+      },
+      {
+        "text": "Téléchargement PDF"
+      },
+      {
+        "text": "Détail du paiement (Montant, Date, Événement)"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "38": {
+    "title": "Confidentialité & données",
+    "requirements": [
+      {
+        "text": "Paramètres du compte"
+      },
+      {
+        "text": "Informations personnelles"
+      },
+      {
+        "text": "Suppression du compte"
+      },
+      {
+        "text": "Consentements RGPD"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "39": {
+    "title": "Invitation publiée (invité)",
+    "requirements": [
+      {
+        "text": "Invitation Mobile: Affichage hero (porte ou fade)"
+      },
+      {
+        "text": "Informations mariés et date"
+      },
+      {
+        "text": "Bouton principal Répondre"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "40": {
+    "title": "RSVP invité",
+    "requirements": [
+      {
+        "text": "RSVP Mobile: Household salutation"
+      },
+      {
+        "text": "Liste des membres du foyer"
+      },
+      {
+        "text": "Présence/absence par membre"
+      },
+      {
+        "text": "Deadline RSVP"
+      },
+      {
+        "text": "Bouton Valider"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "41": {
+    "title": "QR Livre d’or audio · enregistrement",
+    "requirements": [
+      {
+        "text": "Collecte Souvenirs Mobile: Uploader une photo/vidéo"
+      },
+      {
+        "text": "Upload progress"
+      },
+      {
+        "text": "Validation du dépôt"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "42": {
+    "title": "QR Photos & vidéos · dépôt",
+    "requirements": [
+      {
+        "text": "Livre Audio Mobile: Interface d'enregistrement"
+      },
+      {
+        "text": "Bouton Record"
+      },
+      {
+        "text": "Waveform dynamique"
+      },
+      {
+        "text": "Re-record ou Valider"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "43": {
+    "title": "Galerie privée (invité)",
+    "requirements": [
+      {
+        "text": "Galerie Invités Mobile: Grille masonry des photos approuvées"
+      },
+      {
+        "text": "Bouton plein écran"
+      },
+      {
+        "text": "Téléchargement"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "44": {
+    "title": "Planche des états UI",
+    "requirements": [
+      {
+        "text": "Design patterns UI: Skeleton loading"
+      },
+      {
+        "text": "Aucun full-screen spinner (sauf initialisation)"
+      },
+      {
+        "text": "Autosave avec indicateur discret"
+      },
+      {
+        "text": "Opérations longues quantifiées"
+      },
+      {
+        "text": "Empty states illustrés avec CTA"
+      },
+      {
+        "text": "Recovery sur recherche infructueuse"
+      },
+      {
+        "text": "Erreurs de formulaire in-line"
+      },
+      {
+        "text": "États verrouillés / Upgrade"
+      },
+      {
+        "text": "Entitlement badges"
+      },
+      {
+        "text": "Modale de confirmation destructive"
+      },
+      {
+        "text": "Toasts de succès/erreur"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "01": {
+    "title": "Homepage",
+    "requirements": [
+      {
+        "text": "Navigation principale"
+      },
+      {
+        "text": "Hero avec CTA"
+      },
+      {
+        "text": "Bandeau des clients"
+      },
+      {
+        "text": "Étapes de fonctionnement (1 à 4)"
+      },
+      {
+        "text": "Mise en avant Studio"
+      },
+      {
+        "text": "Gestion invités & RSVP"
+      },
+      {
+        "text": "Souvenirs (QR codes)"
+      },
+      {
+        "text": "Galerie de templates"
+      },
+      {
+        "text": "Témoignages"
+      },
+      {
+        "text": "Grille de tarifs"
+      },
+      {
+        "text": "FAQ cliquable"
+      },
+      {
+        "text": "Footer complet"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "02": {
+    "title": "Fonctionnalités",
+    "requirements": [
+      {
+        "text": "Aperçu détaillé des 8 modules (Invitation, Studio, Invités, RSVP, QR, Audio, Photo, Stats)"
+      },
+      {
+        "text": "Démonstration visuelle Studio"
+      },
+      {
+        "text": "Démonstration visuelle Invités"
+      },
+      {
+        "text": "Démonstration visuelle Envois"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "03": {
+    "title": "Galerie de templates",
+    "requirements": [
+      {
+        "text": "Filtres par catégorie (Oriental, Moderne, Floral, etc.)"
+      },
+      {
+        "text": "Tri par popularité"
+      },
+      {
+        "text": "Affichage des vignettes avec couleurs et typos"
+      },
+      {
+        "text": "Aperçu et sélection de modèle"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "04": {
+    "title": "Détail d’un template",
+    "requirements": [
+      {
+        "text": "Prévisualisation mobile du modèle"
+      },
+      {
+        "text": "Informations du modèle (nom, description)"
+      },
+      {
+        "text": "Sélecteur de variantes de couleurs"
+      },
+      {
+        "text": "Liste des sections incluses"
+      },
+      {
+        "text": "Switcher Mobile/Tablette/Desktop"
+      },
+      {
+        "text": "Actions: Utiliser, Aperçu plein écran, Favori"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "05": {
+    "title": "Tarifs",
+    "requirements": [
+      {
+        "text": "Comparatif des offres (Digital, Photo/Vidéo, +Audio)"
+      },
+      {
+        "text": "Pricing unique par événement"
+      },
+      {
+        "text": "Détail exhaustif des fonctionnalités incluses par offre"
+      },
+      {
+        "text": "FAQ dédiée à la facturation"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "06": {
+    "title": "Wedding planners (B2B)",
+    "requirements": [
+      {
+        "text": "Démonstration des formats de souvenirs"
+      },
+      {
+        "text": "Concept de modération avant publication"
+      },
+      {
+        "text": "Stockage privé 10 Go"
+      },
+      {
+        "text": "Accessibilité post-événement (12 mois)"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "07": {
+    "title": "Exemples & inspiration",
+    "requirements": [
+      {
+        "text": "Aperçu d'un espace organisateur réel (Dashboard, Envois, Statistiques)"
+      },
+      {
+        "text": "Présentation de scénarios d'usage (Mariage, Fiançailles, Henné)"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "08": {
+    "title": "FAQ",
+    "requirements": [
+      {
+        "text": "Liste complète des questions/réponses"
+      },
+      {
+        "text": "Support client"
+      },
+      {
+        "text": "Formulaire de contact"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "09": {
+    "title": "Connexion",
+    "requirements": [
+      {
+        "text": "Formulaire de connexion (Email, Mot de passe)"
+      },
+      {
+        "text": "Lien mot de passe oublié"
+      },
+      {
+        "text": "Bouton Google Auth"
+      },
+      {
+        "text": "Lien vers inscription"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "12a": {
+    "title": "Onboarding · 1. Type d’événement",
+    "requirements": [
+      {
+        "text": "Choix du type d'événement"
+      },
+      {
+        "text": "Choix parmi les types affichés (Mariage, Henné, etc.)"
+      },
+      {
+        "text": "État sélectionné"
+      },
+      {
+        "text": "Information multi-cérémonies"
+      },
+      {
+        "text": "Boutons Retour, Passer, Continuer"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "12b": {
+    "title": "Onboarding · 2. Date",
+    "requirements": [
+      {
+        "text": "Saisie du titre ou des noms"
+      },
+      {
+        "text": "Date de l'événement"
+      },
+      {
+        "text": "Boutons Retour, Passer, Continuer"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "12c": {
+    "title": "Onboarding · 4. Style",
+    "requirements": [
+      {
+        "text": "Proposition de templates basés sur le type"
+      },
+      {
+        "text": "Variantes de couleurs"
+      },
+      {
+        "text": "Boutons Retour, Continuer"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  },
+  "12d": {
+    "title": "Onboarding · 6. Votre première invitation",
+    "requirements": [
+      {
+        "text": "Génération en cours (Loading state)"
+      },
+      {
+        "text": "Messages de progression"
+      }
+    ],
+    "coverage": {
+      "structural": true,
+      "actions": true,
+      "states": true,
+      "dataShown": true
+    },
+    "implementation": []
+  }
+}
