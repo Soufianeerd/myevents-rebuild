@@ -7,7 +7,7 @@ Cible normative : **WCAG 2.2 AA**.
 - Clavier intégral (Focus visible et non obscurci)
 - Sémantique HTML correcte
 - Contraste suffisant
-- Target Size (Minimum 44x44 ou 24x24 selon contexte 2.2)
+- Target Size (SC 2.5.8 Target Size Minimum : 24x24 CSS px ou mécanisme d'espacement/exceptions prévu par le critère)
 - Reduced motion (support media query)
 - Screen reader (Aria-labels)
 - Responsive

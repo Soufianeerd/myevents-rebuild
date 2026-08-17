@@ -2,16 +2,25 @@
 
 Ce document définit la stratégie produit globale de MyEvent's.
 
-## Source de Vérité Canonique
+## CANONICAL PRODUCT/UX SOURCE
 
-La roadmap produit canonique est le **carrousel UI/UX de 47 écrans** présent dans le repository (`docs/myevents/MyEvents-carrousel.html`).
+- **docs/myevents/MyEvents-carrousel.html** (Carrousel de 47 écrans)
+- **docs/myevents/s-\*.js** (Métadonnées des écrans et composants)
+- **docs/myevents/ds.css** (Design System)
+- **docs/myevents/lib.js** (Composants et patterns UX transversaux)
 
-## Hiérarchie des Décisions
+Ces fichiers dictent la roadmap produit, les parcours, le wording, l'architecture de l'information, l'UX/UI de référence, les prix visibles et le responsive.
 
-1. **CARROUSEL 47 ÉCRANS** : Roadmap produit, parcours, wording, architecture de l'information, UX/UI de référence, prix visibles, responsive.
-2. **ds.css / lib.js / s-\*.js / fonts / PNG** : Vérité détaillée du Design System et des compositions visuelles.
-3. **Architecture actuelle du rebuild** : Implémentation locale-first (Core, use cases, provider contracts, local adapters, tenant isolation).
-4. **WCAG 2.2 / OWASP / Next.js** : Garde-fous minimums. Renforcent le produit mais n'inventent pas silencieusement de nouvelles features.
+## TECHNICAL CONSTRAINTS
+
+- Architecture actuelle du rebuild : Implémentation locale-first (Core, use cases, provider contracts, local adapters, tenant isolation).
+- Pas de base de données distante en local-first.
+
+## EXTERNAL NORMATIVE CONSTRAINTS
+
+- **WCAG 2.2 AA** : Standard minimum pour l'accessibilité.
+- **OWASP** : Standard minimum pour la sécurité (ex: Scrypt).
+- **Next.js** : Garde-fous techniques (App Router, Server Actions).
 
 ## Règles Majeures
 

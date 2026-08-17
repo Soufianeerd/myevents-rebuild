@@ -1,4 +1,5 @@
 # Conflict Register
 
-| Conflict ID | Description | Source A | Source B | Status | Resolution |
-| ----------- | ----------- | -------- | -------- | ------ | ---------- |
+| Conflict ID       | Description              | Source A                                                                                    | Source B                                                               | Status   | Resolution                                                                                             |
+| ----------------- | ------------------------ | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
+| CONFLICT-AUTH-001 | Password policy mismatch | `docs/myevents/s-public.js` (Screen 10 wording: "12 caractères, une majuscule, un chiffre") | Auth Security Policy (15-128 chars, no required classes, NIST 800-63B) | resolved | Structure visuelle conservée; wording modernisé; implémentation security-first prévaut (15 chars min). |

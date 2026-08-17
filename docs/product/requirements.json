@@ -1,110 +1,1463 @@
 {
   "requirements": [
     {
-      "id": "UI-001",
-      "title": "Sidebar dimensions",
-      "statement": "La Sidebar desktop mesure 268px.",
-      "category": "UI",
+      "id": "PROD-01-001",
+      "title": "Structure de l'écran 01 (Homepage)",
+      "statement": "L'écran 01 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
       "level": "MUST",
       "source": {
-        "document": "docs/myevents/ds.css",
-        "section": "Sidebar"
-      },
-      "appliesTo": ["local", "connected"],
-      "status": "implemented_unverified",
-      "implementation": ["src/app/(app)/_components/layout/Sidebar.tsx"],
-      "tests": ["tests/e2e/appshell.test.ts"],
-      "screens": ["13", "14", "15", "16"],
-      "notes": ["Partially verified visually"]
-    },
-    {
-      "id": "AUTH-001",
-      "title": "Surfaces Auth",
-      "statement": "La surface Auth comprend Connexion, Inscription et Mot de passe oublié.",
-      "category": "AUTH",
-      "level": "MUST",
-      "source": {
-        "document": "docs/myevents/MyEvents-carrousel.html",
-        "section": "Screens 09-11"
-      },
-      "appliesTo": ["local", "connected"],
-      "status": "verified",
-      "implementation": [
-        "src/app/(auth)/connexion/page.tsx",
-        "src/app/(auth)/inscription/page.tsx",
-        "src/app/(auth)/mot-de-passe-oublie/page.tsx"
-      ],
-      "tests": ["tests/e2e/auth.test.ts"],
-      "screens": ["09", "10", "11"],
-      "notes": []
-    },
-    {
-      "id": "STUDIO-001",
-      "title": "Interface Studio",
-      "statement": "Le Studio expose une liste de sections, une preview centrale et un panneau de propriétés.",
-      "category": "STUDIO",
-      "level": "MUST",
-      "source": {
-        "document": "docs/myevents/MyEvents-carrousel.html",
-        "section": "Screens 19-21"
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 01"
       },
       "appliesTo": ["local", "connected"],
       "status": "planned",
       "implementation": [],
       "tests": [],
-      "screens": ["19", "20", "21"],
+      "screens": ["01"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
       "notes": []
     },
     {
-      "id": "BILLING-001",
-      "title": "Pricing Packages",
-      "statement": "Le produit propose un paiement unique: Invitation (14,99 €), + Photo/Vidéo (29,99 €), + Audio (39,99 €).",
-      "category": "BILLING",
+      "id": "PROD-02-001",
+      "title": "Structure de l'écran 02 (Fonctionnalités)",
+      "statement": "L'écran 02 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
       "level": "MUST",
       "source": {
-        "document": "docs/myevents/MyEvents-carrousel.html",
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 02"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["02"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-03-001",
+      "title": "Structure de l'écran 03 (Galerie de templates)",
+      "statement": "L'écran 03 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 03"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["03"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-04-001",
+      "title": "Structure de l'écran 04 (Détail d’un template)",
+      "statement": "L'écran 04 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 04"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["04"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-05-001",
+      "title": "Structure de l'écran 05 (Tarifs)",
+      "statement": "L'écran 05 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
         "section": "Screen 05"
       },
       "appliesTo": ["local", "connected"],
       "status": "planned",
       "implementation": [],
       "tests": [],
-      "screens": ["05", "34"],
+      "screens": ["05"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
       "notes": []
     },
     {
-      "id": "AUTH-002",
-      "title": "Secure Password Policy",
-      "statement": "Minimum 15 caractères, pas de limite de répétitions (NIST).",
+      "id": "PROD-06-001",
+      "title": "Structure de l'écran 06 (Wedding planners (B2B))",
+      "statement": "L'écran 06 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 06"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["06"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-07-001",
+      "title": "Structure de l'écran 07 (Exemples & inspiration)",
+      "statement": "L'écran 07 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 07"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["07"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "PROD-08-001",
+      "title": "Structure de l'écran 08 (FAQ)",
+      "statement": "L'écran 08 doit respecter la structure et les informations du carrousel.",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-public.js",
+        "section": "Screen 08"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["08"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "AUTH-09-001",
+      "title": "Structure de l'écran 09 (Connexion)",
+      "statement": "L'écran 09 doit respecter la structure et les informations du carrousel.",
       "category": "AUTH",
       "level": "MUST",
       "source": {
-        "document": "NIST SP 800-63B",
-        "section": "Passwords"
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 09"
       },
       "appliesTo": ["local", "connected"],
-      "status": "verified",
-      "implementation": ["src/core/auth/utils/PasswordPolicy.ts"],
-      "tests": ["tests/unit/core/auth/PasswordPolicy.test.ts"],
-      "screens": ["10", "11"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/..."],
+      "tests": [],
+      "screens": ["09"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
       "notes": []
     },
     {
-      "id": "AUTH-003",
-      "title": "Visual Baseline Auth",
-      "statement": "Le rendu UI de l'authentification correspond strictement au Design System.",
+      "id": "AUTH-10-001",
+      "title": "Structure de l'écran 10 (Inscription)",
+      "statement": "L'écran 10 doit respecter la structure et les informations du carrousel.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/..."],
+      "tests": [],
+      "screens": ["10"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-001",
+      "title": "Champ Prénom",
+      "statement": "Le formulaire comprend un champ Prénom.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-002",
+      "title": "Champ Nom",
+      "statement": "Le formulaire comprend un champ Nom.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-003",
+      "title": "Champ e-mail",
+      "statement": "Le formulaire comprend un champ e-mail.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-004",
+      "title": "Champ mot de passe",
+      "statement": "Le formulaire comprend un champ mot de passe.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-005",
+      "title": "Confirmation mot de passe",
+      "statement": "Le formulaire comprend un champ confirmation mot de passe.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-006",
+      "title": "Acceptation conditions",
+      "statement": "Case à cocher pour accepter conditions et confidentialité.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-007",
+      "title": "CTA Créer",
+      "statement": "Bouton principal Créer mon compte.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-008",
+      "title": "Lien Se connecter",
+      "statement": "Lien de redirection vers la connexion.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["local"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/inscription/page.tsx"],
+      "tests": ["tests/e2e/auth.test.ts"],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "AUTH-REG-009",
+      "title": "Google Auth",
+      "statement": "Bouton Google présent dans référence mais non implémenté localement.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 10"
+      },
+      "appliesTo": ["connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["10"],
+      "evidence": {},
+      "notes": ["Google Auth adapter required"]
+    },
+    {
+      "id": "AUTH-11-001",
+      "title": "Structure de l'écran 11 (Mot de passe oublié / Réinitialisation)",
+      "statement": "L'écran 11 doit respecter la structure et les informations du carrousel.",
+      "category": "AUTH",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 11"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "implemented_unverified",
+      "implementation": ["src/app/(auth)/..."],
+      "tests": [],
+      "screens": ["11"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-12a-001",
+      "title": "Structure de l'écran 12a (Onboarding · 1. Type d’événement)",
+      "statement": "L'écran 12a doit respecter la structure et les informations du carrousel.",
       "category": "UI",
       "level": "MUST",
       "source": {
-        "document": "docs/myevents/MyEvents-carrousel.html",
-        "section": "Screens 09-11"
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12a"
       },
       "appliesTo": ["local", "connected"],
-      "status": "verified",
+      "status": "planned",
       "implementation": [],
-      "tests": ["tests/e2e/auth.test.ts"],
-      "screens": ["09", "10", "11"],
-      "notes": ["Baseline verified manually against carrousel."]
+      "tests": [],
+      "screens": ["12a"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-12b-001",
+      "title": "Structure de l'écran 12b (Onboarding · 2. Date)",
+      "statement": "L'écran 12b doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12b"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12b"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-12c-001",
+      "title": "Structure de l'écran 12c (Onboarding · 4. Style)",
+      "statement": "L'écran 12c doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12c"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12c"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-12d-001",
+      "title": "Structure de l'écran 12d (Onboarding · 6. Votre première invitation)",
+      "statement": "L'écran 12d doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 12d"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["12d"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-13-001",
+      "title": "Structure de l'écran 13 (Dashboard principal)",
+      "statement": "L'écran 13 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 13"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["13"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-14-001",
+      "title": "Structure de l'écran 14 (Mes événements)",
+      "statement": "L'écran 14 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 14"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["14"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-15-001",
+      "title": "Structure de l'écran 15 (Créer un événement)",
+      "statement": "L'écran 15 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 15"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["15"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-16-001",
+      "title": "Structure de l'écran 16 (Détail événement)",
+      "statement": "L'écran 16 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 16"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["16"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-17-001",
+      "title": "Structure de l'écran 17 (Programme & sous-événements)",
+      "statement": "L'écran 17 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-app.js",
+        "section": "Screen 17"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["17"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-18-001",
+      "title": "Structure de l'écran 18 (Studio · Sélection du template)",
+      "statement": "L'écran 18 doit respecter la structure et les informations du carrousel.",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 18"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["18"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-19-001",
+      "title": "Structure de l'écran 19 (Studio principal)",
+      "statement": "L'écran 19 doit respecter la structure et les informations du carrousel.",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 19"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["19"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-20-001",
+      "title": "Structure de l'écran 20 (Studio · Style global)",
+      "statement": "L'écran 20 doit respecter la structure et les informations du carrousel.",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 20"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["20"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-21-001",
+      "title": "Structure de l'écran 21 (Studio · Animations)",
+      "statement": "L'écran 21 doit respecter la structure et les informations du carrousel.",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 21"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["21"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "STUDIO-22-001",
+      "title": "Structure de l'écran 22 (Studio · Historique de versions)",
+      "statement": "L'écran 22 doit respecter la structure et les informations du carrousel.",
+      "category": "STUDIO",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-studio.js",
+        "section": "Screen 22"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["22"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-23-001",
+      "title": "Structure de l'écran 23 (Invités (CRM))",
+      "statement": "L'écran 23 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 23"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["23"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-24-001",
+      "title": "Structure de l'écran 24 (Fiche invité (drawer))",
+      "statement": "L'écran 24 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 24"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["24"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-25-001",
+      "title": "Structure de l'écran 25 (Foyers & groupes)",
+      "statement": "L'écran 25 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 25"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["25"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-26-001",
+      "title": "Structure de l'écran 26 (Import CSV (assistant))",
+      "statement": "L'écran 26 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 26"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["26"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "RSVP-27-001",
+      "title": "Structure de l'écran 27 (Gestion RSVP)",
+      "statement": "L'écran 27 doit respecter la structure et les informations du carrousel.",
+      "category": "RSVP",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 27"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["27"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-28-001",
+      "title": "Structure de l'écran 28 (Centre d’envois)",
+      "statement": "L'écran 28 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 28"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["28"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-29-001",
+      "title": "Structure de l'écran 29 (Statistiques)",
+      "statement": "L'écran 29 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 29"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["29"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-30-001",
+      "title": "Structure de l'écran 30 (QR Codes)",
+      "statement": "L'écran 30 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 30"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["30"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-31-001",
+      "title": "Structure de l'écran 31 (Photos & vidéos)",
+      "statement": "L'écran 31 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 31"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["31"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-32-001",
+      "title": "Structure de l'écran 32 (Livre d’or audio)",
+      "statement": "L'écran 32 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 32"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["32"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-33-001",
+      "title": "Structure de l'écran 33 (Éditeur carte de remerciement)",
+      "statement": "L'écran 33 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 33"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["33"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "BILLING-34-001",
+      "title": "Structure de l'écran 34 (Offres & produits)",
+      "statement": "L'écran 34 doit respecter la structure et les informations du carrousel.",
+      "category": "BILLING",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 34"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["34"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-35-001",
+      "title": "Structure de l'écran 35 (Profil & préférences)",
+      "statement": "L'écran 35 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 35"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["35"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-36-001",
+      "title": "Structure de l'écran 36 (Équipe & rôles)",
+      "statement": "L'écran 36 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 36"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["36"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-37-001",
+      "title": "Structure de l'écran 37 (Facturation & achats)",
+      "statement": "L'écran 37 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 37"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["37"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-38-001",
+      "title": "Structure de l'écran 38 (Confidentialité & données)",
+      "statement": "L'écran 38 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 38"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["38"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-39-001",
+      "title": "Structure de l'écran 39 (Invitation publiée (invité))",
+      "statement": "L'écran 39 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 39"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["39"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-40-001",
+      "title": "Structure de l'écran 40 (RSVP invité)",
+      "statement": "L'écran 40 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 40"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["40"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-41-001",
+      "title": "Structure de l'écran 41 (QR Livre d’or audio · enregistrement)",
+      "statement": "L'écran 41 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 41"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["41"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-42-001",
+      "title": "Structure de l'écran 42 (QR Photos & vidéos · dépôt)",
+      "statement": "L'écran 42 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 42"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["42"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "GUEST-43-001",
+      "title": "Structure de l'écran 43 (Galerie privée (invité))",
+      "statement": "L'écran 43 doit respecter la structure et les informations du carrousel.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-mobile.js",
+        "section": "Screen 43"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["43"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UI-44-001",
+      "title": "Structure de l'écran 44 (Planche des états UI)",
+      "statement": "L'écran 44 doit respecter la structure et les informations du carrousel.",
+      "category": "UI",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {
+        "visual": "",
+        "a11y": "",
+        "security": "",
+        "manual": ""
+      },
+      "notes": []
+    },
+    {
+      "id": "UX-44-001",
+      "title": "UI State: skeleton loading",
+      "statement": "Appliquer le design pattern \"skeleton loading\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-002",
+      "title": "UI State: no full-screen spinner",
+      "statement": "Appliquer le design pattern \"no full-screen spinner\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-003",
+      "title": "UI State: autosave states",
+      "statement": "Appliquer le design pattern \"autosave states\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-004",
+      "title": "UI State: long operation progress quantified",
+      "statement": "Appliquer le design pattern \"long operation progress quantified\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-005",
+      "title": "UI State: useful empty states",
+      "statement": "Appliquer le design pattern \"useful empty states\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-006",
+      "title": "UI State: no-result recovery",
+      "statement": "Appliquer le design pattern \"no-result recovery\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-007",
+      "title": "UI State: corrective form errors",
+      "statement": "Appliquer le design pattern \"corrective form errors\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-008",
+      "title": "UI State: locked feature state",
+      "statement": "Appliquer le design pattern \"locked feature state\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-009",
+      "title": "UI State: upgrade state",
+      "statement": "Appliquer le design pattern \"upgrade state\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-010",
+      "title": "UI State: entitlement badges",
+      "statement": "Appliquer le design pattern \"entitlement badges\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-011",
+      "title": "UI State: destructive confirmation",
+      "statement": "Appliquer le design pattern \"destructive confirmation\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
+    },
+    {
+      "id": "UX-44-012",
+      "title": "UI State: toast/state vocabulary",
+      "statement": "Appliquer le design pattern \"toast/state vocabulary\" défini à l'écran 44.",
+      "category": "UX",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-states.js",
+        "section": "Screen 44"
+      },
+      "appliesTo": ["local", "connected"],
+      "status": "planned",
+      "implementation": [],
+      "tests": [],
+      "screens": ["44"],
+      "evidence": {},
+      "notes": []
     }
   ]
 }
