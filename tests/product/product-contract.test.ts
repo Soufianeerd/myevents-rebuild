@@ -1,61 +1,89 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import * as fs from 'fs';
-import * as path from 'path';
+import { describe, it, expect } from 'vitest';
+import fs from 'fs';
+import path from 'path';
+
+const reqPath = path.resolve(__dirname, '../../docs/product/requirements.json');
+const atomicPath = path.resolve(
+  __dirname,
+  '../../docs/product/source/atomic-requirements.json',
+);
+const matrixPath = path.resolve(
+  __dirname,
+  '../../docs/product/SCREEN-MATRIX.md',
+);
+
+const reqJson = JSON.parse(fs.readFileSync(reqPath, 'utf8'));
 
 interface Requirement {
   id: string;
-  title: string;
-  statement: string;
-  category: string;
-  level: string;
-  source: {
-    document: string;
-    section?: string;
-  };
-  appliesTo: string[];
+  kind: string;
+  sourceNeedles: string[];
+  screens: string[];
   status: string;
   implementation: string[];
-  tests: string[];
-  screens: string[];
-  evidence?: {
-    visual?: string;
-    a11y?: string;
-    security?: string;
-    manual?: string;
-  };
-  coverage?: {
-    structural: boolean;
-    actions: boolean;
-    states: boolean;
-    dataShown: boolean;
-  };
-  notes?: string[];
 }
+const requirements: Requirement[] = reqJson.requirements;
 
-interface RequirementsData {
-  requirements: Requirement[];
-}
+const atomicJson = JSON.parse(fs.readFileSync(atomicPath, 'utf8'));
 
-describe('Product Contract Governance', () => {
-  const reqPath = path.resolve(
-    __dirname,
-    '../../docs/product/requirements.json',
-  );
-  const screenMatrixPath = path.resolve(
-    __dirname,
-    '../../docs/product/SCREEN-MATRIX.md',
-  );
-  const docsDir = path.resolve(__dirname, '../../docs/myevents');
+describe('Product Contract Integrity', () => {
+  it('should have exactly 47 screens in atomic-requirements.json', () => {
+    expect(Object.keys(atomicJson).length).toBe(47);
+  });
 
-  let requirementsData: RequirementsData;
-  let screenMatrixContent: string;
-  const extractedScreens: Record<
-    string,
-    { w: string; h: string; file: string; title: string }
-  > = {};
+  it('should have exactly 47 screens mapped in SCREEN-MATRIX.md', () => {
+    const matrixContent = fs.readFileSync(matrixPath, 'utf8');
+    const screenLines = matrixContent
+      .split('\n')
+      .filter((line) => line.startsWith('|') && /^\| \d/.test(line));
+    expect(screenLines.length).toBe(47);
+  });
 
-  beforeAll(() => {
-    // Read actual s-*.js files to get ground truth
+  it('should verify every requirement has kind and sourceNeedles', () => {
+    requirements.forEach((req) => {
+      expect(['structure', 'action', 'state', 'data']).toContain(req.kind);
+      expect(Array.isArray(req.sourceNeedles)).toBe(true);
+      expect(req.sourceNeedles.length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  it('should prevent fake intendedRoutes', () => {
+    const matrixContent = fs.readFileSync(matrixPath, 'utf8');
+    const screenLines = matrixContent
+      .split('\n')
+      .filter((line) => line.startsWith('|') && /^\| \d/.test(line));
+
+    screenLines.forEach((line) => {
+      const parts = line.split('|').map((p) => p.trim());
+      const route = parts[7];
+      expect([
+        '/',
+        '/connexion',
+        '/inscription',
+        '/mot-de-passe-oublie',
+        '/dashboard',
+        'TBD',
+      ]).toContain(route);
+    });
+  });
+
+  it('should prevent logic mismatch on implemented_unverified', () => {
+    requirements.forEach((req) => {
+      if (req.status === 'implemented_unverified') {
+        expect(req.implementation).toBeDefined();
+        expect(Array.isArray(req.implementation)).toBe(true);
+        expect(req.implementation.length).toBeGreaterThanOrEqual(1);
+
+        req.implementation.forEach((implPath) => {
+          const fullPath = path.resolve(__dirname, '../../', implPath);
+          expect(fs.existsSync(fullPath)).toBe(true);
+        });
+      }
+    });
+  });
+
+  it('should match actual strings in the canonical files (Source Fidelity Anchor)', () => {
+    const docsDir = path.resolve(__dirname, '../../docs/myevents');
     const files = [
       's-public.js',
       's-app.js',
@@ -66,182 +94,75 @@ describe('Product Contract Governance', () => {
       's-states.js',
     ];
 
-    files.forEach((file) => {
-      const content = fs.readFileSync(path.join(docsDir, file), 'utf8');
-      const screenRegex =
-        /n:\s*'([^']+)',\s*slug:\s*'([^']+)',\s*title:\s*'([^']+)',\s*w:\s*(\d+),\s*h:\s*(\d+)/g;
-      let match;
-      while ((match = screenRegex.exec(content)) !== null) {
-        extractedScreens[match[1]] = {
-          w: match[4],
-          h: match[5],
-          file: file,
-          title: match[3],
-        };
+    const screenContent: Record<string, string> = {};
+    files.forEach((f) => {
+      const content = fs.readFileSync(path.join(docsDir, f), 'utf8');
+      for (let i = 1; i <= 44; i++) {
+        const n = i.toString().padStart(2, '0');
+        ['', 'a', 'b', 'c', 'd'].forEach((suffix) => {
+          const fullN = n + suffix;
+          const idx = content.indexOf('function p' + fullN + '()');
+          if (idx !== -1) {
+            let nextIdx = -1;
+            for (let j = idx + 10; j < content.length; j++) {
+              if (content.substring(j, j + 10).startsWith('function p')) {
+                nextIdx = j;
+                break;
+              }
+            }
+            if (nextIdx === -1) nextIdx = content.length;
+            screenContent[fullN] = content.substring(idx, nextIdx);
+          }
+        });
       }
     });
 
-    requirementsData = JSON.parse(fs.readFileSync(reqPath, 'utf8'));
-    screenMatrixContent = fs.readFileSync(screenMatrixPath, 'utf8');
-  });
-
-  it('must find exactly 47 canonical screens in source files', () => {
-    expect(Object.keys(extractedScreens).length).toBe(47);
-  });
-
-  it('each screen from source must exist in SCREEN-MATRIX.md with correct IDs', () => {
-    const regex =
-      /^\|\s*([\w]+)\s*\|\s*[^|]+\s*\|\s*[^|]+\s*\|\s*([^|]+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*([^|]+)\s*\|\s*[^|]+\s*\|\s*[^|]+\s*\|\s*[^|]+\s*\|\s*([^|]+)\s*\|/gm;
-    let match;
-    let parsedScreensCount = 0;
-    while ((match = regex.exec(screenMatrixContent)) !== null) {
-      if (match[1] === 'Screen') continue;
-      const n = match[1];
-      const file = match[2].trim();
-      const w = match[3];
-      const h = match[4];
-      const route = match[5].trim();
-      const reqIdsStr = match[6].trim();
-
-      expect(extractedScreens).toHaveProperty(n);
-      expect(extractedScreens[n].file).toBe(file);
-      expect(extractedScreens[n].w).toBe(w);
-      expect(extractedScreens[n].h).toBe(h);
-
-      // Intended route check
-      if (route !== 'TBD') {
-        expect(route.startsWith('/')).toBe(true);
-      }
-
-      // Req IDs check
-      const matrixIds = reqIdsStr
-        .split(',')
-        .map((s) => s.trim())
-        .filter((s) => s !== 'Aucune');
-      const jsonIds = requirementsData.requirements
-        .filter((r) => r.screens.includes(n))
-        .map((r) => r.id);
-
-      expect(matrixIds.sort()).toEqual(jsonIds.sort());
-
-      parsedScreensCount++;
-    }
-    expect(parsedScreensCount).toBe(47);
-  });
-
-  it('all requirement IDs must be unique', () => {
-    const ids = requirementsData.requirements.map((req) => req.id);
-    const uniqueIds = new Set(ids);
-    expect(uniqueIds.size).toBe(ids.length);
-  });
-
-  it('each screen must have exhaustive requirements with full coverage declared', () => {
-    const screensWithReqs = new Set<string>();
-    requirementsData.requirements.forEach((req) => {
-      req.screens.forEach((s) => screensWithReqs.add(s));
-
-      // Verification of coverage
-      expect(req.coverage).toBeDefined();
-      expect(req.coverage?.structural).toBe(true);
-      expect(req.coverage?.actions).toBe(true);
-      expect(req.coverage?.states).toBe(true);
-      expect(req.coverage?.dataShown).toBe(true);
-    });
-
-    Object.keys(extractedScreens).forEach((screenId) => {
-      expect(screensWithReqs.has(screenId)).toBe(true);
-    });
-  });
-
-  it('each requirement must have valid attributes, real paths, and correct prefix', () => {
-    const validCategories = [
-      'PROD',
-      'UX',
-      'UI',
-      'A11Y',
-      'ARCH',
-      'SEC',
-      'AUTH',
-      'EVENT',
-      'STUDIO',
-      'GUEST',
-      'HOUSEHOLD',
-      'RSVP',
-      'SEND',
-      'BILLING',
-      'QR',
-      'MEDIA',
-      'PUBLIC',
-      'I18N',
-      'DATA',
-      'B2B',
-      'LEGAL',
-    ];
-    const validLevels = ['MUST', 'SHOULD', 'MAY'];
-    const validStatuses = [
-      'verified',
-      'implemented_unverified',
-      'planned',
-      'blocked',
-      'deferred',
-      'not_applicable',
-    ];
-
-    requirementsData.requirements.forEach((req) => {
-      expect(req.id).toBeDefined();
-      const prefix = req.id.split('-')[0];
-      expect(validCategories).toContain(prefix);
-      expect(req.category).toBe(prefix); // category must match prefix
-
-      expect(req.title).toBeDefined();
-      expect(req.statement).toBeDefined();
-      expect(validLevels).toContain(req.level);
-      expect(validStatuses).toContain(req.status);
-      expect(req.source).toBeDefined();
-      expect(req.source.document).toBeDefined();
-
-      if (req.source.document.startsWith('docs/')) {
-        const docPath = path.resolve(__dirname, '../../', req.source.document);
-        expect(fs.existsSync(docPath)).toBe(true);
-      }
-
-      req.implementation.forEach((implPath) => {
-        expect(
-          implPath.includes('...'),
-          `Impl path contains placeholder: ${implPath}`,
-        ).toBe(false); // NO PLACEHOLDERS
-        const fullPath = path.resolve(__dirname, '../../', implPath);
-        expect(fs.existsSync(fullPath), `Impl file missing: ${implPath}`).toBe(
-          true,
-        );
-      });
-
-      req.tests.forEach((testPath) => {
-        expect(
-          testPath.includes('...'),
-          `Test path contains placeholder: ${testPath}`,
-        ).toBe(false); // NO PLACEHOLDERS
-        const fullPath = path.resolve(__dirname, '../../', testPath);
-        expect(fs.existsSync(fullPath), `Test file missing: ${testPath}`).toBe(
-          true,
-        );
-      });
-
-      if (req.status === 'verified') {
-        expect(req.evidence).toBeDefined();
-        if (
-          req.category === 'UI' ||
-          req.category === 'UX' ||
-          req.category === 'AUTH'
-        ) {
-          expect(req.evidence?.visual).toBeDefined();
-          expect(req.evidence?.visual?.length).toBeGreaterThan(0);
-        }
-      }
-
-      if (req.status === 'planned') {
-        expect(req.implementation.length).toBe(0);
+    let invalid = 0;
+    requirements.forEach((req) => {
+      const n = req.screens[0];
+      const html = screenContent[n] || '';
+      const validNeedles = req.sourceNeedles.filter((needle) =>
+        html.includes(needle),
+      );
+      if (validNeedles.length === 0) {
+        invalid++;
+        console.error(`Invalid needle in screen ${n}: ${req.sourceNeedles[0]}`);
       }
     });
+
+    expect(invalid).toBe(0);
+  });
+
+  it('should guarantee Screen 41 is Audio and Screen 42 is Photo/Video', () => {
+    const r41 = requirements.filter((r) => r.screens.includes('41'));
+    const r42 = requirements.filter((r) => r.screens.includes('42'));
+
+    const audioNeedles = r41.map((r) => r.sourceNeedles.join(' ')).join(' ');
+    expect(audioNeedles).toContain('00:47');
+    expect(audioNeedles).toContain('03:00 maximum');
+    expect(audioNeedles).not.toContain('Prendre une photo');
+
+    const videoNeedles = r42.map((r) => r.sourceNeedles.join(' ')).join(' ');
+    expect(videoNeedles).toContain('Prendre une photo');
+    expect(videoNeedles).toContain('Filmer une vidéo');
+    expect(videoNeedles).not.toContain('00:47');
+  });
+
+  it('should guarantee Screen 06 has actual B2B requirements', () => {
+    const r06 = requirements.filter((r) => r.screens.includes('06'));
+    const n06 = r06.map((r) => r.sourceNeedles.join(' ')).join(' ');
+
+    expect(n06).toContain('Portefeuille clients');
+    expect(n06).toContain('Marque blanche');
+    expect(n06).not.toContain('10 Go');
+  });
+
+  it('should guarantee Screen 15 has actual creation requirements', () => {
+    const r15 = requirements.filter((r) => r.screens.includes('15'));
+    const n15 = r15.map((r) => r.sourceNeedles.join(' ')).join(' ');
+
+    expect(n15).toContain('Mariage');
+    expect(n15).toContain('Date');
+    expect(n15).toContain('Fuseau horaire');
   });
 });

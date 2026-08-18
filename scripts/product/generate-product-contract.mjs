@@ -12,6 +12,8 @@ const atomicPath = path.join(productDir, 'source/atomic-requirements.json');
 const screenMatrixPath = path.join(productDir, 'SCREEN-MATRIX.md');
 const traceMatrixPath = path.join(productDir, 'TRACEABILITY-MATRIX.md');
 
+const isCheckMode = process.argv.includes('--check');
+
 const filesToProcess = [
   's-public.js',
   's-app.js',
@@ -22,18 +24,17 @@ const filesToProcess = [
   's-states.js',
 ];
 
-// Helper for strict category mapping as requested
 function getCategory(n) {
   if (/^0[1-8]$/.test(n)) return 'PROD';
   if (/^09|10|11$/.test(n)) return 'AUTH';
-  if (/^12[a-d]$/.test(n)) return 'PROD'; // ONBOARDING
+  if (/^12[a-d]$/.test(n)) return 'PROD';
   if (n === '13') return 'PROD';
   if (/^14|15|16|17$/.test(n)) return 'EVENT';
   if (/^18|19|20|21|22$/.test(n)) return 'STUDIO';
   if (/^23|24|25|26$/.test(n)) return 'GUEST';
   if (n === '27') return 'RSVP';
   if (n === '28') return 'SEND';
-  if (n === '29') return 'PROD'; // ANALYTICS
+  if (n === '29') return 'PROD';
   if (n === '30') return 'QR';
   if (/^31|32$/.test(n)) return 'MEDIA';
   if (n === '33') return 'SEND';
@@ -46,51 +47,19 @@ function getCategory(n) {
   if (n === '40') return 'RSVP';
   if (/^41|42|43$/.test(n)) return 'MEDIA';
   if (n === '44') return 'UX';
-  return 'UI'; // Fallback
+  return 'UI';
 }
 
-// Routes deciding logic
-function getIntendedRoute(n, slug) {
-  const tbd = [
-    '12a',
-    '12b',
-    '12c',
-    '12d',
-    '14',
-    '15',
-    '17',
-    '18',
-    '19',
-    '20',
-    '21',
-    '22',
-    '23',
-    '24',
-    '25',
-    '26',
-    '27',
-    '28',
-    '29',
-    '30',
-    '31',
-    '32',
-    '33',
-    '34',
-    '35',
-    '36',
-    '37',
-    '38',
-    '44',
-  ];
-  if (tbd.includes(n)) return 'TBD';
-  if (n === '01') return '/';
-  if (n === '09') return '/connexion';
-  if (n === '10') return '/inscription';
-  if (n === '11') return '/mot-de-passe-oublie';
-  if (n === '13') return '/dashboard';
-  if (n === '16') return '/dashboard';
-  if (/^39|40|41|42|43$/.test(n)) return '/invite/[slug]';
-  return `/${slug}`;
+function getIntendedRoute(n) {
+  const realRoutes = {
+    '01': '/',
+    '09': '/connexion',
+    10: '/inscription',
+    11: '/mot-de-passe-oublie',
+    13: '/dashboard',
+    16: '/dashboard',
+  };
+  return realRoutes[n] || 'TBD';
 }
 
 const atomicData = JSON.parse(fs.readFileSync(atomicPath, 'utf8'));
@@ -116,76 +85,36 @@ for (const file of filesToProcess) {
   }
 }
 
-// Generate Requirements JSON
 let newReqs = [];
+let sourceNeedlesCount = 0;
+
 for (const s of extractedScreens) {
   const cat = getCategory(s.n);
-  const data = atomicData[s.n] || {
-    requirements: [],
-    coverage: {
-      structural: false,
-      actions: false,
-      states: false,
-      dataShown: false,
-    },
+  const data = atomicData[s.n] || { requirements: [], coverageNA: {} };
+
+  const hasStructural =
+    data.requirements.some((r) => r.kind === 'structure') ||
+    (data.coverageNA && data.coverageNA.structural);
+  const hasActions =
+    data.requirements.some((r) => r.kind === 'action') ||
+    (data.coverageNA && data.coverageNA.actions);
+  const hasStates =
+    data.requirements.some((r) => r.kind === 'state') ||
+    (data.coverageNA && data.coverageNA.states);
+  const hasData =
+    data.requirements.some((r) => r.kind === 'data') ||
+    (data.coverageNA && data.coverageNA.dataShown);
+
+  const coverage = {
+    structural: hasStructural ? true : false,
+    actions: hasActions ? true : false,
+    states: hasStates ? true : false,
+    dataShown: hasData ? true : false,
   };
 
   data.requirements.forEach((req, idx) => {
     const num = (idx + 1).toString().padStart(3, '0');
-    let status = 'planned';
-    let impl = [];
-    let tests = [];
-
-    // Custom Status Logic
-    if (s.n === '09' || s.n === '10' || s.n === '11') {
-      if (req.text.includes('Google')) {
-        status = 'planned';
-      } else {
-        status = 'implemented_unverified';
-        if (s.n === '09') {
-          impl = [
-            'src/app/(auth)/connexion/page.tsx',
-            'src/core/auth/usecases/loginUser.ts',
-          ];
-          tests = [
-            'tests/e2e/auth.test.ts',
-            'tests/unit/core/auth/usecases/LoginUserUseCase.test.ts',
-          ];
-        } else if (s.n === '10') {
-          impl = [
-            'src/app/(auth)/inscription/page.tsx',
-            'src/core/auth/usecases/registerUser.ts',
-          ];
-          tests = [
-            'tests/e2e/auth.test.ts',
-            'tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts',
-          ];
-        } else if (s.n === '11') {
-          impl = [
-            'src/app/(auth)/mot-de-passe-oublie/page.tsx',
-            'src/core/auth/usecases/requestPasswordReset.ts',
-          ];
-          tests = [
-            'tests/e2e/auth.test.ts',
-            'tests/unit/core/auth/usecases/RequestPasswordResetUseCase.test.ts',
-          ];
-        }
-      }
-    } else if (s.n === '13') {
-      if (
-        req.text.includes('AppShell') ||
-        req.text.includes('Sidebar') ||
-        req.text.includes('Topbar')
-      ) {
-        status = 'implemented_unverified';
-        impl = [
-          'src/components/layout/AppShell.tsx',
-          'src/components/layout/Sidebar.tsx',
-          'src/components/layout/Topbar.tsx',
-        ];
-        tests = ['tests/e2e/appshell.test.ts'];
-      }
-    }
+    sourceNeedlesCount += (req.sourceNeedles || []).length;
 
     newReqs.push({
       id: `${cat}-${s.n}-${num}`,
@@ -198,26 +127,23 @@ for (const s of extractedScreens) {
         section: `Screen ${s.n}`,
       },
       appliesTo: ['local', 'connected'],
-      status: status,
-      implementation: impl,
-      tests: tests,
+      status: req.status || 'planned',
+      implementation: req.implementation || [],
+      tests: req.tests || [],
       screens: [s.n],
-      evidence: status === 'verified' ? { visual: 'Yes', manual: 'Yes' } : {},
-      coverage: data.coverage,
+      evidence:
+        req.status === 'verified' ? { visual: 'Yes', manual: 'Yes' } : {},
+      coverage: coverage,
+      kind: req.kind || 'structure',
+      sourceNeedles: req.sourceNeedles || [],
       notes: [],
     });
   });
 }
 
-const finalJson = { requirements: newReqs };
-fs.writeFileSync(reqPath, JSON.stringify(finalJson, null, 2));
+const generatedJson = JSON.stringify({ requirements: newReqs }, null, 2);
 
-// Generate SCREEN-MATRIX.md
-let smMd = `# Screen Matrix
-
-| Screen ID | Title | Group | Source File | Ref Width | Ref Height | Intended Route | Impl Status | Vis Baseline | Vis Compared | Req IDs | Notes |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-`;
+let smMd = `# Screen Matrix\n\n| Screen ID | Title | Group | Source File | Ref Width | Ref Height | Intended Route | Impl Status | Vis Baseline | Vis Compared | Req IDs | Notes |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
 
 for (const s of extractedScreens) {
   const sReqs = newReqs.filter((r) => r.screens.includes(s.n));
@@ -238,14 +164,8 @@ for (const s of extractedScreens) {
 
   smMd += `| ${s.n} | ${s.title} | ${cat} | ${s.file} | ${s.w} | ${s.h} | ${route} | ${status} | ${visBaseline} | ${visCompared} | ${reqIds || 'Aucune'} | - |\n`;
 }
-fs.writeFileSync(screenMatrixPath, smMd);
 
-// Generate TRACEABILITY-MATRIX.md
-let tmMd = `# Traceability Matrix
-
-| Requirement ID | Screen | Source | Status | Implementation | Unit Tests | Integration Tests | E2E Tests | Visual Evidence | A11y Evidence | Security | Notes |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-`;
+let tmMd = `# Traceability Matrix\n\n| Requirement ID | Screen | Source | Status | Implementation | Unit Tests | Integration Tests | E2E Tests | Visual Evidence | A11y Evidence | Security | Notes |\n|---|---|---|---|---|---|---|---|---|---|---|---|\n`;
 
 for (const r of newReqs) {
   const screens = (r.screens || []).join(', ');
@@ -266,19 +186,55 @@ for (const r of newReqs) {
 
   tmMd += `| ${r.id} | ${screens} | ${r.source.document} | ${r.status} | ${impl} | ${units} | ${ints} | ${e2e} | ${vis} | ${a11y} | ${sec} | ${notes} |\n`;
 }
-fs.writeFileSync(traceMatrixPath, tmMd);
 
-// Generate stats
-const stats = {
-  total: newReqs.length,
-  verified: newReqs.filter((r) => r.status === 'verified').length,
-  implemented_unverified: newReqs.filter(
-    (r) => r.status === 'implemented_unverified',
-  ).length,
-  planned: newReqs.filter((r) => r.status === 'planned').length,
-  blocked: newReqs.filter((r) => r.status === 'blocked').length,
-  deferred: newReqs.filter((r) => r.status === 'deferred').length,
-};
+if (isCheckMode) {
+  const currentJson = fs.existsSync(reqPath)
+    ? fs.readFileSync(reqPath, 'utf8')
+    : '';
+  const currentSm = fs.existsSync(screenMatrixPath)
+    ? fs.readFileSync(screenMatrixPath, 'utf8')
+    : '';
+  const currentTm = fs.existsSync(traceMatrixPath)
+    ? fs.readFileSync(traceMatrixPath, 'utf8')
+    : '';
 
-console.log('Contract Generated Successfully!');
-console.log(JSON.stringify(stats, null, 2));
+  let drift = false;
+  if (currentJson !== generatedJson) {
+    console.error('Drift detected in requirements.json');
+    drift = true;
+  }
+  if (currentSm !== smMd) {
+    console.error('Drift detected in SCREEN-MATRIX.md');
+    drift = true;
+  }
+  if (currentTm !== tmMd) {
+    console.error('Drift detected in TRACEABILITY-MATRIX.md');
+    drift = true;
+  }
+
+  if (drift) {
+    process.exit(1);
+  } else {
+    console.log('No drift detected. Generated files match sources.');
+    process.exit(0);
+  }
+} else {
+  fs.writeFileSync(reqPath, generatedJson);
+  fs.writeFileSync(screenMatrixPath, smMd);
+  fs.writeFileSync(traceMatrixPath, tmMd);
+
+  const stats = {
+    total: newReqs.length,
+    sourceNeedles: sourceNeedlesCount,
+    verified: newReqs.filter((r) => r.status === 'verified').length,
+    implemented_unverified: newReqs.filter(
+      (r) => r.status === 'implemented_unverified',
+    ).length,
+    planned: newReqs.filter((r) => r.status === 'planned').length,
+    blocked: newReqs.filter((r) => r.status === 'blocked').length,
+    deferred: newReqs.filter((r) => r.status === 'deferred').length,
+  };
+
+  console.log('Contract Generated Successfully!');
+  console.log(JSON.stringify(stats, null, 2));
+}

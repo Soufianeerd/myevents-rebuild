@@ -1,1158 +1,2925 @@
 {
   "10": {
-    "title": "Inscription",
     "requirements": [
       {
-        "text": "Champ Prénom"
+        "text": "Prénom",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/inscription/page.tsx",
+          "src/core/auth/usecases/registerUser.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Prénom"]
       },
       {
-        "text": "Champ Nom"
+        "text": "Nom",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/inscription/page.tsx",
+          "src/core/auth/usecases/registerUser.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Nom"]
       },
       {
-        "text": "Champ e-mail"
+        "text": "Email",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/inscription/page.tsx",
+          "src/core/auth/usecases/registerUser.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/RegisterUserUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Adresse e-mail"]
       },
       {
-        "text": "Champ mot de passe"
-      },
-      {
-        "text": "Confirmation mot de passe"
-      },
-      {
-        "text": "Acceptation conditions (checkbox)"
-      },
-      {
-        "text": "Bouton Créer"
-      },
-      {
-        "text": "Bouton Google Auth"
-      },
-      {
-        "text": "Lien Se connecter"
+        "text": "CGU et confidentialité",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["J’accepte les"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "11": {
-    "title": "Mot de passe oublié / Réinitialisation",
     "requirements": [
       {
-        "text": "Champ e-mail pour réinitialisation"
+        "text": "Email",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/mot-de-passe-oublie/page.tsx",
+          "src/core/auth/usecases/requestPasswordReset.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/RequestPasswordResetUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Adresse e-mail"]
       },
       {
-        "text": "Bouton Envoyer le lien"
+        "text": "Envoyer",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/mot-de-passe-oublie/page.tsx",
+          "src/core/auth/usecases/requestPasswordReset.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/RequestPasswordResetUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Envoyer le lien"]
       },
       {
-        "text": "Lien Retour à la connexion"
+        "text": "Lien valable 30 minutes",
+        "kind": "structure",
+        "status": "implemented_unverified",
+        "implementation": ["src/core/auth/usecases/requestPasswordReset.ts"],
+        "tests": [
+          "tests/unit/core/auth/usecases/RequestPasswordResetUseCase.test.ts"
+        ],
+        "sourceNeedles": ["30 minutes"]
+      },
+      {
+        "text": "État email envoyé",
+        "kind": "state",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["E-mail envoyé"]
+      },
+      {
+        "text": "Renvoi avec countdown",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["00:42"]
+      },
+      {
+        "text": "Contact support",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["contacter le support"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "13": {
-    "title": "Dashboard principal",
     "requirements": [
       {
-        "text": "Navigation AppShell (Sidebar, Topbar)"
+        "text": "Affichage: Choisir le template...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Choisir le template"]
       },
       {
-        "text": "Bandeau des prochaines étapes"
+        "text": "Affichage: Personnaliser l’invitation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Personnaliser l’invitation"]
       },
       {
-        "text": "Fil d'actualité récent (Notifications)"
+        "text": "Affichage: Importer la liste d’invités...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Importer la liste d’invités"]
       },
       {
-        "text": "Sélection de l'événement courant"
+        "text": "Affichage: Publier l’invitation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Publier l’invitation"]
+      },
+      {
+        "text": "Affichage: Envoyer la première vague...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Envoyer la première vague"]
+      },
+      {
+        "text": "Affichage: Relancer les foyers sans répon...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Relancer les foyers sans réponse"]
+      },
+      {
+        "text": "Affichage: Imprimer les QR codes de table...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Imprimer les QR codes de table"]
+      },
+      {
+        "text": "Affichage: Préparer la carte de remerciem...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Préparer la carte de remerciement"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "14": {
-    "title": "Mes événements",
     "requirements": [
       {
-        "text": "Liste des événements associés au compte"
+        "text": "Affichage: Yasmine &amp; Adam...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Yasmine &amp; Adam"]
       },
       {
-        "text": "Statut de chaque événement (Brouillon, Publié)"
+        "text": "Affichage: Mariage...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mariage"]
       },
       {
-        "text": "Créer un nouvel événement"
+        "text": "Affichage: 6 juin 2026...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["6 juin 2026"]
+      },
+      {
+        "text": "Affichage: Publiée...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Publiée"]
+      },
+      {
+        "text": "Affichage: #F6F1E7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F6F1E7"]
+      },
+      {
+        "text": "Affichage: #7A1F2B...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#7A1F2B"]
+      },
+      {
+        "text": "Affichage: Henné de Yasmine...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Henné de Yasmine"]
+      },
+      {
+        "text": "Affichage: Henné...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Henné"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "15": {
-    "title": "Créer un événement",
     "requirements": [
       {
-        "text": "Paramètres globaux de l'événement"
+        "text": "Section Type",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["1 · Type"]
       },
       {
-        "text": "Choix du slug/URL"
+        "text": "Type d'événement",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mariage"]
       },
       {
-        "text": "Visibilité et accès restreint"
+        "text": "Section Identité",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["2 · Identité"]
+      },
+      {
+        "text": "Nom de l'événement",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Nom de l’événement"]
+      },
+      {
+        "text": "Date",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Date"]
+      },
+      {
+        "text": "Fuseau horaire",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Fuseau horaire"]
+      },
+      {
+        "text": "Ville principale",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Ville principale"]
+      },
+      {
+        "text": "Section Organisateurs",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["3 · Organisateurs"]
+      },
+      {
+        "text": "Organisateurs email",
+        "kind": "data",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["yasmine@exemple.com"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "16": {
-    "title": "Détail événement",
     "requirements": [
       {
-        "text": "Aperçu analytique (Ouvertures, RSVP)"
+        "text": "Affichage: Vue d’ensemble...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Vue d’ensemble"]
       },
       {
-        "text": "Raccourcis rapides (Gérer invités, Envoyer)"
+        "text": "Affichage: Programme...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Programme"]
+      },
+      {
+        "text": "Affichage: Lieux...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Lieux"]
+      },
+      {
+        "text": "Affichage: Invitation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invitation"]
+      },
+      {
+        "text": "Affichage: Invités...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invités"]
+      },
+      {
+        "text": "Affichage: RSVP...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["RSVP"]
+      },
+      {
+        "text": "Affichage: Envois...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Envois"]
+      },
+      {
+        "text": "Affichage: Souvenirs...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Souvenirs"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "17": {
-    "title": "Programme & sous-événements",
     "requirements": [
       {
-        "text": "Liste des sous-événements (Mairie, Dîner, etc.)"
+        "text": "Affichage: Mairie d’Aix-en-Provence...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mairie d’Aix-en-Provence"]
       },
       {
-        "text": "Horaires et lieux de chaque sous-événement"
+        "text": "Affichage: Cérémonie civile...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Cérémonie civile"]
       },
       {
-        "text": "Capacité et restriction d'invités"
+        "text": "Affichage: 14:00 — 15:00...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["14:00 — 15:00"]
+      },
+      {
+        "text": "Affichage: Place de l’Hôtel de Ville, 131...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Place de l’Hôtel de Ville, 13100 Aix-en-Provence"]
+      },
+      {
+        "text": "Affichage: 54 invités · Proches uniquemen...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["54 invités · Proches uniquement"]
+      },
+      {
+        "text": "Affichage: Domaine des Oliviers...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Domaine des Oliviers"]
+      },
+      {
+        "text": "Affichage: Cérémonie laïque...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Cérémonie laïque"]
+      },
+      {
+        "text": "Affichage: 16:30 — 17:30...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["16:30 — 17:30"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "18": {
-    "title": "Studio · Sélection du template",
     "requirements": [
       {
-        "text": "Aperçu Canvas central"
+        "text": "Affichage: Andalouse...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Andalouse"]
       },
       {
-        "text": "Panneau des modèles (Changer de modèle)"
+        "text": "Affichage: Oriental...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Oriental"]
       },
       {
-        "text": "Panneau des réglages"
+        "text": "Affichage: #F6F1E7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F6F1E7"]
       },
       {
-        "text": "Bouton Publier"
+        "text": "Affichage: #7A1F2B...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#7A1F2B"]
       },
       {
-        "text": "Switcher de vue (Mobile/Tablette/Desktop)"
+        "text": "Affichage: Zellige...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Zellige"]
+      },
+      {
+        "text": "Affichage: #F2EFE6...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F2EFE6"]
+      },
+      {
+        "text": "Affichage: #9C7742...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#9C7742"]
+      },
+      {
+        "text": "Affichage: Minéral...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Minéral"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "19": {
-    "title": "Studio principal",
     "requirements": [
       {
-        "text": "Panneau des sections réorganisables"
+        "text": "Affichage: Typographie...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Typographie"]
       },
       {
-        "text": "Ajouter/supprimer une section"
+        "text": "Affichage: Couleurs...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Couleurs"]
       },
       {
-        "text": "Contenu: Sur-titre, Noms, Texte, Date"
+        "text": "Affichage: Espacement...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Espacement"]
       },
       {
-        "text": "Style: Palette, Typo"
+        "text": "Affichage: Arrière-plan...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Arrière-plan"]
       },
       {
-        "text": "Animation: type d'apparition"
+        "text": "Affichage: Effets...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Effets"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "20": {
-    "title": "Studio · Style global",
     "requirements": [
       {
-        "text": "Palettes de couleurs prédéfinies"
+        "text": "Affichage: Bordeaux &amp; ivoire...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Bordeaux &amp; ivoire"]
       },
       {
-        "text": "Typographies globales"
+        "text": "Affichage: #7A1F2B...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#7A1F2B"]
       },
       {
-        "text": "Arrière-plan"
+        "text": "Affichage: #D4B07B...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#D4B07B"]
       },
       {
-        "text": "Motifs"
+        "text": "Affichage: #F6F1E7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F6F1E7"]
       },
       {
-        "text": "Boutons (rayons, espacement)"
+        "text": "Affichage: #2A1214...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#2A1214"]
       },
       {
-        "text": "Preview centrale"
+        "text": "Affichage: Nuit &amp; or...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Nuit &amp; or"]
       },
       {
-        "text": "Navigation Studio"
+        "text": "Affichage: #231A18...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#231A18"]
+      },
+      {
+        "text": "Affichage: #F3EFE7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F3EFE7"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "21": {
-    "title": "Studio · Animations",
     "requirements": [
       {
-        "text": "Paramétrage des animations (Fondu, Glissement, Portes)"
+        "text": "Affichage: Fondu...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Fondu"]
       },
       {
-        "text": "Durée et délai"
+        "text": "Affichage: Apparition en opacité...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Apparition en opacité"]
+      },
+      {
+        "text": "Affichage: sparkle...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["sparkle"]
+      },
+      {
+        "text": "Affichage: Révélation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Révélation"]
+      },
+      {
+        "text": "Affichage: Le contenu se dévoile par le b...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Le contenu se dévoile par le bas"]
+      },
+      {
+        "text": "Affichage: Glissement doux...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Glissement doux"]
+      },
+      {
+        "text": "Affichage: Translation latérale légère...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Translation latérale légère"]
+      },
+      {
+        "text": "Affichage: aright...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["aright"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "22": {
-    "title": "Studio · Historique de versions",
     "requirements": [
       {
-        "text": "Historique des modifications"
+        "text": "Affichage: Aujourd’hui · 09:42...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Aujourd’hui · 09:42"]
       },
       {
-        "text": "Versions nommées"
+        "text": "Affichage: Version actuelle...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Version actuelle"]
       },
       {
-        "text": "Bouton de restauration"
+        "text": "Affichage: Adam F....",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Adam F."]
       },
       {
-        "text": "Auteur et date de modification"
+        "text": "Affichage: Modification des noms des mari...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Modification des noms des mariés"]
+      },
+      {
+        "text": "Affichage: auto...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["auto"]
+      },
+      {
+        "text": "Affichage: Aujourd’hui · 09:31...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Aujourd’hui · 09:31"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "23": {
-    "title": "Invités (CRM)",
-    "requirements": [
-      {
-        "text": "KPIs invités (Présents, En attente, etc.)"
+    "requirements": [],
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
       },
-      {
-        "text": "Liste des invités (Nom, Foyer, RSVP, Accompagnants)"
-      },
-      {
-        "text": "Filtres et recherche"
-      },
-      {
-        "text": "Sélection multiple"
-      },
-      {
-        "text": "Action: Ajouter, Importer"
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
       }
-    ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    }
   },
   "24": {
-    "title": "Fiche invité (drawer)",
     "requirements": [
       {
-        "text": "Ajout manuel d'un invité"
+        "text": "Affichage: row between aic...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["row between aic"]
       },
       {
-        "text": "Saisie Nom, Prénom, Email, Téléphone"
+        "text": "Affichage: cap muted...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["cap muted"]
       },
       {
-        "text": "Assignation foyer et sous-événements"
+        "text": "Affichage: ${l}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${l}"]
       },
       {
-        "text": "Nombre d'accompagnants autorisés"
+        "text": "Affichage: capm...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["capm"]
+      },
+      {
+        "text": "Affichage: ${v}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${v}"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "25": {
-    "title": "Foyers & groupes",
     "requirements": [
       {
-        "text": "Détail complet d'un foyer"
+        "text": "Affichage: Famille Benali...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Famille Benali"]
       },
       {
-        "text": "Membres du foyer"
+        "text": "Affichage: Yassine Benali...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Yassine Benali"]
       },
       {
-        "text": "Historique d'envoi et RSVP du foyer"
+        "text": "Affichage: 5 personnes...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["5 personnes"]
+      },
+      {
+        "text": "Affichage: En attente...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["En attente"]
+      },
+      {
+        "text": "Affichage: warn...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["warn"]
+      },
+      {
+        "text": "Affichage: Mairie · Dîner...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mairie · Dîner"]
+      },
+      {
+        "text": "Affichage: Famille Dupont...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Famille Dupont"]
+      },
+      {
+        "text": "Affichage: Claire Dupont...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Claire Dupont"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "26": {
-    "title": "Import CSV (assistant)",
     "requirements": [
       {
-        "text": "Import CSV"
+        "text": "Affichage: Colonne A...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Colonne A"]
       },
       {
-        "text": "Mapping des colonnes (Prénom, Foyer, etc.)"
+        "text": "Affichage: Prénom...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Prénom"]
       },
       {
-        "text": "Aperçu avant import"
+        "text": "Affichage: Colonne B...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Colonne B"]
       },
       {
-        "text": "Validation et erreurs de données"
+        "text": "Affichage: Colonne C...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Colonne C"]
+      },
+      {
+        "text": "Affichage: Email...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Email"]
+      },
+      {
+        "text": "Affichage: Adresse e-mail...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Adresse e-mail"]
+      },
+      {
+        "text": "Affichage: Colonne D...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Colonne D"]
+      },
+      {
+        "text": "Affichage: Téléphone...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Téléphone"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "27": {
-    "title": "Gestion RSVP",
     "requirements": [
       {
-        "text": "Liste des RSVP reçus"
+        "text": "Affichage: Foyer Nadari...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Foyer Nadari"]
       },
       {
-        "text": "Statut global par foyer"
+        "text": "Affichage: 4 / 4...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["4 / 4"]
       },
       {
-        "text": "Détail par accompagnant (présent/absent)"
+        "text": "Affichage: Présente...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Présente"]
       },
       {
-        "text": "Sous-événements confirmés"
+        "text": "Affichage: Tous...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Tous"]
       },
       {
-        "text": "Filtres (Présent, Absent, Attente)"
+        "text": "Affichage: 2 sans gluten...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["2 sans gluten"]
+      },
+      {
+        "text": "Affichage: il y a 2 h...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["il y a 2 h"]
+      },
+      {
+        "text": "Affichage: Famille Benali...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Famille Benali"]
+      },
+      {
+        "text": "Affichage: 0 / 5...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["0 / 5"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "28": {
-    "title": "Centre d’envois",
     "requirements": [
       {
-        "text": "Liste des campagnes d'envoi"
+        "text": "Affichage: Première invitation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Première invitation"]
       },
       {
-        "text": "Statut (Envoyée, Programmée)"
+        "text": "Affichage: Tous les foyers · 42...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Tous les foyers · 42"]
       },
       {
-        "text": "Statistiques (Envoyé, Ouvert, Répondu)"
+        "text": "Affichage: E-mail + SMS...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["E-mail + SMS"]
       },
       {
-        "text": "Créer une campagne"
+        "text": "Affichage: Envoyée...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Envoyée"]
       },
       {
-        "text": "Relance sans réponse"
+        "text": "Affichage: 12 janvier 2026 · 09:00...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["12 janvier 2026 · 09:00"]
+      },
+      {
+        "text": "Affichage: Rappel programme...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Rappel programme"]
+      },
+      {
+        "text": "Affichage: Foyers ayant répondu · 31...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Foyers ayant répondu · 31"]
+      },
+      {
+        "text": "Affichage: E-mail...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["E-mail"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "29": {
-    "title": "Statistiques",
     "requirements": [
       {
-        "text": "Graphiques d'ouverture des invitations"
+        "text": "Affichage: card pad...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["card pad"]
       },
       {
-        "text": "Évolution des RSVP"
+        "text": "Affichage: row between ais...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["row between ais"]
       },
       {
-        "text": "Répartition des invités"
+        "text": "Affichage: ${t}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${t}"]
+      },
+      {
+        "text": "Affichage: cap dim mt6...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["cap dim mt6"]
+      },
+      {
+        "text": "Affichage: ${d}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${d}"]
+      },
+      {
+        "text": "Affichage: ${btn(cta, 'sec', null, 'sm')}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${btn(cta, 'sec', null, 'sm')}"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "30": {
-    "title": "QR Codes",
     "requirements": [
       {
-        "text": "Génération de QR Codes (Invitation, RSVP, Photos, Audio, Galerie)"
+        "text": "Affichage: Invitation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invitation"]
       },
       {
-        "text": "Téléchargement (PNG, SVG)"
+        "text": "Affichage: myevents.app/yasmine-adam...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["myevents.app/yasmine-adam"]
       },
       {
-        "text": "Statistiques de scan par QR"
+        "text": "Affichage: Actif...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Actif"]
+      },
+      {
+        "text": "Affichage: 12 janvier 2026...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["12 janvier 2026"]
+      },
+      {
+        "text": "Affichage: RSVP...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["RSVP"]
+      },
+      {
+        "text": "Affichage: myevents.app/…/rsvp...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["myevents.app/…/rsvp"]
+      },
+      {
+        "text": "Affichage: Livre d’or audio...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Livre d’or audio"]
+      },
+      {
+        "text": "Affichage: myevents.app/…/audio...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["myevents.app/…/audio"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "31": {
-    "title": "Photos & vidéos",
     "requirements": [
       {
-        "text": "Galerie de photos et vidéos"
+        "text": "Affichage: photo...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["photo"]
       },
       {
-        "text": "Grille de médias"
+        "text": "Affichage: video...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["video"]
       },
       {
-        "text": "Modération (Accepter/Refuser)"
-      },
-      {
-        "text": "Espace de stockage restant"
+        "text": "Affichage: warn...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["warn"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "32": {
-    "title": "Livre d’or audio",
     "requirements": [
       {
-        "text": "Liste des messages vocaux"
+        "text": "Affichage: Amina Cherkaoui...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Amina Cherkaoui"]
       },
       {
-        "text": "Waveform audio"
+        "text": "Affichage: 0:48...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["0:48"]
       },
       {
-        "text": "Lecteur play/pause"
+        "text": "Affichage: il y a 12 min...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["il y a 12 min"]
       },
       {
-        "text": "Durée et date"
+        "text": "Affichage: Karim Haddad...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Karim Haddad"]
       },
       {
-        "text": "Nom de l'invité"
+        "text": "Affichage: 1:22...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["1:22"]
       },
       {
-        "text": "Action: Supprimer/Accepter"
+        "text": "Affichage: il y a 3 h...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["il y a 3 h"]
+      },
+      {
+        "text": "Affichage: Nour Belkacem...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Nour Belkacem"]
+      },
+      {
+        "text": "Affichage: 0:36...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["0:36"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "33": {
-    "title": "Éditeur carte de remerciement",
     "requirements": [
       {
-        "text": "Modèles de cartes de remerciement"
+        "text": "Affichage: Ivoire &amp; or...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Ivoire &amp; or"]
       },
       {
-        "text": "Sélection de la photo principale"
+        "text": "Affichage: Bordeaux...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Bordeaux"]
       },
       {
-        "text": "Génération d'export"
+        "text": "Affichage: Photo pleine page...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Photo pleine page"]
+      },
+      {
+        "text": "Affichage: Minimal...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Minimal"]
+      },
+      {
+        "text": "Affichage: Floral...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Floral"]
+      },
+      {
+        "text": "Affichage: Calligraphie...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Calligraphie"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "34": {
-    "title": "Offres & produits",
     "requirements": [
       {
-        "text": "Sélection de l'offre (Digitale, Photo, Audio)"
+        "text": "Affichage: Invitation digitale...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invitation digitale"]
       },
       {
-        "text": "Détail des inclusions"
+        "text": "Affichage: 14,99 €...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["14,99 €"]
       },
       {
-        "text": "Processus de paiement (Checkout)"
+        "text": "Affichage: Invitation personnalisable...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invitation personnalisable"]
+      },
+      {
+        "text": "Affichage: Studio complet...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Studio complet"]
+      },
+      {
+        "text": "Affichage: Invités &amp; RSVP...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invités &amp; RSVP"]
+      },
+      {
+        "text": "Affichage: Envois illimités...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Envois illimités"]
+      },
+      {
+        "text": "Affichage: QR d’invitation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["QR d’invitation"]
+      },
+      {
+        "text": "Affichage: Possédé...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Possédé"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "35": {
-    "requirements": [
-      {
-        "text": "Affichage des informations du profil (Nom, Email)"
+    "requirements": [],
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
       },
-      {
-        "text": "Modification des informations du profil"
-      },
-      {
-        "text": "Préférences de notifications"
-      },
-      {
-        "text": "Gestion de la langue"
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
       }
-    ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
     }
   },
   "36": {
-    "title": "Équipe & rôles",
     "requirements": [
       {
-        "text": "Gestion de l'équipe (B2B)"
+        "text": "Affichage: Adam Ferrand...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Adam Ferrand"]
       },
       {
-        "text": "Rôles (Owner, Admin, Editor)"
+        "text": "Affichage: adam.ferrand@exemple.com...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["adam.ferrand@exemple.com"]
       },
       {
-        "text": "Inviter un collaborateur"
+        "text": "Affichage: Owner...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Owner"]
       },
       {
-        "text": "Date de dernière connexion"
+        "text": "Affichage: Il y a 4 min...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Il y a 4 min"]
+      },
+      {
+        "text": "Affichage: Yasmine Nadari...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Yasmine Nadari"]
+      },
+      {
+        "text": "Affichage: yasmine@exemple.com...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["yasmine@exemple.com"]
+      },
+      {
+        "text": "Affichage: Il y a 2 h...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Il y a 2 h"]
+      },
+      {
+        "text": "Affichage: Nadia Benkirane...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Nadia Benkirane"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "37": {
-    "title": "Facturation & achats",
     "requirements": [
       {
-        "text": "Historique des factures"
+        "text": "Affichage: 12 janvier 2026...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["12 janvier 2026"]
       },
       {
-        "text": "Téléchargement PDF"
+        "text": "Affichage: Invitation + Photo/Vidéo...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invitation + Photo/Vidéo"]
       },
       {
-        "text": "Détail du paiement (Montant, Date, Événement)"
+        "text": "Affichage: Mariage Yasmine &amp; Adam...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mariage Yasmine &amp; Adam"]
+      },
+      {
+        "text": "Affichage: 29,99 €...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["29,99 €"]
+      },
+      {
+        "text": "Affichage: Payé...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Payé"]
+      },
+      {
+        "text": "Affichage: FAC-2026-0412...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["FAC-2026-0412"]
+      },
+      {
+        "text": "Affichage: Impression 100 QR de table...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Impression 100 QR de table"]
+      },
+      {
+        "text": "Affichage: 24,99 €...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["24,99 €"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "38": {
-    "title": "Confidentialité & données",
-    "requirements": [
-      {
-        "text": "Paramètres du compte"
+    "requirements": [],
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
       },
-      {
-        "text": "Informations personnelles"
-      },
-      {
-        "text": "Suppression du compte"
-      },
-      {
-        "text": "Consentements RGPD"
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
       }
-    ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    }
   },
   "39": {
-    "title": "Invitation publiée (invité)",
-    "requirements": [
-      {
-        "text": "Invitation Mobile: Affichage hero (porte ou fade)"
+    "requirements": [],
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
       },
-      {
-        "text": "Informations mariés et date"
-      },
-      {
-        "text": "Bouton principal Répondre"
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
       }
-    ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    }
   },
   "40": {
-    "title": "RSVP invité",
     "requirements": [
       {
-        "text": "RSVP Mobile: Household salutation"
+        "text": "Affichage: card...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["card"]
       },
       {
-        "text": "Liste des membres du foyer"
+        "text": "Affichage: row g10 aic...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["row g10 aic"]
       },
       {
-        "text": "Présence/absence par membre"
+        "text": "Affichage: ${ini}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${ini}"]
       },
       {
-        "text": "Deadline RSVP"
+        "text": "Affichage: ${n}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${n}"]
       },
       {
-        "text": "Bouton Valider"
+        "text": "Affichage: ${note ? `...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${note ? `"]
+      },
+      {
+        "text": "Affichage: mic muted mt2...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["mic muted mt2"]
+      },
+      {
+        "text": "Affichage: font-weight:400...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["font-weight:400"]
+      },
+      {
+        "text": "Affichage: ${note}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${note}"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "41": {
-    "title": "QR Livre d’or audio · enregistrement",
     "requirements": [
       {
-        "text": "Collecte Souvenirs Mobile: Uploader une photo/vidéo"
+        "text": "Titre audio",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["un souvenir de votre voix"]
       },
       {
-        "text": "Upload progress"
+        "text": "Timer en cours",
+        "kind": "data",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["00:47"]
       },
       {
-        "text": "Validation du dépôt"
+        "text": "Durée max 3 minutes",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["03:00 maximum"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "42": {
-    "title": "QR Photos & vidéos · dépôt",
     "requirements": [
       {
-        "text": "Livre Audio Mobile: Interface d'enregistrement"
+        "text": "Titre photo",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Partagez"]
       },
       {
-        "text": "Bouton Record"
+        "text": "Sous-titre",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["l’album privé des mariés."]
       },
       {
-        "text": "Waveform dynamique"
+        "text": "Prendre photo",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Prendre une photo"]
       },
       {
-        "text": "Re-record ou Valider"
+        "text": "Filmer vidéo",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Filmer une vidéo"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "43": {
-    "title": "Galerie privée (invité)",
-    "requirements": [
-      {
-        "text": "Galerie Invités Mobile: Grille masonry des photos approuvées"
+    "requirements": [],
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
       },
-      {
-        "text": "Bouton plein écran"
-      },
-      {
-        "text": "Téléchargement"
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
       }
-    ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    }
   },
   "44": {
-    "title": "Planche des états UI",
     "requirements": [
       {
-        "text": "Design patterns UI: Skeleton loading"
+        "text": "Affichage: card pad...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["card pad"]
       },
       {
-        "text": "Aucun full-screen spinner (sauf initialisation)"
+        "text": "Affichage: box-shadow:none...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["box-shadow:none"]
       },
       {
-        "text": "Autosave avec indicateur discret"
+        "text": "Affichage: row between aic...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["row between aic"]
       },
       {
-        "text": "Opérations longues quantifiées"
+        "text": "Affichage: sk mt16...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["sk mt16"]
       },
       {
-        "text": "Empty states illustrés avec CTA"
+        "text": "Affichage: sk mt10...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["sk mt10"]
       },
       {
-        "text": "Recovery sur recherche infructueuse"
+        "text": "Affichage: sk mt6...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["sk mt6"]
       },
       {
-        "text": "Erreurs de formulaire in-line"
+        "text": "Affichage: row g10 mt16...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["row g10 mt16"]
       },
       {
-        "text": "États verrouillés / Upgrade"
-      },
-      {
-        "text": "Entitlement badges"
-      },
-      {
-        "text": "Modale de confirmation destructive"
-      },
-      {
-        "text": "Toasts de succès/erreur"
+        "text": "Affichage: ${[1, 2, 3].map(() => `...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${[1, 2, 3].map(() => `"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "01": {
-    "title": "Homepage",
     "requirements": [
       {
-        "text": "Navigation principale"
+        "text": "Affichage: col g12...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["col g12"]
       },
       {
-        "text": "Hero avec CTA"
+        "text": "Affichage: row g12 aic...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["row g12 aic"]
       },
       {
-        "text": "Bandeau des clients"
+        "text": "Affichage: ${n}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${n}"]
       },
       {
-        "text": "Étapes de fonctionnement (1 à 4)"
+        "text": "Affichage: ${ic(i, 'i18')}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${ic(i, 'i18')}"]
       },
       {
-        "text": "Mise en avant Studio"
+        "text": "Affichage: ${t}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${t}"]
       },
       {
-        "text": "Gestion invités & RSVP"
+        "text": "Affichage: b dim...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["b dim"]
       },
       {
-        "text": "Souvenirs (QR codes)"
-      },
-      {
-        "text": "Galerie de templates"
-      },
-      {
-        "text": "Témoignages"
-      },
-      {
-        "text": "Grille de tarifs"
-      },
-      {
-        "text": "FAQ cliquable"
-      },
-      {
-        "text": "Footer complet"
+        "text": "Affichage: ${d}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${d}"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "02": {
-    "title": "Fonctionnalités",
     "requirements": [
       {
-        "text": "Aperçu détaillé des 8 modules (Invitation, Studio, Invités, RSVP, QR, Audio, Photo, Stats)"
+        "text": "Affichage: mic muted...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["mic muted"]
       },
       {
-        "text": "Démonstration visuelle Studio"
+        "text": "Affichage: SECTIONS...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["SECTIONS"]
       },
       {
-        "text": "Démonstration visuelle Invités"
+        "text": "Affichage: col g5 mt8...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["col g5 mt8"]
       },
       {
-        "text": "Démonstration visuelle Envois"
+        "text": "Affichage: row g7 aic...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["row g7 aic"]
+      },
+      {
+        "text": "Affichage: ${s}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${s}"]
+      },
+      {
+        "text": "Affichage: device-phone...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["device-phone"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "03": {
-    "title": "Galerie de templates",
     "requirements": [
       {
-        "text": "Filtres par catégorie (Oriental, Moderne, Floral, etc.)"
+        "text": "Affichage: Tous...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Tous"]
       },
       {
-        "text": "Tri par popularité"
+        "text": "Affichage: Oriental...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Oriental"]
       },
       {
-        "text": "Affichage des vignettes avec couleurs et typos"
+        "text": "Affichage: Moderne...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Moderne"]
       },
       {
-        "text": "Aperçu et sélection de modèle"
+        "text": "Affichage: Minimaliste...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Minimaliste"]
+      },
+      {
+        "text": "Affichage: Floral...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Floral"]
+      },
+      {
+        "text": "Affichage: Classique...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Classique"]
+      },
+      {
+        "text": "Affichage: Civil...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Civil"]
+      },
+      {
+        "text": "Affichage: Henné...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Henné"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "04": {
-    "title": "Détail d’un template",
-    "requirements": [
-      {
-        "text": "Prévisualisation mobile du modèle"
+    "requirements": [],
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
       },
-      {
-        "text": "Informations du modèle (nom, description)"
-      },
-      {
-        "text": "Sélecteur de variantes de couleurs"
-      },
-      {
-        "text": "Liste des sections incluses"
-      },
-      {
-        "text": "Switcher Mobile/Tablette/Desktop"
-      },
-      {
-        "text": "Actions: Utiliser, Aperçu plein écran, Favori"
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
       }
-    ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    }
   },
   "05": {
-    "title": "Tarifs",
     "requirements": [
       {
-        "text": "Comparatif des offres (Digital, Photo/Vidéo, +Audio)"
+        "text": "Affichage: Invitation personnalisable...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invitation personnalisable"]
       },
       {
-        "text": "Pricing unique par événement"
+        "text": "Affichage: Studio complet (sections, styl...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Studio complet (sections, styles, animations)"]
       },
       {
-        "text": "Détail exhaustif des fonctionnalités incluses par offre"
+        "text": "Affichage: Gestion des invités, foyers &a...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Gestion des invités, foyers &amp; accompagnants"]
       },
       {
-        "text": "FAQ dédiée à la facturation"
+        "text": "Affichage: RSVP par personne et par sous-...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["RSVP par personne et par sous-événement"]
+      },
+      {
+        "text": "Affichage: Envois par lien, e-mail et SMS...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Envois par lien, e-mail et SMS"]
+      },
+      {
+        "text": "Affichage: QR code d’invitation...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["QR code d’invitation"]
+      },
+      {
+        "text": "Affichage: Statistiques &amp; relances...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Statistiques &amp; relances"]
+      },
+      {
+        "text": "Affichage: QR code photos &amp; vidéos...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["QR code photos &amp; vidéos"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "06": {
-    "title": "Wedding planners (B2B)",
     "requirements": [
       {
-        "text": "Démonstration des formats de souvenirs"
+        "text": "Espace agence / portefeuille clients",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Portefeuille clients"]
       },
       {
-        "text": "Concept de modération avant publication"
+        "text": "Événements actifs",
+        "kind": "data",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["événements actifs"]
       },
       {
-        "text": "Stockage privé 10 Go"
+        "text": "Temps sur les relances",
+        "kind": "data",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["de temps sur les relances"]
       },
       {
-        "text": "Accessibilité post-événement (12 mois)"
+        "text": "Un espace clients",
+        "kind": "data",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["1 espace"]
+      },
+      {
+        "text": "Marque blanche",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Marque blanche"]
+      },
+      {
+        "text": "CTA Tarifs agence",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Voir les tarifs agence"]
+      },
+      {
+        "text": "CTA contact / démo",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Demander une démo"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "07": {
-    "title": "Exemples & inspiration",
     "requirements": [
       {
-        "text": "Aperçu d'un espace organisateur réel (Dashboard, Envois, Statistiques)"
+        "text": "Affichage: Yasmine &amp; Adam...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Yasmine &amp; Adam"]
       },
       {
-        "text": "Présentation de scénarios d'usage (Mariage, Fiançailles, Henné)"
+        "text": "Affichage: Mariage oriental · Aix-en-Prov...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mariage oriental · Aix-en-Provence"]
+      },
+      {
+        "text": "Affichage: #F6F1E7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F6F1E7"]
+      },
+      {
+        "text": "Affichage: #7A1F2B...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#7A1F2B"]
+      },
+      {
+        "text": "Affichage: 126 invités · 94 % de réponses...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["126 invités · 94 % de réponses"]
+      },
+      {
+        "text": "Affichage: Léa &amp; Antoine...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Léa &amp; Antoine"]
+      },
+      {
+        "text": "Affichage: Mariage civil · Annecy...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mariage civil · Annecy"]
+      },
+      {
+        "text": "Affichage: #EFEDE7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#EFEDE7"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "08": {
-    "title": "FAQ",
     "requirements": [
       {
-        "text": "Liste complète des questions/réponses"
+        "text": "Affichage: Avant de commencer...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Avant de commencer"]
       },
       {
-        "text": "Support client"
+        "text": "Affichage: Faut-il un abonnement ?...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Faut-il un abonnement ?"]
       },
       {
-        "text": "Formulaire de contact"
+        "text": "Affichage: Non. MyEvent’s se paie une foi...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": [
+          "Non. MyEvent’s se paie une fois, par événement. Vos accès restent ouverts 12 mois après la date de l’événement, le temps de récupérer tous vos souvenirs."
+        ]
+      },
+      {
+        "text": "Affichage: Puis-je essayer avant de payer...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Puis-je essayer avant de payer ?"]
+      },
+      {
+        "text": "Affichage: Oui. Vous créez votre événemen...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": [
+          "Oui. Vous créez votre événement, choisissez un template et personnalisez tout dans le Studio gratuitement. Le paiement n’intervient qu’au moment de publier."
+        ]
+      },
+      {
+        "text": "Affichage: MyEvent’s convient-il à autre ...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["MyEvent’s convient-il à autre chose qu’un mariage ?"]
+      },
+      {
+        "text": "Affichage: Oui : fiançailles, henné, anni...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": [
+          "Oui : fiançailles, henné, anniversaire, baby shower, baptême, soirée privée, événement professionnel et conférence. Les templates et le vocabulaire s’adaptent au type choisi."
+        ]
+      },
+      {
+        "text": "Affichage: Invitations &amp; Studio...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Invitations &amp; Studio"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "09": {
-    "title": "Connexion",
     "requirements": [
       {
-        "text": "Formulaire de connexion (Email, Mot de passe)"
+        "text": "Email",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/connexion/page.tsx",
+          "src/core/auth/usecases/loginUser.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/LoginUserUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Adresse e-mail"]
       },
       {
-        "text": "Lien mot de passe oublié"
+        "text": "Password",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/connexion/page.tsx",
+          "src/core/auth/usecases/loginUser.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/LoginUserUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Mot de passe"]
       },
       {
-        "text": "Bouton Google Auth"
+        "text": "Forgot password",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": ["src/app/(auth)/connexion/page.tsx"],
+        "tests": ["tests/e2e/auth.test.ts"],
+        "sourceNeedles": ["Mot de passe oublié ?"]
       },
       {
-        "text": "Lien vers inscription"
+        "text": "Rester connecté",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Rester connecté sur cet appareil"]
+      },
+      {
+        "text": "Login",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": [
+          "src/app/(auth)/connexion/page.tsx",
+          "src/core/auth/usecases/loginUser.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/core/auth/usecases/LoginUserUseCase.test.ts"
+        ],
+        "sourceNeedles": ["Se connecter"]
+      },
+      {
+        "text": "Google",
+        "kind": "action",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Continuer avec Google"]
+      },
+      {
+        "text": "Créer compte",
+        "kind": "action",
+        "status": "implemented_unverified",
+        "implementation": ["src/app/(auth)/connexion/page.tsx"],
+        "tests": ["tests/e2e/auth.test.ts"],
+        "sourceNeedles": ["Créer un compte"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "12a": {
-    "title": "Onboarding · 1. Type d’événement",
     "requirements": [
       {
-        "text": "Choix du type d'événement"
+        "text": "Affichage: Mariage...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Mariage"]
       },
       {
-        "text": "Choix parmi les types affichés (Mariage, Henné, etc.)"
+        "text": "Affichage: ring...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["ring"]
       },
       {
-        "text": "État sélectionné"
+        "text": "Affichage: Fiançailles...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Fiançailles"]
       },
       {
-        "text": "Information multi-cérémonies"
+        "text": "Affichage: heart...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["heart"]
       },
       {
-        "text": "Boutons Retour, Passer, Continuer"
+        "text": "Affichage: Henné...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Henné"]
+      },
+      {
+        "text": "Affichage: leaf...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["leaf"]
+      },
+      {
+        "text": "Affichage: Anniversaire...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Anniversaire"]
+      },
+      {
+        "text": "Affichage: cake...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["cake"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "12b": {
-    "title": "Onboarding · 2. Date",
     "requirements": [
       {
-        "text": "Saisie du titre ou des noms"
-      },
-      {
-        "text": "Date de l'événement"
-      },
-      {
-        "text": "Boutons Retour, Passer, Continuer"
+        "text": "Affichage: ${i}...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["${i}"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "12c": {
-    "title": "Onboarding · 4. Style",
     "requirements": [
       {
-        "text": "Proposition de templates basés sur le type"
+        "text": "Affichage: Andalouse...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Andalouse"]
       },
       {
-        "text": "Variantes de couleurs"
+        "text": "Affichage: #F6F1E7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F6F1E7"]
       },
       {
-        "text": "Boutons Retour, Continuer"
+        "text": "Affichage: #7A1F2B...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#7A1F2B"]
+      },
+      {
+        "text": "Affichage: Minéral...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Minéral"]
+      },
+      {
+        "text": "Affichage: #EFEDE7...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#EFEDE7"]
+      },
+      {
+        "text": "Affichage: #46413A...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#46413A"]
+      },
+      {
+        "text": "Affichage: Camélia...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["Camélia"]
+      },
+      {
+        "text": "Affichage: #F7EEEA...",
+        "kind": "structure",
+        "status": "planned",
+        "implementation": [],
+        "tests": [],
+        "sourceNeedles": ["#F7EEEA"]
       }
     ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
+      },
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
+      }
+    }
   },
   "12d": {
-    "title": "Onboarding · 6. Votre première invitation",
-    "requirements": [
-      {
-        "text": "Génération en cours (Loading state)"
+    "requirements": [],
+    "coverageNA": {
+      "states": {
+        "status": "not_applicable",
+        "reason": "Aucun état conditionnel"
       },
-      {
-        "text": "Messages de progression"
+      "dataShown": {
+        "status": "not_applicable",
+        "reason": "Aucune donnée dynamique"
       }
-    ],
-    "coverage": {
-      "structural": true,
-      "actions": true,
-      "states": true,
-      "dataShown": true
-    },
-    "implementation": []
+    }
   }
 }
