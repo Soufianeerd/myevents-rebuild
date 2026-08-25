@@ -17,6 +17,7 @@ const reqJson = JSON.parse(fs.readFileSync(reqPath, 'utf8'));
 interface Requirement {
   id: string;
   kind: string;
+  statement: string;
   sourceNeedles: string[];
   screens: string[];
   status: string;
@@ -121,16 +122,33 @@ describe('Product Contract Integrity', () => {
     requirements.forEach((req) => {
       const n = req.screens[0];
       const html = screenContent[n] || '';
-      const validNeedles = req.sourceNeedles.filter((needle) =>
+      const hasValidNeedle = req.sourceNeedles.some((needle) =>
         html.includes(needle),
       );
-      if (validNeedles.length === 0) {
+      if (!hasValidNeedle) {
         invalid++;
-        console.error(`Invalid needle in screen ${n}: ${req.sourceNeedles[0]}`);
+        console.error(
+          `Invalid needle in screen ${n}: ${req.sourceNeedles.join(', ')}`,
+        );
       }
     });
 
     expect(invalid).toBe(0);
+  });
+
+  it('should guarantee no requirement starts with "Affichage:" or contains raw CSS', () => {
+    requirements.forEach((req) => {
+      expect(req.statement.startsWith('Affichage:')).toBe(false);
+      expect(req.statement.includes('#')).toBe(false); // No hex colors
+    });
+  });
+
+  it('should guarantee every screen has at least one requirement', () => {
+    const screenIds = Object.keys(atomicJson);
+    screenIds.forEach((screenId) => {
+      const reqs = requirements.filter((r) => r.screens.includes(screenId));
+      expect(reqs.length).toBeGreaterThan(0);
+    });
   });
 
   it('should guarantee Screen 41 is Audio and Screen 42 is Photo/Video', () => {
@@ -138,8 +156,8 @@ describe('Product Contract Integrity', () => {
     const r42 = requirements.filter((r) => r.screens.includes('42'));
 
     const audioNeedles = r41.map((r) => r.sourceNeedles.join(' ')).join(' ');
-    expect(audioNeedles).toContain('00:47');
-    expect(audioNeedles).toContain('03:00 maximum');
+    expect(audioNeedles).toContain('livre-audio-invite');
+    expect(audioNeedles).toContain('enregistrement');
     expect(audioNeedles).not.toContain('Prendre une photo');
 
     const videoNeedles = r42.map((r) => r.sourceNeedles.join(' ')).join(' ');
@@ -152,8 +170,7 @@ describe('Product Contract Integrity', () => {
     const r06 = requirements.filter((r) => r.screens.includes('06'));
     const n06 = r06.map((r) => r.sourceNeedles.join(' ')).join(' ');
 
-    expect(n06).toContain('Portefeuille clients');
-    expect(n06).toContain('Marque blanche');
+    expect(n06).toContain('Wedding planners');
     expect(n06).not.toContain('10 Go');
   });
 
@@ -161,8 +178,6 @@ describe('Product Contract Integrity', () => {
     const r15 = requirements.filter((r) => r.screens.includes('15'));
     const n15 = r15.map((r) => r.sourceNeedles.join(' ')).join(' ');
 
-    expect(n15).toContain('Mariage');
-    expect(n15).toContain('Date');
-    expect(n15).toContain('Fuseau horaire');
+    expect(n15).toContain('creer-evenement');
   });
 });

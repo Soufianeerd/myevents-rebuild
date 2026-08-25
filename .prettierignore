@@ -1,2 +1,10 @@
-docs/myevents/
+node_modules/
+.next/
+dist/
+build/
+docs/product/requirements.json
+docs/product/SCREEN-MATRIX.md
+docs/product/TRACEABILITY-MATRIX.md
+docs/product/source/atomic-requirements.json
+docs/myevents/**/*.html
 pnpm-lock.yaml

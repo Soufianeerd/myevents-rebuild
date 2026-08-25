@@ -15,8 +15,8 @@
     "test:unit": "vitest run --dir tests/unit",
     "test:integration": "vitest run --dir tests/integration",
     "test:e2e": "rm -rf .data-e2e && pnpm build && playwright test",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:product && pnpm test:architecture && pnpm test:unit && pnpm test:e2e",
-    "check:full": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:product && pnpm test:architecture && pnpm test:unit && pnpm test:integration && pnpm test:e2e",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm product:check-generated && pnpm test:product && pnpm test:architecture && pnpm test:unit && pnpm test:e2e",
+    "check:full": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm product:check-generated && pnpm test:product && pnpm test:architecture && pnpm test:unit && pnpm test:integration && pnpm test:e2e",
     "product:generate": "node scripts/product/generate-product-contract.mjs",
     "product:check-generated": "node scripts/product/generate-product-contract.mjs --check"
   },
