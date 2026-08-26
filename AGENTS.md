@@ -20,3 +20,37 @@ Avant chaque développement de fonctionnalité (Feature) :
 6. Comparer visuellement à la référence du carrousel.
 7. Mettre à jour `docs/product/TRACEABILITY-MATRIX.md` (et/ou `requirements.json`) avec l'état `verified` et les évidences.
 8. Lancer `pnpm test:product` et l'ensemble de la suite de validation (`pnpm check:full`).
+
+==================================================
+# FUTURE PROMPT CONTRACT
+==================================================
+
+AVANT CHAQUE SESSION FEATURE :
+
+1. Lire PRODUCT-SPEC.
+2. Lire les sections explicitement mentionnées dans la session.
+3. Lire DECISION-REGISTER.
+4. Lire les références UI concernées.
+5. Lire UI-GAPS.
+6. Lire les contraintes Architecture.
+7. Lire Security/A11y.
+8. Auditer ce qui existe déjà avant de coder.
+9. Implémenter Domain avant Infrastructure.
+10. Utiliser local providers.
+11. Ajouter server authorization.
+12. Ajouter validation Zod.
+13. Ajouter tests.
+14. Comparer visuellement si une référence existe.
+15. Mettre à jour la traçabilité.
+
+INTERDIT :
+
+- réduire la feature pour gagner du temps ;
+- inventer une règle métier depuis une maquette ;
+- ignorer une exigence du cahier ;
+- créer un QR comme remplacement de l'invitation ;
+- coder un pack comme produit technique distinct ;
+- coder un moteur par type d'événement ;
+- connecter un vrai provider avant sa session ;
+- déclarer une feature terminée sans tests ;
+- modifier silencieusement une règle du cahier.

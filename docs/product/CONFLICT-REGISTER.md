@@ -1,5 +1,14 @@
 # Conflict Register
 
-| Conflict ID       | Description              | Source A                                                                                    | Source B                                                               | Status   | Resolution                                                                                             |
-| ----------------- | ------------------------ | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------ |
-| CONFLICT-AUTH-001 | Password policy mismatch | `docs/myevents/s-public.js` (Screen 10 wording: "12 caractères, une majuscule, un chiffre") | Auth Security Policy (15-128 chars, no required classes, NIST 800-63B) | resolved | Structure visuelle conservée; wording modernisé; implémentation security-first prévaut (15 chars min). |
+Règle de résolution des conflits :
+1. Décision propriétaire explicitement enregistrée
+2. Cahier des charges
+3. UI/UX pour les questions visuelles
+4. Architecture pour les questions techniques
+5. Standards externes pour sécurité/accessibilité
+
+En cas de conflit de même niveau : NE PAS DEVINER. Créer une entrée ici et bloquer uniquement la feature concernée.
+
+| conflictId | sources | problem | impact | status |
+|---|---|---|---|---|
+| (Ex: CON-001) | | | | TO_DECIDE |

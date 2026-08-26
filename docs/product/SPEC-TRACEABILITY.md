@@ -1,0 +1,26 @@
+# Product Spec Traceability
+
+Cette matrice trace les capacités produit de haut niveau (P0/P1/P2) aux sessions de développement.
+
+| Spec Section | Capability | Priority | Domain Objects | UI Reference | UI Gap | Roadmap Session | Implementation Status | Tests | Notes |
+|---|---|---|---|---|---|---|---|---|---|
+| §84 #1 | Landing page | P0 | | | | | Planned | | |
+| §84 #2 | Catalogue produits/packs | P0 | Product, Pack | | | 06 | Planned | | |
+| §84 #3 | Création de compte | P0 | User | | | 05 | Planned | | |
+| §84 #4 | Gestion d'événements | P0 | Workspace, Event | | | 05 | Planned | | |
+| §84 #5 | Studio d'invitation | P0 | Invitation, Section | | | 11-25 | Planned | | |
+| §84 #6 | Bibliothèque modèles | P0 | Template | | | 07 | Planned | | |
+| §84 #7 | Invitation par lien | P0 | PublishedSnapshot | | | 12 | Planned | | |
+| §84 #8 | RSVP personnalisable | P0 | RSVPForm, Field | | | 27 | Planned | | |
+| §84 #9 | Gestion des invités | P0 | Guest, Group | | | 26, 28-30 | Planned | | |
+| §84 #10 | QR Audio | P0 | QRCode, AudioMsg | | | 34, 36 | Planned | | |
+| §84 #11 | QR Photo / Vidéo | P0 | QRCode, MediaAsset | | | 34, 38 | Planned | | |
+| §84 #12 | Gestion des médias | P0 | MediaSpace | | | 35, 39 | Planned | | |
+| §84 #13 | Mode privé/collab | P0 | MediaSpace | | GAP-005 | 41 | Planned | | |
+| §84 #14 | Export ZIP | P0 | | | GAP-006 | 43 | Planned | | |
+| §84 #15 | Quotas stockage | P0 | StorageQuota | | GAP-003 | 35 | Planned | | |
+| §84 #16 | Paiement | P0 | Order, Payment | | | 44, 45 | Planned | | |
+| §84 #17 | Profil | P0 | User | | | 48 | Planned | | |
+| §84 #18 | Cartes remerc. | P0 | PrintProduct | | GAP-007 | 49-55 | Planned | | |
+| §84 #19 | Commandes phys. | P0 | Order | | GAP-007 | 49-55 | Planned | | |
+| §84 #20 | Back-office | P0 | | | GAP-008+ | 56-62 | Planned | | |

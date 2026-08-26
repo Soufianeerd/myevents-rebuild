@@ -1,32 +1,37 @@
-# Product Contract
+# Index de Gouvernance (Product Contract)
 
-Ce document définit la stratégie produit globale de MyEvent's.
+Ce document est l'Index de Gouvernance de MyEvents.
+Le carrousel de maquettes ne constitue pas le Product Master fonctionnel à lui seul.
 
-## CANONICAL PRODUCT/UX SOURCE
+## Hiérarchie des Sources de Vérité
 
-- **docs/myevents/MyEvents-carrousel.html** (Carrousel de 47 écrans)
-- **docs/myevents/s-\*.js** (Métadonnées des écrans et composants)
-- **docs/myevents/ds.css** (Design System)
-- **docs/myevents/lib.js** (Composants et patterns UX transversaux)
+### 1. PRODUCT-SPEC = WHAT (Source Primaire)
+- Source primaire : `docs/product/source/MYEVENTS_CAHIER_DES_CHARGES.md`
+- Index exploitable : [PRODUCT-SPEC](./PRODUCT-SPEC.md)
+- Traçabilité : [SPEC-TRACEABILITY](./SPEC-TRACEABILITY.md)
+- Domaine : [DOMAIN-MAP](./DOMAIN-MAP.md)
 
-Ces fichiers dictent la roadmap produit, les parcours, le wording, l'architecture de l'information, l'UX/UI de référence, les prix visibles et le responsive.
+### 2. DECISION-REGISTER
+- [DECISION-REGISTER](./DECISION-REGISTER.md) : Seules les décisions explicitement validées par le propriétaire modifient le cahier des charges.
 
-## TECHNICAL CONSTRAINTS
+### 3. UI/UX REFERENCE = HOW IT LOOKS / HOW IT FEELS
+- **docs/myevents/** (Carrousel, JS, CSS)
+- Définit la direction artistique, layouts, hiérarchie, responsive, etc.
+- Ne définit pas les entités métier, cycles de vie, ou autorisations.
+- [UI-GAPS](./UI-GAPS.md) : Identifier les gaps de design avant implémentation.
 
-- Architecture actuelle du rebuild : Implémentation locale-first (Core, use cases, provider contracts, local adapters, tenant isolation).
-- Pas de base de données distante en local-first.
+### 4. LEGACY PROTOTYPE = ORIGINAL EXPERIENCE REFERENCE
+- [LEGACY-PROTOTYPE](./LEGACY-PROTOTYPE.md) : Référence d'expérience (portes, sceau, expérience verticale, etc.).
 
-## EXTERNAL NORMATIVE CONSTRAINTS
+### 5. ARCHITECTURE = HOW IT IS BUILT
+- `docs/01-ARCHITECTURE.md` : Server Actions, Zod, Domain, Local-first, Core pur.
+- `docs/02-LOCAL-FIRST.md`
 
-- **WCAG 2.2 AA** : Standard minimum pour l'accessibilité.
-- **OWASP** : Standard minimum pour la sécurité (ex: Scrypt).
-- **Next.js** : Garde-fous techniques (App Router, Server Actions).
+### 6. EXTERNAL STANDARDS
+- WCAG 2.2 AA (Accessibilité), OWASP (Sécurité), Standards Web, Next.js best practices.
 
-## Règles Majeures
+### 7. ROADMAPS
+- [08-ROADMAP-DETAILED](../08-ROADMAP-DETAILED.md)
+- `docs/07-ROADMAP.md`
 
-- **Local-First** : Même règles métier, mêmes schémas, mêmes entitlements, mêmes composants et mêmes tests de domaine. Seuls les adapters changent en mode connecté.
-- **Pricing** :
-  - Invitation digitale : 14,99 €
-  - Invitation + Photo/Vidéo : 29,99 €
-  - Invitation + Photo/Vidéo + Audio : 39,99 €
-    (Paiement unique par événement, pas d'abonnement).
+En cas de contradiction, voir le [CONFLICT-REGISTER](./CONFLICT-REGISTER.md).

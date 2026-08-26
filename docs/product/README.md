@@ -1,7 +1,8 @@
 # Product Governance
 
-Ce dossier contient l'intégralité du **Product Contract** de MyEvent's.
-La source canonique produit est le **Carrousel de 47 écrans** (`docs/myevents/MyEvents-carrousel.html`).
+Ce dossier contient la gouvernance de MyEvent's.
+La source canonique primaire est le **Cahier des charges fonctionnel et produit** (`docs/product/source/MYEVENTS_CAHIER_DES_CHARGES.md`).
+Le **Carrousel de 47 écrans** (`docs/myevents/MyEvents-carrousel.html`) constitue la référence UI/UX canonique.
 
 ## Structure
 
