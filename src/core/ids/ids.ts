@@ -8,6 +8,9 @@ export type OpaqueId<T extends string> = string & { readonly __brand: T };
 
 export type UserId = OpaqueId<'UserId'>;
 export type TenantId = OpaqueId<'TenantId'>;
+export type WorkspaceId = OpaqueId<'WorkspaceId'>;
+export type EventId = OpaqueId<'EventId'>;
+export type EventMemberId = OpaqueId<'EventMemberId'>;
 
 /**
  * Creates an OpaqueId from a raw string.

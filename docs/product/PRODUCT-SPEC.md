@@ -4,10 +4,12 @@ Cette spécification est la couche indexée du cahier des charges principal de M
 Elle permet de mapper les exigences fonctionnelles vers le code, la roadmap et les tests.
 
 ## 1. Source Canonique
+
 La source primaire et immuable est : `docs/product/source/MYEVENTS_CAHIER_DES_CHARGES.md`.
 Ce document ne remplace pas la source, il l'indexe.
 
 ## 2. P0 - Première version commercialisable (Réf: §84)
+
 1. Landing page
 2. Catalogue produits/packs
 3. Création de compte
@@ -30,6 +32,7 @@ Ce document ne remplace pas la source, il l'indexe.
 20. Back-office
 
 ## 3. Règles Produit Immutables (Réf: §88)
+
 Ces règles doivent rester immédiatement visibles pour tous les futurs agents.
 
 - **RULE-001** : Une invitation digitale est un lien, pas un QR code.

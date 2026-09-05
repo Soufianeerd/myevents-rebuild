@@ -11,6 +11,8 @@ import {
   NodeTokenHasher,
   NodeSecretTokenProvider,
   EnvAppUrlProvider,
+  LocalWorkspaceRepository,
+  LocalEventRepository,
 } from '../../providers/local';
 import type { AppContainer } from './types';
 
@@ -40,6 +42,8 @@ export const createContainer = (): AppContainer => {
   const userRepository = new LocalUserRepository(dataDir);
   const sessionRepository = new LocalSessionRepository(dataDir);
   const passwordResetRepository = new LocalPasswordResetRepository(dataDir);
+  const workspaceRepository = new LocalWorkspaceRepository(dataDir);
+  const eventRepository = new LocalEventRepository(dataDir);
 
   const mailProvider = new LocalMailProvider(dataDir, clock);
   const tokenHasher = new NodeTokenHasher();
@@ -52,6 +56,8 @@ export const createContainer = (): AppContainer => {
     userRepository,
     sessionRepository,
     passwordResetRepository,
+    workspaceRepository,
+    eventRepository,
     passwordHasher,
     mailProvider,
     tokenHasher,

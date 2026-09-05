@@ -10,6 +10,8 @@ import type {
   SecretTokenProvider,
   AppUrlProvider,
 } from '../../providers/contracts';
+import type { WorkspaceRepository } from '../../providers/contracts/WorkspaceRepository';
+import type { EventRepository } from '../../providers/contracts/EventRepository';
 
 export interface AppContainer {
   clock: Clock;
@@ -17,6 +19,8 @@ export interface AppContainer {
   userRepository: UserRepository;
   sessionRepository: SessionRepository;
   passwordResetRepository: PasswordResetRepository;
+  workspaceRepository: WorkspaceRepository;
+  eventRepository: EventRepository;
   passwordHasher: PasswordHasher;
   mailProvider: MailProvider;
   tokenHasher: TokenHasher;

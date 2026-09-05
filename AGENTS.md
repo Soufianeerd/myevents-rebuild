@@ -22,7 +22,9 @@ Avant chaque développement de fonctionnalité (Feature) :
 8. Lancer `pnpm test:product` et l'ensemble de la suite de validation (`pnpm check:full`).
 
 ==================================================
+
 # FUTURE PROMPT CONTRACT
+
 ==================================================
 
 AVANT CHAQUE SESSION FEATURE :

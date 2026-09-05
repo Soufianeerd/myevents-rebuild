@@ -1,17 +1,16 @@
 # 07 Roadmap
 
-## Macro-Roadmap
+## Macro-Roadmap (V2)
 
-- **Session 00** : Fondations (Next.js, architecture stricte, local-first)
-- **Session 01** : Design system pixel-perfect
-- **Session 02** : AppShell / Sidebar / Topbar
-- **Session 03** : Architecture domaine + providers local-first
-- **Session 04** : Authentification locale
-- **Session 05** : Domaine événements
-- **Session 06** : InvitationDocument + Block Registry
-- **Session 07** : Culture Packs
-- **Session 08** : Renderer partagé
-- **Session 09** : Onboarding
-- **Sessions suivantes** : Studio découpé par sous-systèmes
-- **Puis** : Guests, RSVP, catalogue, fake billing, publication
-- **Puis seulement** : Supabase, Stripe, Resend, Storage cloud, Maps, IA, autres intégrations réelles.
+La séquence canonique de développement (détaillée dans `08-ROADMAP-DETAILED.md`) est la suivante :
+
+- **Session 00 à 04** : Fondations techniques, design system, AppShell, architecture et authentification locale.
+- **Session 05** : Event / Workspace Domain (Multi-Event Foundation).
+- **Session 06** : Commercial Capability Foundation.
+- **Session 07** : Invitation Model Foundation.
+- **Session 08** : Universal Model / Culture / I18N.
+- **Session 09** : Shared Invitation Renderer.
+- **Session 10** : Onboarding.
+- **Session 11** : Studio Minimal.
+- **Session 12** : Publication / Public Invitation.
+- **Sessions 13+** : Suite du Studio, Invités, RSVP, Médias, Commerce, Admin, et intégration des vrais providers.

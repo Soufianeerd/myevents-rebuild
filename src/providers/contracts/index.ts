@@ -6,3 +6,5 @@ export * from './auth/MailProvider';
 export * from './auth/TokenHasher';
 export * from './auth/SecretTokenProvider';
 export * from './auth/AppUrlProvider';
+export * from './WorkspaceRepository';
+export * from './EventRepository';

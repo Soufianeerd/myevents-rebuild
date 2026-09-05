@@ -2,6 +2,7 @@
 
 Seules les décisions explicitement validées par le propriétaire peuvent modifier une règle du cahier des charges. Aucune décision implicite. Aucune ancienne documentation ne peut silencieusement écraser le cahier des charges.
 
-| decisionId | date | status | sourceSection | oldRule | newRule | reason | affectedSessions |
-|---|---|---|---|---|---|---|---|
-| (Ex: DEC-001) | | | | | | | |
+| decisionId  | date       | status   | sourceSection | oldRule | newRule                                                                                                                                                                                     | reason                                                                                    | affectedSessions |
+| ----------- | ---------- | -------- | ------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------- |
+| DEC-GOV-001 | 2026-08-26 | APPROVED | All           | (N/A)   | Cahier des charges = source fonctionnelle canonique. Carrousel = source UI/UX canonique. Architecture docs = source technique.                                                              | Clarification des responsabilités documentaires (Pre-flight 05).                          | Toutes           |
+| DEC-ARC-001 | 2026-08-26 | APPROVED | §78           | (N/A)   | `TenantId` sert de frontière technique stricte (hard boundary). `Workspace` devient une entité métier (ex: Agence, Espace Personnel). 1 Tenant contient actuellement 1 Workspace principal. | Prépare l'architecture B2B et B2C, évite de dupliquer la sécurité, simplifie l'isolation. | 05, 56           |
