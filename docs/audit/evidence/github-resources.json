@@ -1,0 +1,200 @@
+[
+  {
+    "repo": "openai/plugins",
+    "stars": 6533,
+    "pushed_at": "2026-09-11T22:01:06Z",
+    "archived": false,
+    "license": null,
+    "description": "OpenAI Plugins",
+    "branch": "main"
+  },
+  {
+    "repo": "openai/skills",
+    "stars": 27009,
+    "pushed_at": "2026-09-08T20:35:26Z",
+    "archived": false,
+    "license": null,
+    "description": "Skills Catalog for Codex",
+    "branch": "main"
+  },
+  {
+    "repo": "addyosmani/agent-skills",
+    "stars": 93741,
+    "pushed_at": "2026-09-12T03:14:59Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "Production-grade engineering skills for AI coding agents.",
+    "branch": "main"
+  },
+  {
+    "repo": "VoltAgent/awesome-agent-skills",
+    "stars": 34192,
+    "pushed_at": "2026-09-07T08:53:43Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "A curated collection of 1000+ agent skills from official dev teams and the community, compatible with Claude Code, Codex, Gemini CLI, Cursor, and more.",
+    "branch": "main"
+  },
+  {
+    "repo": "coreyhaines31/marketingskills",
+    "stars": 49814,
+    "pushed_at": "2026-09-05T04:48:10Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "Marketing skills for Claude Code and AI agents. CRO, copywriting, SEO, analytics, and growth engineering.",
+    "branch": "main"
+  },
+  {
+    "repo": "supabase/supabase-js",
+    "stars": 4563,
+    "pushed_at": "2026-09-09T10:12:12Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "An isomorphic Javascript client for Supabase. Query your Supabase database, subscribe to realtime events, upload and download files, browse typescript examples, invoke postgres functions via rpc, invoke supabase edge functions, query pgvector.",
+    "branch": "master"
+  },
+  {
+    "repo": "supabase-community/supabase-mcp",
+    "stars": 2904,
+    "pushed_at": "2026-09-12T11:15:43Z",
+    "archived": false,
+    "license": "Apache-2.0",
+    "description": "Connect Supabase to your AI assistants",
+    "branch": "main"
+  },
+  {
+    "repo": "stripe/stripe-node",
+    "stars": 4501,
+    "pushed_at": "2026-09-12T05:42:53Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "Node.js library for the Stripe API.    ",
+    "branch": "master"
+  },
+  {
+    "repo": "vercel/next.js",
+    "stars": 142259,
+    "pushed_at": "2026-09-12T22:14:33Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "The React Framework",
+    "branch": "canary"
+  },
+  {
+    "repo": "microsoft/playwright",
+    "stars": 96027,
+    "pushed_at": "2026-09-11T23:00:20Z",
+    "archived": false,
+    "license": "Apache-2.0",
+    "description": "Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API. ",
+    "branch": "main"
+  },
+  {
+    "repo": "greensock/GSAP",
+    "stars": 28374,
+    "pushed_at": "2026-04-13T13:08:58Z",
+    "archived": false,
+    "license": null,
+    "description": "GSAP (GreenSock Animation Platform), a JavaScript animation library for the modern web",
+    "branch": "master"
+  },
+  {
+    "repo": "greensock/react",
+    "stars": 338,
+    "pushed_at": "2025-01-15T22:30:14Z",
+    "archived": false,
+    "license": null,
+    "description": "Tools for using GSAP in React, like useGSAP() which is a drop-in replacement for useLayoutEffect()/useEffect()",
+    "branch": "main"
+  },
+  {
+    "archived": false,
+    "branch": "main",
+    "description": "The modern toolkit for building drag and drop interfaces",
+    "license": "MIT",
+    "pushed_at": "2026-09-12T19:57:38Z",
+    "repo": "clauderic/dnd-kit",
+    "stars": 17623
+  },
+  {
+    "repo": "measuredco/puck",
+    "stars": 13304,
+    "pushed_at": "2026-09-11T14:04:04Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "The visual editor for React.",
+    "branch": "main"
+  },
+  {
+    "repo": "prevwong/craft.js",
+    "stars": 8743,
+    "pushed_at": "2025-02-14T09:25:28Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "🚀 A React Framework for building extensible drag and drop page editors",
+    "branch": "main"
+  },
+  {
+    "repo": "tldraw/tldraw",
+    "stars": 50325,
+    "pushed_at": "2026-09-12T21:24:42Z",
+    "archived": false,
+    "license": "NOASSERTION",
+    "description": "Build infinite canvas apps in React with the tldraw SDK. World's best, top-most agent recommended #1 five star SDK.",
+    "branch": "main"
+  },
+  {
+    "repo": "konvajs/react-konva",
+    "stars": 6410,
+    "pushed_at": "2026-09-09T13:16:35Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "React components for the Konva 2d canvas library. Build interactive graphics, design editors, and whiteboards with JSX.",
+    "branch": "master"
+  },
+  {
+    "repo": "getsentry/sentry-javascript",
+    "stars": 8744,
+    "pushed_at": "2026-09-12T01:38:53Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "Official Sentry SDKs for JavaScript",
+    "branch": "develop"
+  },
+  {
+    "repo": "resend/resend-node",
+    "stars": 951,
+    "pushed_at": "2026-09-11T19:00:20Z",
+    "archived": false,
+    "license": "MIT",
+    "description": "Resend's Official Node.js SDK",
+    "branch": "canary"
+  },
+  {
+    "repo": "netlify/netlify-mcp",
+    "stars": 61,
+    "pushed_at": "2026-09-10T16:52:25Z",
+    "archived": false,
+    "license": null,
+    "description": "Netlify's Official MCP server",
+    "branch": "main"
+  },
+  {
+    "repo": "Soufianeerd/hanna",
+    "stars": 0,
+    "pushed_at": "2026-09-09T09:28:03Z",
+    "archived": false,
+    "license": null,
+    "description": null,
+    "branch": "main"
+  },
+  {
+    "repo": "Soufianeerd/invitationmariagesalmaetsoufiane",
+    "stars": 0,
+    "pushed_at": "2026-09-01T17:21:38Z",
+    "archived": false,
+    "license": null,
+    "description": null,
+    "branch": "main"
+  }
+]

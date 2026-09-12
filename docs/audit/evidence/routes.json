@@ -1,0 +1,294 @@
+[
+  {
+    "name": "anon--",
+    "url": "http://localhost:3100/",
+    "title": "Create Next App",
+    "text": "MyEvent's\n\nFondation locale opérationnelle",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--connexion",
+    "url": "http://localhost:3100/connexion",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nConnexion\n\nBienvenue sur MyEvent's\n\nAdresse e-mail\nMot de passe\nMot de passe oublié ?\nSe connecter\nPas encore de compte ? S'inscrire",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--inscription",
+    "url": "http://localhost:3100/inscription",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nCréer un compte\n\nRejoignez MyEvent's aujourd'hui\n\nPrénom\nNom\nAdresse e-mail\nMot de passe\n\nAu moins 15 caractères.\n\nConfirmation du mot de passe\nCréer mon compte\nVous avez déjà un compte ? Se connecter",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--mot-de-passe-oublie",
+    "url": "http://localhost:3100/mot-de-passe-oublie",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nMot de passe oublié ?\n\nEntrez votre e-mail pour recevoir un lien de réinitialisation.\n\nAdresse e-mail\nEnvoyer le lien\nRetour à la connexion",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--reinitialiser-mot-de-passe",
+    "url": "http://localhost:3100/reinitialiser-mot-de-passe",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nLien invalide\n\nLe lien de réinitialisation est manquant ou invalide.\n\nDemander un nouveau lien",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--design-system",
+    "url": "http://localhost:3100/design-system",
+    "title": "Create Next App",
+    "text": "MyEvent's Design System\n\nCatalogue des primitives UI de la Session 01.\n\nCouleurs & Tokens\nAa\nBordeaux 900\nAa\nBordeaux 700 (Primary)\nAa\nBordeaux 500\nAa\nBordeaux 100\nAa\nGold 700\nAa\nGold 500 (Accent)\nAa\nGold 50\nAa\nInk\nAa\nIvory\nAa\nSuccess\nAa\nWarning\nAa\nDanger\nAa\nInfo\nTypographie\nDisplay XL (Serif)\nMyEvent's\nDisplay LG (Serif)\nQuiet Luxury\nHeading 1\nCréer une invitation\nHeading 2\nGérer vos invités\nHeading 3\nInformations générales\nHeading 4\nDétails de l'événement\nBody Large\n\nCréez votre invitation, gérez vos invités et rassemblez tous vos souvenirs au même endroit.\n\nBody Default\n\nUne expérience premium pensée pour les événements d'exception. Chaque détail compte.\n\nBody Small\n\nAppuyez sur Entrée pour valider votre sélection ou Échap pour annuler.\n\nOverline\nINVITATION PUBLIÉE\nSupport RTL (Arabic)\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\n\nرَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ\n\nBoutons\nVariants\nPrimary\nSecondary\nOutline\nGhost\nDanger\nGold\nTailles\nSmall (32px)\nDefault (40px)\nLarge (46px)\nÉtats\nDisabled Primary\nDisabled Secondary\nEn cours...\nIcon Buttons\nFormulaires\nPrénom de l'invité\n\nSera utilisé sur l'invitation nominative.\n\nAdresse email\n\nFormat d'email invalide.\n\nRôle\nInvité\nVIP\nFamille proche\nMessage pour les mariés\nInput désactivé\nPréférences\nNotifications Email\n\nRecevoir un récapitulatif quotidien\n\nMenu végétarien\nAllergies (préciser)\nPrésence\nSera présent\nNe pourra pas venir\nFeedback & États\nBadges\nBrouillon\nEn cours\nPublié\nEn attente\nRefusé\nPremium\nStatusMessage\nSynchronisation en cours...\nToutes les invitations envoyées\nCertains emails n'ont pas abouti\nErreur de connexion\nSkeletons & Spinners\nAlerts\nNouvelle fonctionnalité\nVous pouvez désormais importer vos invités depuis un fichier Excel.\nPaiement validé\nBientôt complet\nIl ne reste que 15 places disponibles.\nAbonnement expiré\nVeuillez renouveler votre abonnement pour continuer à envoyer des invitations.\nEmpty States\nAucun invité trouvé\n\nCommencez par ajouter votre premier invité ou importez une liste existante.\n\nOverlays (Radix UI)\nOuvrir Dialog\nOuvrir Drawer\n?",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--dev-mailbox",
+    "url": "http://localhost:3100/dev/mailbox",
+    "title": "Create Next App",
+    "text": "Mailbox accessible; content intentionally excluded.",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--dashboard",
+    "url": "http://localhost:3100/connexion",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nConnexion\n\nBienvenue sur MyEvent's\n\nAdresse e-mail\nMot de passe\nMot de passe oublié ?\nSe connecter\nPas encore de compte ? S'inscrire",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--events-new",
+    "url": "http://localhost:3100/connexion",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nConnexion\n\nBienvenue sur MyEvent's\n\nAdresse e-mail\nMot de passe\nMot de passe oublié ?\nSe connecter\nPas encore de compte ? S'inscrire",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "anon--events-audit-missing",
+    "url": "http://localhost:3100/connexion",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nConnexion\n\nBienvenue sur MyEvent's\n\nAdresse e-mail\nMot de passe\nMot de passe oublié ?\nSe connecter\nPas encore de compte ? S'inscrire",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "dashboard-desktop",
+    "url": "http://localhost:3100/dashboard",
+    "title": "Mes événements - MyEvent's",
+    "text": "Aller au contenu principal\nMYEVENT'S\nESPACE ORGANISATEUR\nMM\nMariage de M & M\n12 Septembre 2026\nGESTION\nDashboard\nProgramme\nInvités & Groupes\nEnvois & RSVP\nDESIGN\nStudio\nQR Codes\nSOUVENIRS\nPhotos & Vidéos\nLivre d'or audio\nJean Dupont\nPlan gratuit\nDashboard\nVue d'ensemble\nRechercher...\nAU\nMes événements\n\nGérez vos différents événements depuis cet espace.\n\nCréer un événement\n\nVous n'avez pas encore d'événement.\n\nCréer mon premier événement",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "event-new-desktop",
+    "url": "http://localhost:3100/events/new",
+    "title": "Create Next App",
+    "text": "Aller au contenu principal\nMYEVENT'S\nESPACE ORGANISATEUR\nMM\nMariage de M & M\n12 Septembre 2026\nGESTION\nDashboard\nProgramme\nInvités & Groupes\nEnvois & RSVP\nDESIGN\nStudio\nQR Codes\nSOUVENIRS\nPhotos & Vidéos\nLivre d'or audio\nJean Dupont\nPlan gratuit\nDashboard\nVue d'ensemble\nRechercher...\nAU\nCréer un événement\n\nRenseignez les informations principales. Vous pourrez les modifier plus tard.\n\nType d'événement *\nMariage\nAnniversaire\nEntreprise\nAutre\nLangue par défaut *\nFrançais\nAnglais\nNom de l'événement *\nDate de début *\nFuseau horaire *\nEurope/Paris\nAfrica/Casablanca\nLieu principal (optionnel)\nAnnuler\nCréer l'événement",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": [
+      {
+        "id": "label",
+        "impact": "critical",
+        "nodes": [["input[type=\"datetime-local\"]"]]
+      },
+      {
+        "id": "select-name",
+        "impact": "critical",
+        "nodes": [
+          ["select[name=\"type\"]"],
+          ["select[name=\"defaultLanguage\"]"],
+          ["select[name=\"timezone\"]"]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "event-created",
+    "url": "http://localhost:3100/dashboard",
+    "title": "Mes événements - MyEvent's",
+    "text": "Aller au contenu principal\nMYEVENT'S\nESPACE ORGANISATEUR\nMM\nMariage de M & M\n12 Septembre 2026\nGESTION\nDashboard\nProgramme\nInvités & Groupes\nEnvois & RSVP\nDESIGN\nStudio\nQR Codes\nSOUVENIRS\nPhotos & Vidéos\nLivre d'or audio\nJean Dupont\nPlan gratuit\nDashboard\nVue d'ensemble\nRechercher...\nAU\nMes événements\n\nGérez vos différents événements depuis cet espace.\n\nCréer un événement\nWEDDING\nÉvénement audit Phase 0\n10/23/2026\ndraft\nGérer →",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": []
+  },
+  {
+    "name": "event-detail",
+    "url": "http://localhost:3100/events/33e73511-ed6d-41bb-85a7-1d2aafef5872",
+    "title": "404: This page could not be found.",
+    "text": "Aller au contenu principal\nMYEVENT'S\nESPACE ORGANISATEUR\nMM\nMariage de M & M\n12 Septembre 2026\nGESTION\nDashboard\nProgramme\nInvités & Groupes\nEnvois & RSVP\nDESIGN\nStudio\nQR Codes\nSOUVENIRS\nPhotos & Vidéos\nLivre d'or audio\nJean Dupont\nPlan gratuit\nDashboard\nVue d'ensemble\nRechercher...\nAU\n404\nThis page could not be found.",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": [],
+    "a11y": []
+  },
+  {
+    "name": "event-edit-missing",
+    "url": "http://localhost:3100/events/33e73511-ed6d-41bb-85a7-1d2aafef5872/edit",
+    "title": "Create Next App",
+    "text": "404\nThis page could not be found.",
+    "overflow": {
+      "client": 1440,
+      "scroll": 1440
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--dashboard",
+    "url": "http://localhost:3100/dashboard",
+    "title": "Mes événements - MyEvent's",
+    "text": "Aller au contenu principal\nAU\nMes événements\n\nGérez vos différents événements depuis cet espace.\n\nCréer un événement\nWEDDING\nÉvénement audit Phase 0\n10/23/2026\ndraft\nGérer →",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--events-new",
+    "url": "http://localhost:3100/events/new",
+    "title": "Create Next App",
+    "text": "Aller au contenu principal\nAU\nCréer un événement\n\nRenseignez les informations principales. Vous pourrez les modifier plus tard.\n\nType d'événement *\nMariage\nAnniversaire\nEntreprise\nAutre\nLangue par défaut *\nFrançais\nAnglais\nNom de l'événement *\nDate de début *\nFuseau horaire *\nEurope/Paris\nAfrica/Casablanca\nLieu principal (optionnel)\nAnnuler\nCréer l'événement",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--connexion",
+    "url": "http://localhost:3100/connexion",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nConnexion\n\nBienvenue sur MyEvent's\n\nAdresse e-mail\nMot de passe\nMot de passe oublié ?\nSe connecter\nPas encore de compte ? S'inscrire",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--inscription",
+    "url": "http://localhost:3100/inscription",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nCréer un compte\n\nRejoignez MyEvent's aujourd'hui\n\nPrénom\nNom\nAdresse e-mail\nMot de passe\n\nAu moins 15 caractères.\n\nConfirmation du mot de passe\nCréer mon compte\nVous avez déjà un compte ? Se connecter",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--mot-de-passe-oublie",
+    "url": "http://localhost:3100/mot-de-passe-oublie",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nMot de passe oublié ?\n\nEntrez votre e-mail pour recevoir un lien de réinitialisation.\n\nAdresse e-mail\nEnvoyer le lien\nRetour à la connexion",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--reinitialiser-mot-de-passe",
+    "url": "http://localhost:3100/reinitialiser-mot-de-passe",
+    "title": "Create Next App",
+    "text": "M\nMyEvent's\nL'excellence à\nchaque événement.\n\nGérez vos invités, envoyez vos invitations et suivez les confirmations en toute simplicité.\n\n© 2026 MyEvent's\nMentions légales\nLien invalide\n\nLe lien de réinitialisation est manquant ou invalide.\n\nDemander un nouveau lien",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--design-system",
+    "url": "http://localhost:3100/design-system",
+    "title": "Create Next App",
+    "text": "MyEvent's Design System\n\nCatalogue des primitives UI de la Session 01.\n\nCouleurs & Tokens\nAa\nBordeaux 900\nAa\nBordeaux 700 (Primary)\nAa\nBordeaux 500\nAa\nBordeaux 100\nAa\nGold 700\nAa\nGold 500 (Accent)\nAa\nGold 50\nAa\nInk\nAa\nIvory\nAa\nSuccess\nAa\nWarning\nAa\nDanger\nAa\nInfo\nTypographie\nDisplay XL (Serif)\nMyEvent's\nDisplay LG (Serif)\nQuiet Luxury\nHeading 1\nCréer une invitation\nHeading 2\nGérer vos invités\nHeading 3\nInformations générales\nHeading 4\nDétails de l'événement\nBody Large\n\nCréez votre invitation, gérez vos invités et rassemblez tous vos souvenirs au même endroit.\n\nBody Default\n\nUne expérience premium pensée pour les événements d'exception. Chaque détail compte.\n\nBody Small\n\nAppuyez sur Entrée pour valider votre sélection ou Échap pour annuler.\n\nOverline\nINVITATION PUBLIÉE\nSupport RTL (Arabic)\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ\n\nرَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ\n\nBoutons\nVariants\nPrimary\nSecondary\nOutline\nGhost\nDanger\nGold\nTailles\nSmall (32px)\nDefault (40px)\nLarge (46px)\nÉtats\nDisabled Primary\nDisabled Secondary\nEn cours...\nIcon Buttons\nFormulaires\nPrénom de l'invité\n\nSera utilisé sur l'invitation nominative.\n\nAdresse email\n\nFormat d'email invalide.\n\nRôle\nInvité\nVIP\nFamille proche\nMessage pour les mariés\nInput désactivé\nPréférences\nNotifications Email\n\nRecevoir un récapitulatif quotidien\n\nMenu végétarien\nAllergies (préciser)\nPrésence\nSera présent\nNe pourra pas venir\nFeedback & États\nBadges\nBrouillon\nEn cours\nPublié\nEn attente\nRefusé\nPremium\nStatusMessage\nSynchronisation en cours...\nToutes les invitations envoyées\nCertains emails n'ont pas abouti\nErreur de connexion\nSkeletons & Spinners\nAlerts\nNouvelle fonctionnalité\nVous pouvez désormais importer vos invités depuis un fichier Excel.\nPaiement validé\nBientôt complet\nIl ne reste que 15 places disponibles.\nAbonnement expiré\nVeuillez renouveler votre abonnement pour continuer à envoyer des invitations.\nEmpty States\nAucun invité trouvé\n\nCommencez par ajouter votre premier invité ou importez une liste existante.\n\nOverlays (Radix UI)\nOuvrir Dialog\nOuvrir Drawer\n?",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--dev-mailbox",
+    "url": "http://localhost:3100/dev/mailbox",
+    "title": "Create Next App",
+    "text": "Mailbox accessible; content intentionally excluded.",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile--",
+    "url": "http://localhost:3100/",
+    "title": "Create Next App",
+    "text": "MyEvent's\n\nFondation locale opérationnelle",
+    "overflow": {
+      "client": 390,
+      "scroll": 390
+    },
+    "errors": []
+  }
+]
