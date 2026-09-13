@@ -53,6 +53,14 @@ test.describe('AppShell - Session 02', () => {
     // Focus and press enter on hamburger to ensure Radix captures focus origin
     const hamburger = page.locator('button[aria-label="Ouvrir le menu"]');
     await expect(hamburger).toBeVisible();
+    for (const control of [
+      hamburger,
+      page.getByRole('button', { name: 'Menu utilisateur' }),
+    ]) {
+      const box = await control.boundingBox();
+      expect(box?.width).toBeGreaterThanOrEqual(32);
+      expect(box?.height).toBeGreaterThanOrEqual(32);
+    }
     await hamburger.focus();
     await hamburger.press('Enter');
 

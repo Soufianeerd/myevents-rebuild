@@ -39,7 +39,7 @@ export const AppShell = ({ children, user }: AppShellProps) => {
         />
         <main
           id="main-content"
-          className="flex-1 overflow-y-auto outline-none p-4 md:p-7"
+          className="flex-1 overflow-y-auto outline-none p-[16px] md:p-7"
           tabIndex={-1}
         >
           {children}

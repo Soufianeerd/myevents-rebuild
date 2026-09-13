@@ -8,7 +8,8 @@ import type { EventId } from '../../ids';
 import type { AccessContext } from '../../access/access';
 import { requireAuthentication } from '../../access/access';
 import { Result, ok, err } from '../../result';
-import type { AppError } from '../../errors';
+import { type AppError, createAppError } from '../../errors';
+import { eventBasicsSchema } from '../validation';
 import { GetOrCreateWorkspaceUseCase } from '../../workspaces/usecases/GetOrCreateWorkspaceUseCase';
 
 export interface CreateEventInput {
@@ -39,6 +40,13 @@ export class CreateEventUseCase {
       return err(authResult.error);
     }
     const userContext = authResult.value;
+
+    const parsed = eventBasicsSchema.safeParse(input);
+    if (!parsed.success)
+      return err(
+        createAppError('VALIDATION_ERROR', parsed.error.issues[0].message),
+      );
+    input = parsed.data;
 
     const workspaceResult = await this.getOrCreateWorkspace.execute(context);
     if (!workspaceResult.ok) {

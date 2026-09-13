@@ -1,3 +1,4 @@
+import type { AuthAttemptLimiter } from '../../providers/contracts/auth/AuthAttemptLimiter';
 import type {
   Clock,
   IdGenerator,
@@ -14,6 +15,7 @@ import type { WorkspaceRepository } from '../../providers/contracts/WorkspaceRep
 import type { EventRepository } from '../../providers/contracts/EventRepository';
 
 export interface AppContainer {
+  authAttemptLimiter: AuthAttemptLimiter;
   clock: Clock;
   idGenerator: IdGenerator;
   userRepository: UserRepository;

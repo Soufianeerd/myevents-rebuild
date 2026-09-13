@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { formatEventDate } from '@/core/events/dates';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getEventAction } from '../../actions/events/actions';
@@ -8,9 +9,10 @@ import { DeleteEventButton } from './DeleteEventButton';
 export default async function EventDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const event = await getEventAction(params.id as EventId);
+  const { id } = await params;
+  const event = await getEventAction(id as EventId);
 
   if (!event) {
     notFound();
@@ -18,8 +20,8 @@ export default async function EventDetailPage({
 
   return (
     <div className="mx-auto max-w-5xl">
-      <div className="mb-6 flex items-start justify-between gap-6">
-        <div>
+      <div className="mb-6 flex flex-col sm:flex-row items-start justify-between gap-6">
+        <div className="min-w-0 break-words">
           <div className="text-[11px] font-medium uppercase tracking-[1.6px] text-neutral-500 mb-1">
             {event.type}
           </div>
@@ -39,7 +41,7 @@ export default async function EventDetailPage({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">
+        <div className="min-w-0 break-words rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold tracking-tight text-neutral-900 mb-4">
             Détails
           </h2>
@@ -49,7 +51,8 @@ export default async function EventDetailPage({
                 Date de début
               </dt>
               <dd className="mt-1 text-sm text-neutral-900">
-                {new Date(event.startAt).toLocaleString()} ({event.timezone})
+                {formatEventDate(event.startAt, event.timezone)} (
+                {event.timezone})
               </dd>
             </div>
             {event.primaryLocation && (
@@ -82,7 +85,10 @@ export default async function EventDetailPage({
           </div>
           <p className="mt-4 text-sm text-neutral-500">
             Cet événement a été créé le{' '}
-            {new Date(event.createdAt).toLocaleDateString()}.
+            {new Date(event.createdAt).toLocaleDateString('fr-FR', {
+              timeZone: event.timezone,
+            })}
+            .
           </p>
         </div>
       </div>

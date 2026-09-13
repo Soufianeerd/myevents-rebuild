@@ -57,7 +57,9 @@ function getIntendedRoute(n) {
     10: '/inscription',
     11: '/mot-de-passe-oublie',
     13: '/dashboard',
-    16: '/dashboard',
+    14: '/dashboard',
+    15: '/events/new',
+    16: '/events/[id]',
   };
   return realRoutes[n] || 'TBD';
 }
@@ -131,12 +133,11 @@ for (const s of extractedScreens) {
       implementation: req.implementation || [],
       tests: req.tests || [],
       screens: [s.n],
-      evidence:
-        req.status === 'verified' ? { visual: 'Yes', manual: 'Yes' } : {},
+      evidence: req.evidence || {},
       coverage: coverage,
       kind: req.kind || 'structure',
       sourceNeedles: req.sourceNeedles || [],
-      notes: [],
+      notes: req.notes || [],
     });
   });
 }

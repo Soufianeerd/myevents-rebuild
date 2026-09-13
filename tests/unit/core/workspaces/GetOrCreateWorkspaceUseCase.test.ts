@@ -25,6 +25,9 @@ describe('GetOrCreateWorkspaceUseCase', () => {
   beforeEach(() => {
     mockWorkspaceRepo = {
       create: vi.fn(),
+      getOrCreatePrimary: vi
+        .fn()
+        .mockImplementation(async (candidate) => candidate),
       findById: vi.fn(),
       findByTenantId: vi.fn(),
       update: vi.fn(),
@@ -77,6 +80,6 @@ describe('GetOrCreateWorkspaceUseCase', () => {
       expect(result.value.id).toBe('mock-workspace-id');
       expect(result.value.tenantId).toBe('tenant-1');
     }
-    expect(mockWorkspaceRepo.create).toHaveBeenCalledTimes(1);
+    expect(mockWorkspaceRepo.getOrCreatePrimary).toHaveBeenCalledTimes(1);
   });
 });

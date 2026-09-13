@@ -5,7 +5,9 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'jsdom',
+    environment: 'node',
+    maxWorkers: 1,
+    testTimeout: 15000,
     alias: {
       '@': path.resolve(__dirname, './src'),
     },

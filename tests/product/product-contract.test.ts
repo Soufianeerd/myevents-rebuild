@@ -22,6 +22,7 @@ interface Requirement {
   screens: string[];
   status: string;
   implementation: string[];
+  evidence: Record<string, string>;
 }
 const requirements: Requirement[] = reqJson.requirements;
 
@@ -63,6 +64,8 @@ describe('Product Contract Integrity', () => {
         '/inscription',
         '/mot-de-passe-oublie',
         '/dashboard',
+        '/events/new',
+        '/events/[id]',
         'TBD',
       ]).toContain(route);
     });
@@ -81,6 +84,17 @@ describe('Product Contract Integrity', () => {
         });
       }
     });
+  });
+
+  it('keeps traceability evidence backed by existing files', () => {
+    for (const req of requirements) {
+      for (const evidence of Object.values(req.evidence)) {
+        expect(
+          fs.existsSync(path.resolve(__dirname, '../../', evidence)),
+          `${req.id}: ${evidence}`,
+        ).toBe(true);
+      }
+    }
   });
 
   it('should match actual strings in the canonical files (Source Fidelity Anchor)', () => {

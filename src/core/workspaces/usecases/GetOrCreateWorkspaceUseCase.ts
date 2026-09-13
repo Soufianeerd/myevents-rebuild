@@ -42,7 +42,6 @@ export class GetOrCreateWorkspaceUseCase {
       updatedAt: now,
     };
 
-    await this.workspaceRepository.create(newWorkspace);
-    return ok(newWorkspace);
+    return ok(await this.workspaceRepository.getOrCreatePrimary(newWorkspace));
   }
 }

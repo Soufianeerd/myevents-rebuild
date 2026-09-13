@@ -26,10 +26,31 @@ export class LocalWorkspaceRepository implements WorkspaceRepository {
     });
   }
 
+  async getOrCreatePrimary(candidate: Workspace): Promise<Workspace> {
+    let workspace = candidate;
+    await this.store.update((data) => {
+      const workspaces = data || {};
+      const existing = Object.values(workspaces).find(
+        (w) => w.tenantId === candidate.tenantId,
+      );
+      if (existing) workspace = existing;
+      else {
+        if (workspaces[candidate.id])
+          throw new Error('Workspace ID already exists');
+        workspaces[candidate.id] = candidate;
+      }
+      return workspaces;
+    });
+    return workspace;
+  }
+
   async create(workspace: Workspace): Promise<void> {
     await this.store.update((data) => {
       const workspaces = data || {};
-      if (workspaces[workspace.id]) {
+      if (
+        workspaces[workspace.id] ||
+        Object.values(workspaces).some((w) => w.tenantId === workspace.tenantId)
+      ) {
         throw new Error(`Workspace with id ${workspace.id} already exists`);
       }
       workspaces[workspace.id] = workspace;

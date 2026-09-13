@@ -29,7 +29,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2"
+          className="flex h-[36px] w-[36px] shrink-0 items-center justify-center rounded-full bg-primary outline-none focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-2"
           aria-label="Menu utilisateur"
         >
           <span className="text-xs font-medium text-white">{initials}</span>

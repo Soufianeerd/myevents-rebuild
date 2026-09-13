@@ -1,25 +1,29 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const port = Number(process.env.E2E_PORT || 3200);
+if (!Number.isInteger(port) || port < 1024 || port > 65535)
+  throw new Error('Invalid E2E_PORT');
+const dataDir = process.env.E2E_DATA_DIR;
+if (!dataDir)
+  throw new Error('Run corepack pnpm test:e2e to create isolated test data.');
+const baseURL = `http://localhost:${port}`;
+
 export default defineConfig({
   testDir: './tests/e2e',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
-  use: {
-    baseURL: 'http://127.0.0.1:3000',
-    trace: 'on-first-retry',
-  },
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-  ],
+  retries: 0,
+  workers: 1,
+  timeout: 60_000,
+  expect: { timeout: 15_000 },
+  reporter: [['list'], ['html', { open: 'never' }]],
+  use: { baseURL, trace: 'retain-on-failure' },
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'LOCAL_DATA_DIR=.data-e2e pnpm run start',
-    url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
+    command: `corepack pnpm start --hostname 127.0.0.1 --port ${port}`,
+    url: baseURL,
+    env: { APP_MODE: 'local', APP_URL: baseURL, LOCAL_DATA_DIR: dataDir },
+    reuseExistingServer: false,
+    timeout: 120_000,
   },
 });

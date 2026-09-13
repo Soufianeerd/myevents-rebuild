@@ -1,231 +1,115 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createContainer } from '@/server/container';
-import { getSessionCookie, clearSessionCookie } from '@/server/auth/session';
+import { z } from 'zod';
+import { createAuthenticationProvider } from '@/server/auth/provider';
 import {
-  LoginUserUseCase,
-  RegisterUserUseCase,
-  RequestPasswordResetUseCase,
-  ResetPasswordUseCase,
-  LogoutSessionUseCase,
-} from '@/core/auth';
-
-export async function logoutAction() {
-  const sessionToken = await getSessionCookie();
-  if (sessionToken) {
-    const { sessionRepository, tokenHasher } = createContainer();
-    const logoutUseCase = new LogoutSessionUseCase(
-      sessionRepository,
-      tokenHasher,
-    );
-    await logoutUseCase.execute(sessionToken);
-  }
-
-  await clearSessionCookie();
-  redirect('/connexion');
-}
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH,
+} from '@/core/auth/utils/PasswordPolicy';
 
 export type ActionState = {
   success?: boolean;
   error?: string;
   fieldErrors?: Record<string, string[]>;
 };
-
-import { z } from 'zod';
-import { setSessionCookie } from '@/server/auth/session';
-
-const LoginSchema = z.object({
-  email: z.string().email('Adresse e-mail invalide.'),
-  password: z.string().min(1, 'Le mot de passe est requis.'),
+const emailSchema = z
+  .string()
+  .trim()
+  .max(254)
+  .email('Adresse e-mail invalide.');
+const passwordSchema = z
+  .string()
+  .min(
+    PASSWORD_MIN_LENGTH,
+    'Le mot de passe doit contenir au moins 15 caractères.',
+  )
+  .max(
+    PASSWORD_MAX_LENGTH,
+    'Le mot de passe est trop long (maximum 128 caractères).',
+  );
+const loginSchema = z.object({
+  email: emailSchema,
+  password: z
+    .string()
+    .min(1, 'Le mot de passe est requis.')
+    .max(PASSWORD_MAX_LENGTH),
 });
-
-export async function loginAction(
-  prevState: ActionState,
-  formData: FormData,
-): Promise<ActionState> {
-  const data = Object.fromEntries(formData);
-  const parsed = LoginSchema.safeParse(data);
-
-  if (!parsed.success) {
-    return { fieldErrors: parsed.error.flatten().fieldErrors };
-  }
-
-  const {
-    userRepository,
-    sessionRepository,
-    passwordHasher,
-    tokenHasher,
-    secretTokenProvider,
-    idGenerator,
-    clock,
-  } = createContainer();
-  const useCase = new LoginUserUseCase(
-    userRepository,
-    sessionRepository,
-    passwordHasher,
-    tokenHasher,
-    secretTokenProvider,
-    idGenerator,
-    clock,
-  );
-
-  const result = await useCase.execute(parsed.data);
-  if (!result.ok) {
-    return { error: result.error.message };
-  }
-
-  await setSessionCookie(
-    result.value.rawSessionToken,
-    new Date(result.value.session.expiresAt),
-  );
-  redirect('/dashboard');
-}
-
-const RegisterSchema = z
+const registerSchema = z
   .object({
     firstName: z
       .string()
-      .min(2, 'Le prénom doit contenir au moins 2 caractères.'),
-    lastName: z.string().min(2, 'Le nom doit contenir au moins 2 caractères.'),
-    email: z.string().email('Adresse e-mail invalide.'),
-    password: z
+      .trim()
+      .min(2, 'Le prénom doit contenir au moins 2 caractères.')
+      .max(100),
+    lastName: z
       .string()
-      .min(15, 'Le mot de passe doit contenir au moins 15 caractères.'),
-    passwordConfirmation: z.string(),
+      .trim()
+      .min(2, 'Le nom doit contenir au moins 2 caractères.')
+      .max(100),
+    email: emailSchema,
+    password: passwordSchema,
+    passwordConfirmation: z.string().max(PASSWORD_MAX_LENGTH),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
     message: 'Les mots de passe ne correspondent pas.',
     path: ['passwordConfirmation'],
   });
 
-export async function registerAction(
-  prevState: ActionState,
+export async function logoutAction() {
+  await (await createAuthenticationProvider()).logout();
+  redirect('/connexion');
+}
+export async function loginAction(
+  _previous: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
-  const data = Object.fromEntries(formData);
-  const parsed = RegisterSchema.safeParse(data);
-
-  if (!parsed.success) {
+  const parsed = loginSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success)
     return { fieldErrors: parsed.error.flatten().fieldErrors };
-  }
-
-  const {
-    userRepository,
-    sessionRepository,
-    passwordHasher,
-    tokenHasher,
-    secretTokenProvider,
-    idGenerator,
-    clock,
-  } = createContainer();
-  const useCase = new RegisterUserUseCase(
-    userRepository,
-    sessionRepository,
-    passwordHasher,
-    tokenHasher,
-    secretTokenProvider,
-    idGenerator,
-    clock,
-  );
-
-  const result = await useCase.execute(parsed.data);
-  if (!result.ok) {
-    return { error: result.error.message };
-  }
-
-  await setSessionCookie(
-    result.value.rawSessionToken,
-    new Date(result.value.session.expiresAt),
-  );
+  const result = await (
+    await createAuthenticationProvider()
+  ).login(parsed.data.email, parsed.data.password);
+  if (!result.ok) return { error: result.error.message };
   redirect('/dashboard');
 }
-
-const ForgotPasswordSchema = z.object({
-  email: z.string().email('Adresse e-mail invalide.'),
-});
-
-export async function forgotPasswordAction(
-  prevState: ActionState,
+export async function registerAction(
+  _previous: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
-  const data = Object.fromEntries(formData);
-  const parsed = ForgotPasswordSchema.safeParse(data);
-
-  if (!parsed.success) {
+  const parsed = registerSchema.safeParse(Object.fromEntries(formData));
+  if (!parsed.success)
     return { fieldErrors: parsed.error.flatten().fieldErrors };
-  }
-
-  const {
-    userRepository,
-    passwordResetRepository,
-    mailProvider,
-    tokenHasher,
-    secretTokenProvider,
-    appUrlProvider,
-    idGenerator,
-    clock,
-  } = createContainer();
-  const useCase = new RequestPasswordResetUseCase(
-    userRepository,
-    passwordResetRepository,
-    mailProvider,
-    tokenHasher,
-    secretTokenProvider,
-    appUrlProvider,
-    idGenerator,
-    clock,
-  );
-
-  await useCase.execute(parsed.data);
-
-  // Always return success to prevent email enumeration
+  const result = await (
+    await createAuthenticationProvider()
+  ).register(parsed.data);
+  if (!result.ok) return { error: result.error.message };
+  if (result.value.confirmationRequired) return { success: true };
+  redirect('/dashboard');
+}
+export async function forgotPasswordAction(
+  _previous: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const parsed = z
+    .object({ email: emailSchema })
+    .safeParse(Object.fromEntries(formData));
+  if (!parsed.success)
+    return { fieldErrors: parsed.error.flatten().fieldErrors };
+  await (await createAuthenticationProvider()).requestReset(parsed.data.email);
   return { success: true };
 }
-
-const ResetPasswordSchema = z.object({
-  token: z.string().min(1, 'Token manquant.'),
-  password: z
-    .string()
-    .min(8, 'Le mot de passe doit contenir au moins 8 caractères.'),
-});
-
 export async function resetPasswordAction(
-  prevState: ActionState,
+  _previous: ActionState,
   formData: FormData,
 ): Promise<ActionState> {
-  const data = Object.fromEntries(formData);
-  const parsed = ResetPasswordSchema.safeParse(data);
-
-  if (!parsed.success) {
+  const parsed = z
+    .object({ token: z.string().min(1).max(256), password: passwordSchema })
+    .safeParse(Object.fromEntries(formData));
+  if (!parsed.success)
     return { fieldErrors: parsed.error.flatten().fieldErrors };
-  }
-
-  const {
-    userRepository,
-    sessionRepository,
-    passwordResetRepository,
-    passwordHasher,
-    tokenHasher,
-    clock,
-  } = createContainer();
-  const useCase = new ResetPasswordUseCase(
-    userRepository,
-    sessionRepository,
-    passwordResetRepository,
-    passwordHasher,
-    tokenHasher,
-    clock,
-  );
-
-  const result = await useCase.execute({
-    rawResetToken: parsed.data.token,
-    newPassword: parsed.data.password,
-  });
-
-  if (!result.ok) {
-    return { error: result.error.message };
-  }
-
-  return { success: true };
+  const result = await (
+    await createAuthenticationProvider()
+  ).reset(parsed.data.token, parsed.data.password);
+  return result.ok ? { success: true } : { error: result.error.message };
 }

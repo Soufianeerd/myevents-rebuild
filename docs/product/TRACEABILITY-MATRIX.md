@@ -23,10 +23,10 @@
 | PROD-07-001 | 07 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |
 | PROD-08-001 | 08 | docs/myevents/s-public.js | implemented_unverified | src/app/(auth)/connexion/page.tsx | - | - | tests/e2e/auth.test.ts | - | - | - | - |
 | PROD-08-002 | 08 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |
-| AUTH-09-001 | 09 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/mot-de-passe-oublie/page.tsx | - | - | - | - | - | - | - |
-| AUTH-09-002 | 09 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/actions.ts | - | - | - | - | - | - | - |
-| AUTH-10-001 | 10 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/inscription/page.tsx | - | - | - | - | - | - | - |
-| AUTH-11-001 | 11 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/reinitialiser-mot-de-passe/page.tsx | - | - | - | - | - | - | - |
+| AUTH-09-001 | 09 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/mot-de-passe-oublie/page.tsx | tests/unit/providers/supabase/Authentication.test.ts, tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts | - | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé. |
+| AUTH-09-002 | 09 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/actions.ts | tests/unit/providers/supabase/Authentication.test.ts, tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts | - | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé. |
+| AUTH-10-001 | 10 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/inscription/page.tsx | tests/unit/providers/supabase/Authentication.test.ts, tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts | - | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé. |
+| AUTH-11-001 | 11 | docs/myevents/s-app.js | implemented_unverified | src/app/(auth)/reinitialiser-mot-de-passe/page.tsx | tests/unit/providers/supabase/Authentication.test.ts, tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts | - | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | tests/e2e/auth.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé. |
 | PROD-12a-001 | 12a | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | PROD-12b-001 | 12b | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | PROD-12c-001 | 12c | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
@@ -35,15 +35,15 @@
 | PROD-12d-003 | 12d | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | PROD-12d-004 | 12d | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | PROD-12d-005 | 12d | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
-| PROD-13-001 | 13 | docs/myevents/s-app.js | implemented_unverified | src/app/(app)/layout.tsx, src/components/layout/AppShell.tsx | - | - | tests/e2e/appshell.test.ts | - | - | - | - |
+| PROD-13-001 | 13 | docs/myevents/s-app.js | implemented_unverified | src/app/(app)/layout.tsx, src/components/layout/AppShell.tsx | - | - | tests/e2e/appshell.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | tests/e2e/appshell.test.ts | - | Cibles tactiles 36 px et marges mobile corrigées. Contexte et navigation de démonstration encore présents. |
 | PROD-13-002 | 13 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | PROD-13-003 | 13 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | PROD-13-004 | 13 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
-| EVENT-14-001 | 14 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
+| EVENT-14-001 | 14 | docs/myevents/s-app.js | implemented_unverified | src/app/(app)/dashboard/page.tsx | tests/unit/core/events/dates.test.ts | tests/integration/providers/local/EventIsolation.test.ts | tests/e2e/events.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | tests/e2e/events.test.ts | tests/integration/supabase/Rls.test.ts | CRUD et isolation verified en local (R0). Staging et composition complète de la maquette en attente. |
 | EVENT-14-002 | 14 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | EVENT-14-003 | 14 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | EVENT-14-004 | 14 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
-| EVENT-15-001 | 15 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
+| EVENT-15-001 | 15 | docs/myevents/s-app.js | implemented_unverified | src/app/(app)/events/EventForm.tsx, src/app/(app)/events/[id]/edit/page.tsx | tests/unit/core/events/dates.test.ts | tests/integration/providers/local/EventIsolation.test.ts | tests/e2e/events.test.ts | docs/audit/R0-VALIDATION-2026-09-13.md | tests/e2e/events.test.ts | tests/integration/supabase/Rls.test.ts | CRUD et isolation verified en local (R0). Staging et composition complète de la maquette en attente. |
 | EVENT-15-002 | 15 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | EVENT-16-001 | 16 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |
 | EVENT-17-001 | 17 | docs/myevents/s-app.js | planned | - | - | - | - | - | - | - | - |

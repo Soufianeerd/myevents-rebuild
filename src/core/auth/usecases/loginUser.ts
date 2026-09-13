@@ -58,6 +58,9 @@ export class LoginUserUseCase {
       401,
     );
 
+    if (!command.password || command.password.length > 128)
+      return err(genericAuthError);
+
     const emailResult = normalizeEmail(command.email);
     if (!emailResult.ok) return err(genericAuthError);
 

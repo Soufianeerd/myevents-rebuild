@@ -1,4 +1,5 @@
 import type { Event } from '../models';
+import { eventBasicsSchema } from '../validation';
 import type { EventRepository, Clock } from '../../../providers/contracts';
 import type { AccessContext } from '../../access/access';
 import { requireAuthentication } from '../../access/access';
@@ -62,6 +63,12 @@ export class UpdateEventBasicsUseCase {
       updatedAt: this.clock.now().toISOString(),
     };
 
+    const parsed = eventBasicsSchema.safeParse(updatedEvent);
+    if (!parsed.success)
+      return err(
+        createAppError('VALIDATION_ERROR', parsed.error.issues[0].message),
+      );
+    Object.assign(updatedEvent, parsed.data);
     await this.eventRepository.update(updatedEvent);
 
     return ok(updatedEvent);

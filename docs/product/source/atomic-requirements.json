@@ -12,6 +12,19 @@
         "text": "Formulaire d'inscription avec validation de mot de passe.",
         "implementation": [
           "src/app/(auth)/inscription/page.tsx"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/providers/supabase/Authentication.test.ts",
+          "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+          "a11y": "tests/e2e/auth.test.ts",
+          "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+        },
+        "notes": [
+          "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
         ]
       }
     ],
@@ -39,6 +52,19 @@
         "text": "Formulaire de saisie du nouveau mot de passe.",
         "implementation": [
           "src/app/(auth)/reinitialiser-mot-de-passe/page.tsx"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/providers/supabase/Authentication.test.ts",
+          "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+          "a11y": "tests/e2e/auth.test.ts",
+          "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+        },
+        "notes": [
+          "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
         ]
       }
     ],
@@ -70,6 +96,13 @@
         ],
         "tests": [
           "tests/e2e/appshell.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+          "a11y": "tests/e2e/appshell.test.ts"
+        },
+        "notes": [
+          "Cibles tactiles 36 px et marges mobile corrigées. Contexte et navigation de démonstration encore présents."
         ]
       },
       {
@@ -121,11 +154,27 @@
         "id": "REQ-14-CATALOG",
         "description": "La structure du catalogue affiche les événements sous forme de cartes.",
         "kind": "structure",
-        "status": "planned",
+        "status": "implemented_unverified",
         "sourceNeedles": [
           "`).join('')}"
         ],
-        "text": "La structure du catalogue affiche les événements sous forme de cartes."
+        "text": "La structure du catalogue affiche les événements sous forme de cartes.",
+        "implementation": [
+          "src/app/(app)/dashboard/page.tsx"
+        ],
+        "tests": [
+          "tests/e2e/events.test.ts",
+          "tests/integration/providers/local/EventIsolation.test.ts",
+          "tests/unit/core/events/dates.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+          "a11y": "tests/e2e/events.test.ts",
+          "security": "tests/integration/supabase/Rls.test.ts"
+        },
+        "notes": [
+          "CRUD et isolation verified en local (R0). Staging et composition complète de la maquette en attente."
+        ]
       },
       {
         "id": "REQ-14-CATALOG-STATE",
@@ -177,11 +226,28 @@
         "id": "REQ-15-SETTINGS",
         "description": "Page des paramètres de l'événement (nom, date, lieu).",
         "kind": "structure",
-        "status": "planned",
+        "status": "implemented_unverified",
         "sourceNeedles": [
           "creer-evenement"
         ],
-        "text": "Page des paramètres de l'événement (nom, date, lieu)."
+        "text": "Page des paramètres de l'événement (nom, date, lieu).",
+        "implementation": [
+          "src/app/(app)/events/EventForm.tsx",
+          "src/app/(app)/events/[id]/edit/page.tsx"
+        ],
+        "tests": [
+          "tests/e2e/events.test.ts",
+          "tests/integration/providers/local/EventIsolation.test.ts",
+          "tests/unit/core/events/dates.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+          "a11y": "tests/e2e/events.test.ts",
+          "security": "tests/integration/supabase/Rls.test.ts"
+        },
+        "notes": [
+          "CRUD et isolation verified en local (R0). Staging et composition complète de la maquette en attente."
+        ]
       },
       {
         "id": "REQ-15-ROLES",
@@ -1470,6 +1536,19 @@
         "text": "Formulaire de demande de réinitialisation de mot de passe.",
         "implementation": [
           "src/app/(auth)/mot-de-passe-oublie/page.tsx"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/providers/supabase/Authentication.test.ts",
+          "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+          "a11y": "tests/e2e/auth.test.ts",
+          "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+        },
+        "notes": [
+          "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
         ]
       },
       {
@@ -1483,6 +1562,19 @@
         "text": "Bouton d'envoi du lien de récupération.",
         "implementation": [
           "src/app/(auth)/actions.ts"
+        ],
+        "tests": [
+          "tests/e2e/auth.test.ts",
+          "tests/unit/providers/supabase/Authentication.test.ts",
+          "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+          "a11y": "tests/e2e/auth.test.ts",
+          "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+        },
+        "notes": [
+          "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
         ]
       }
     ],

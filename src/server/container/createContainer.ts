@@ -1,3 +1,4 @@
+import { LocalAuthAttemptLimiter } from '../../providers/local/auth/LocalAuthAttemptLimiter';
 import * as path from 'node:path';
 import { env } from '../../lib/env';
 import { SystemClock } from '../../providers/local/clock/SystemClock';
@@ -23,14 +24,17 @@ export const createContainer = (): AppContainer => {
     return containerInstance;
   }
 
-  // We only support 'local' for now, as specified in the rules
+  // This container is exclusively for local adapters. Connected requests use
+  // the request-scoped Supabase factories in events.ts and auth/provider.ts.
   if (env.APP_MODE !== 'local') {
     throw new Error(
-      `Unsupported APP_MODE: ${env.APP_MODE}. Only 'local' is supported in this session.`,
+      `Unsupported APP_MODE: ${env.APP_MODE}. The local container only accepts local mode.`,
     );
   }
 
+  // These files are runtime development data, never deployment assets.
   const dataDir = path.resolve(
+    /* turbopackIgnore: true */
     process.cwd(),
     process.env.LOCAL_DATA_DIR || '.data',
   );
@@ -51,6 +55,7 @@ export const createContainer = (): AppContainer => {
   const appUrlProvider = new EnvAppUrlProvider();
 
   containerInstance = {
+    authAttemptLimiter: new LocalAuthAttemptLimiter(dataDir, clock),
     clock,
     idGenerator,
     userRepository,

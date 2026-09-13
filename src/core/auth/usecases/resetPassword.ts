@@ -34,6 +34,10 @@ export class ResetPasswordUseCase {
       400,
     );
 
+    // Reject invalid passwords before touching a valid, single-use token.
+    const pwdResult = validatePasswordPolicy(command.newPassword);
+    if (!pwdResult.ok) return err(pwdResult.error);
+
     const tokenHash = this.tokenHasher.hashToken(command.rawResetToken);
     const now = this.clock.now().toISOString();
 
@@ -47,12 +51,6 @@ export class ResetPasswordUseCase {
       return err(genericError);
     }
     const token = consumeResult.value;
-
-    // 4. Validate new password
-    const pwdResult = validatePasswordPolicy(command.newPassword);
-    if (!pwdResult.ok) {
-      return err(pwdResult.error);
-    }
 
     // 5. Get user
     const user = await this.userRepository.findById(token.userId);

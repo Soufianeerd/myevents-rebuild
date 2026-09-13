@@ -6,12 +6,17 @@ import { env } from '@/lib/env';
 export const dynamic = 'force-dynamic';
 
 export default async function DevMailboxPage() {
-  if (env.APP_MODE !== 'local') {
+  if (env.NODE_ENV !== 'development' || env.APP_MODE !== 'local') {
     notFound();
   }
 
   const dataDir = process.env.LOCAL_DATA_DIR || '.data';
-  const mailDir = path.resolve(process.cwd(), dataDir, 'mail');
+  // Development messages are runtime data, never deployment assets.
+  const mailDir = path.resolve(
+    /* turbopackIgnore: true */ process.cwd(),
+    dataDir,
+    'mail',
+  );
 
   let files: string[] = [];
   try {

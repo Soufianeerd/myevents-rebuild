@@ -53,6 +53,15 @@ describe('ResetPasswordUseCase', () => {
       mockTokenHasher,
       mockClock,
     );
+    for (const password of ['TooShort123', 'x'.repeat(129)]) {
+      const invalid = await usecase.execute({
+        rawResetToken: 'raw_token',
+        newPassword: password,
+      });
+      expect(invalid.ok).toBe(false);
+    }
+    expect(mockResetRepo.consumeValidToken).not.toHaveBeenCalled();
+    expect(mockPassHasher.hash).not.toHaveBeenCalled();
     const result = await usecase.execute({
       rawResetToken: 'raw_token',
       newPassword: 'NewStrongPassword123!',

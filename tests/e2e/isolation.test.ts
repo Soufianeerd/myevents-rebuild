@@ -7,7 +7,7 @@ test.describe('Data Isolation', () => {
     page,
   }) => {
     // 1. Ensure .data-e2e exists and clean up a specific test user
-    const dataDir = path.resolve(process.cwd(), '.data-e2e');
+    const dataDir = process.env.E2E_DATA_DIR!;
     const defaultDataDir = path.resolve(process.cwd(), '.data');
 
     // 2. Register a new user
@@ -30,13 +30,13 @@ test.describe('Data Isolation', () => {
     // 3. Verify that the user exists in .data-e2e/users.json
     const e2eUsersFile = path.join(dataDir, 'users.json');
     const e2eUsersContent = await fs.readFile(e2eUsersFile, 'utf-8');
-    expect(e2eUsersContent).toContain(email);
+    expect(e2eUsersContent.includes(email)).toBe(true);
 
     // 4. Verify that .data/users.json (if it exists) does NOT contain the user
     try {
       const defaultUsersFile = path.join(defaultDataDir, 'users.json');
       const defaultUsersContent = await fs.readFile(defaultUsersFile, 'utf-8');
-      expect(defaultUsersContent).not.toContain(email);
+      expect(defaultUsersContent.includes(email)).toBe(false);
     } catch (error: unknown) {
       // If .data/users.json doesn't exist, that's also fine!
       expect((error as NodeJS.ErrnoException).code).toBe('ENOENT');

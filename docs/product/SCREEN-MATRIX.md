@@ -18,9 +18,9 @@
 | 12c | Onboarding · 4. Style | PROD | s-app.js | 1440 | 940 | TBD | planned | No | No | PROD-12c-001 | - |
 | 12d | Onboarding · 6. Votre première invitation | PROD | s-app.js | 1440 | 940 | TBD | planned | No | No | PROD-12d-001, PROD-12d-002, PROD-12d-003, PROD-12d-004, PROD-12d-005 | - |
 | 13 | Dashboard principal | PROD | s-app.js | 1440 | 1024 | /dashboard | implemented_unverified | No | No | PROD-13-001, PROD-13-002, PROD-13-003, PROD-13-004 | - |
-| 14 | Mes événements | EVENT | s-app.js | 1440 | 1024 | TBD | planned | No | No | EVENT-14-001, EVENT-14-002, EVENT-14-003, EVENT-14-004 | - |
-| 15 | Créer un événement | EVENT | s-app.js | 1440 | 1024 | TBD | planned | No | No | EVENT-15-001, EVENT-15-002 | - |
-| 16 | Détail événement | EVENT | s-app.js | 1440 | 1024 | /dashboard | planned | No | No | EVENT-16-001 | - |
+| 14 | Mes événements | EVENT | s-app.js | 1440 | 1024 | /dashboard | implemented_unverified | No | No | EVENT-14-001, EVENT-14-002, EVENT-14-003, EVENT-14-004 | - |
+| 15 | Créer un événement | EVENT | s-app.js | 1440 | 1024 | /events/new | implemented_unverified | No | No | EVENT-15-001, EVENT-15-002 | - |
+| 16 | Détail événement | EVENT | s-app.js | 1440 | 1024 | /events/[id] | planned | No | No | EVENT-16-001 | - |
 | 17 | Programme & sous-événements | EVENT | s-app.js | 1440 | 1024 | TBD | planned | No | No | EVENT-17-001 | - |
 | 18 | Studio · Sélection du template | STUDIO | s-studio.js | 1440 | 1024 | TBD | planned | No | No | STUDIO-18-001 | - |
 | 19 | Studio principal | STUDIO | s-studio.js | 1440 | 1024 | TBD | planned | No | No | STUDIO-19-001 | - |

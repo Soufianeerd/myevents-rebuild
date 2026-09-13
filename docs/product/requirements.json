@@ -717,11 +717,19 @@
       "implementation": [
         "src/app/(auth)/mot-de-passe-oublie/page.tsx"
       ],
-      "tests": [],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/providers/supabase/Authentication.test.ts",
+        "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+      ],
       "screens": [
         "09"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+        "a11y": "tests/e2e/auth.test.ts",
+        "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+      },
       "coverage": {
         "structural": true,
         "actions": true,
@@ -732,7 +740,9 @@
       "sourceNeedles": [
         "Mot de passe oublié"
       ],
-      "notes": []
+      "notes": [
+        "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
+      ]
     },
     {
       "id": "AUTH-09-002",
@@ -752,11 +762,19 @@
       "implementation": [
         "src/app/(auth)/actions.ts"
       ],
-      "tests": [],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/providers/supabase/Authentication.test.ts",
+        "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+      ],
       "screens": [
         "09"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+        "a11y": "tests/e2e/auth.test.ts",
+        "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+      },
       "coverage": {
         "structural": true,
         "actions": true,
@@ -767,7 +785,9 @@
       "sourceNeedles": [
         "Content de vous revoir."
       ],
-      "notes": []
+      "notes": [
+        "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
+      ]
     },
     {
       "id": "AUTH-10-001",
@@ -787,11 +807,19 @@
       "implementation": [
         "src/app/(auth)/inscription/page.tsx"
       ],
-      "tests": [],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/providers/supabase/Authentication.test.ts",
+        "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+      ],
       "screens": [
         "10"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+        "a11y": "tests/e2e/auth.test.ts",
+        "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+      },
       "coverage": {
         "structural": true,
         "actions": false,
@@ -802,7 +830,9 @@
       "sourceNeedles": [
         "Créer"
       ],
-      "notes": []
+      "notes": [
+        "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
+      ]
     },
     {
       "id": "AUTH-11-001",
@@ -822,11 +852,19 @@
       "implementation": [
         "src/app/(auth)/reinitialiser-mot-de-passe/page.tsx"
       ],
-      "tests": [],
+      "tests": [
+        "tests/e2e/auth.test.ts",
+        "tests/unit/providers/supabase/Authentication.test.ts",
+        "tests/unit/core/auth/usecases/ResetPasswordUseCase.test.ts"
+      ],
       "screens": [
         "11"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+        "a11y": "tests/e2e/auth.test.ts",
+        "security": "docs/audit/R0-VALIDATION-2026-09-13.md"
+      },
       "coverage": {
         "structural": true,
         "actions": false,
@@ -837,7 +875,9 @@
       "sourceNeedles": [
         "Réinitialiser"
       ],
-      "notes": []
+      "notes": [
+        "Socle fonctionnel verified en local (R0). Staging Supabase et parité visuelle complète non vérifiés ; statut global conservé."
+      ]
     },
     {
       "id": "PROD-12a-001",
@@ -1128,7 +1168,10 @@
       "screens": [
         "13"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+        "a11y": "tests/e2e/appshell.test.ts"
+      },
       "coverage": {
         "structural": true,
         "actions": false,
@@ -1139,7 +1182,9 @@
       "sourceNeedles": [
         "Le grand jour"
       ],
-      "notes": []
+      "notes": [
+        "Cibles tactiles 36 px et marges mobile corrigées. Contexte et navigation de démonstration encore présents."
+      ]
     },
     {
       "id": "PROD-13-002",
@@ -1255,13 +1300,23 @@
         "local",
         "connected"
       ],
-      "status": "planned",
-      "implementation": [],
-      "tests": [],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/(app)/dashboard/page.tsx"
+      ],
+      "tests": [
+        "tests/e2e/events.test.ts",
+        "tests/integration/providers/local/EventIsolation.test.ts",
+        "tests/unit/core/events/dates.test.ts"
+      ],
       "screens": [
         "14"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+        "a11y": "tests/e2e/events.test.ts",
+        "security": "tests/integration/supabase/Rls.test.ts"
+      },
       "coverage": {
         "structural": true,
         "actions": true,
@@ -1272,7 +1327,9 @@
       "sourceNeedles": [
         "`).join('')}"
       ],
-      "notes": []
+      "notes": [
+        "CRUD et isolation verified en local (R0). Staging et composition complète de la maquette en attente."
+      ]
     },
     {
       "id": "EVENT-14-002",
@@ -1389,13 +1446,24 @@
         "local",
         "connected"
       ],
-      "status": "planned",
-      "implementation": [],
-      "tests": [],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/(app)/events/EventForm.tsx",
+        "src/app/(app)/events/[id]/edit/page.tsx"
+      ],
+      "tests": [
+        "tests/e2e/events.test.ts",
+        "tests/integration/providers/local/EventIsolation.test.ts",
+        "tests/unit/core/events/dates.test.ts"
+      ],
       "screens": [
         "15"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/R0-VALIDATION-2026-09-13.md",
+        "a11y": "tests/e2e/events.test.ts",
+        "security": "tests/integration/supabase/Rls.test.ts"
+      },
       "coverage": {
         "structural": true,
         "actions": false,
@@ -1406,7 +1474,9 @@
       "sourceNeedles": [
         "creer-evenement"
       ],
-      "notes": []
+      "notes": [
+        "CRUD et isolation verified en local (R0). Staging et composition complète de la maquette en attente."
+      ]
     },
     {
       "id": "EVENT-15-002",

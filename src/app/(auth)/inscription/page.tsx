@@ -13,6 +13,26 @@ export default function RegisterPage() {
     initialState,
   );
 
+  if (state.success)
+    return (
+      <div
+        className="rounded-2xl border border-neutral-200 bg-white p-8"
+        role="status"
+      >
+        <h2 className="text-2xl font-semibold">Vérifiez votre e-mail</h2>
+        <p className="mt-3 text-neutral-600">
+          Confirmez votre adresse avec le lien reçu pour ouvrir votre espace
+          MyEvents.
+        </p>
+        <Link
+          href="/connexion"
+          className="mt-6 inline-block text-primary underline"
+        >
+          Retour à la connexion
+        </Link>
+      </div>
+    );
+
   return (
     <div className="bg-white px-8 py-10 shadow-sm rounded-2xl border border-neutral-200">
       <div className="mb-8 text-center">

@@ -101,7 +101,10 @@ function ResetPasswordForm() {
         <input type="hidden" name="token" value={token} />
 
         {state.error && (
-          <div className="rounded-md bg-danger-bg p-3 text-sm text-danger border border-danger/20">
+          <div
+            role="alert"
+            className="rounded-md bg-danger-bg p-3 text-sm text-danger border border-danger/20"
+          >
             {state.error}
           </div>
         )}
@@ -119,13 +122,15 @@ function ResetPasswordForm() {
             type="password"
             autoComplete="new-password"
             required
+            minLength={15}
+            maxLength={128}
             aria-invalid={!!state.fieldErrors?.password}
             aria-describedby={
               state.fieldErrors?.password ? 'password-error' : undefined
             }
           />
           <p className="text-xs text-neutral-500 mt-1">
-            Au moins 8 caractères.
+            Au moins 15 caractères (128 maximum).
           </p>
           {state.fieldErrors?.password && (
             <p id="password-error" className="text-sm text-danger mt-1">

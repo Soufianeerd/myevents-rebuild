@@ -1,3 +1,5 @@
+import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
@@ -167,17 +169,17 @@ test.describe('Authentication & Security Flow', () => {
     await page.click('button[type="submit"]');
     await expect(page.getByText('Vérifiez votre e-mail')).toBeVisible();
 
-    // Check Mailbox
-    await page.goto('/dev/mailbox');
-    await expect(page.getByText(resetEmail)).toBeVisible();
-
-    // Get the reset link from the page text
-    const content = await page.innerText('body');
-    const resetLinkMatch = content.match(
-      /http:\/\/(?:localhost|127\.0\.0\.1):3000\/reinitialiser-mot-de-passe\?token=([a-zA-Z0-9_-]+)/,
+    // Read only the test runner's isolated mail files; the public mailbox is closed in production.
+    const mailDir = path.join(process.env.E2E_DATA_DIR!, 'mail');
+    const files = await fs.readdir(mailDir);
+    const messages = await Promise.all(
+      files.map((file) => fs.readFile(path.join(mailDir, file), 'utf8')),
     );
-    expect(resetLinkMatch).not.toBeNull();
-    const resetLink = resetLinkMatch![0];
+    const content = messages.find((mail) => mail.includes(`To: ${resetEmail}`));
+    expect(!!content).toBe(true);
+    const resetLink = content!.match(
+      /https?:\/\/[^\s]+\/reinitialiser-mot-de-passe\?token=[a-zA-Z0-9_-]+/,
+    )![0];
 
     // Reset Password page a11y
     await page.goto(resetLink);
@@ -191,6 +193,15 @@ test.describe('Authentication & Security Flow', () => {
       ),
     ).toEqual([]);
 
+    await page.fill('input[name="password"]', 'TooShort123');
+    // Bypass only native validation to exercise the server boundary.
+    await page
+      .locator('form')
+      .evaluate((form) => ((form as HTMLFormElement).noValidate = true));
+    await page.click('button[type="submit"]');
+    await expect(
+      page.getByText('Le mot de passe doit contenir au moins 15 caractères.'),
+    ).toBeVisible();
     await page.fill('input[name="password"]', newPassword);
     await page.click('button[type="submit"]');
 
