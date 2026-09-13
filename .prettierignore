@@ -8,3 +8,5 @@ docs/product/TRACEABILITY-MATRIX.md
 docs/product/source/atomic-requirements.json
 docs/myevents/**/*.html
 pnpm-lock.yaml
+supabase/.temp/
+supabase/.branches/

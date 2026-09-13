@@ -1,5 +1,11 @@
 # Déploiement MyEvents — Vercel Preview + Supabase Staging
 
+> **Procédure Supabase remplacée par DEC-DEP-002 le 13 septembre 2026.** Le
+> propriétaire demande la récupération de son projet Supabase existant et une
+> migration Neon, gratuite uniquement. Consulter [NEON-MIGRATION.md](./NEON-MIGRATION.md)
+> pour l'état réel des accès et ressources. Les étapes ci-dessous décrivent
+> l'adapter R0 historique ; ne pas les exécuter pour la nouvelle cible.
+
 Cible validée par le propriétaire le 13 septembre 2026 : projet Vercel **myevents**, dépôt **Soufianeerd/myevents-rebuild**, PostgreSQL/Auth/Storage Supabase. Aucun hébergement MyEvents n'était configuré. La production et les clés Stripe Live restent interdites jusqu'à validation du parcours complet.
 
 ## État de la livraison

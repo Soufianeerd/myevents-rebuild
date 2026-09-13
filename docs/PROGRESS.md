@@ -13,18 +13,19 @@ Mis à jour le 13 septembre 2026. Ce suivi ne remplace ni le cahier des charges 
 
 ## En cours
 
-- Déploiement Preview persistant en préparation. Socle R0 validé : `pnpm check:full` réussit (12 tests produit, 2 architecture, 67 unitaires, 24 intégration, 14 E2E = 119). Build connecté Preview avec valeurs factices réussi ; 18 manifestes serveur contrôlés sans données locales ni fichiers d’environnement.
+- Migration du projet Supabase existant `cipzwuurweaeohgxzeti` vers Neon demandée par le propriétaire, en gratuit uniquement (DEC-DEP-002). Préparation et accès documentés dans [NEON-MIGRATION.md](./NEON-MIGRATION.md). Aucune donnée exportée ou transférée. L'adapter connecté reste Supabase tant que la migration n'est pas implémentée.
+- Socle R0 antérieur validé : `pnpm check:full` réussit (12 tests produit, 2 architecture, 67 unitaires, 24 intégration, 14 E2E = 119). Build connecté Preview avec valeurs factices réussi ; 18 manifestes serveur contrôlés sans données locales ni fichiers d’environnement.
 
 ## Bloqué pour une première vente
 
 - Funnel commercial, renderer/Studio, RSVP, commerce, médias et print/admin encore absents. Les adapters Supabase du socle sont écrits mais leur fonctionnement distant reste à vérifier.
 - Prix standalone/composition des offres, durée des droits, périodicité du stockage et paramètres print à finaliser dans les sessions commerciales. Sources contradictoires consignées ; aucune valeur modifiée.
-- Vercel : connexion propriétaire disponible depuis la reprise, création du projet en préparation. Supabase : CLI authentifiée disponible, aucun projet MyEvents existant ; région Paris et plan staging à confirmer. Aucun déploiement ni migration distante réalisé ; aucun autre projet modifié.
+- Vercel `myevents` créé vide sur Hobby ; aucun déploiement. Supabase `myevents-staging` créé gratuitement à Paris avant le changement de cible, sans migration appliquée. L'accès CLI au véritable projet source renvoie 403 ; connexion au compte propriétaire nécessaire. Organisation Neon `Soufiane` accessible sur Free, aucun projet créé. Voir le rapport de migration pour les identifiants et limites Auth.
 - Usage GSAP dans l'éditeur visuel à clarifier avant adoption ; le modèle d'animation peut avancer indépendamment du moteur.
 
 ## Prochain
 
-**Déployer et vérifier le socle en Preview** après connexion Vercel, création de Supabase staging et configuration Auth/SMTP. Exécuter `pnpm test:staging` puis vérifier les parcours réels et la persistance après redéploiement. Développement suivant : R1 catalogue/capabilities local, R2 invitation/Studio/RSVP, R3 paiement/adapters test, R4 souvenirs, R5 print/admin, R6 acquisition/release. Détails et critères dans l'audit.
+**Inventorier et sauvegarder le projet source**, restaurer sur une branche Neon de staging, adapter Auth/repos/stockage et vérifier les données avant de configurer Vercel Preview. La méthode de reprise des comptes dépend de l'inventaire Auth. Adapter les tests connectés à Neon, vérifier les parcours réels et la persistance après redéploiement. Développement suivant : R1 catalogue/capabilities local, R2 invitation/Studio/RSVP, R3 paiement/adapters test, R4 souvenirs, R5 print/admin, R6 acquisition/release. Détails et critères dans l'audit.
 
 ## Dette technique
 
@@ -39,6 +40,7 @@ Mis à jour le 13 septembre 2026. Ce suivi ne remplace ni le cahier des charges 
 
 - Respect de PRODUCT-SPEC et DEC-ARC-001 : TenantId frontière technique, Workspace entité métier.
 - DEC-DEP-001 : cible Vercel + Supabase approuvée par le propriétaire après l'audit. Dépendances Supabase et PGlite ajoutées pour les adapters et tests. Aucune règle commerciale ou aucun prix modifié.
+- DEC-DEP-002 remplace la cible Supabase par Neon à la demande du propriétaire ; récupération de l'existant préalable, budget gratuit uniquement, pas de facturation.
 - Données d'audit hors `.data`, aucun arrêt du serveur de l'autre projet sur 3000.
 - Aucun message externe, RSVP de production, paiement ou upload pendant les inspections de références.
 - Le chemin R0–R6 reste une proposition de séquencement ; il ne modifie aucune exigence du cahier des charges.
