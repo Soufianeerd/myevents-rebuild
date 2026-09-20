@@ -99,6 +99,13 @@ it('uses only a Vercel Preview system hostname as the initial auth origin', () =
   expect(
     deploymentEnvironment({
       ...preview,
+      VERCEL_BRANCH_URL: undefined,
+      VERCEL_URL: 'myevents-deploy-team.vercel.app',
+    }).APP_URL,
+  ).toBe('https://myevents-deploy-team.vercel.app');
+  expect(
+    deploymentEnvironment({
+      ...preview,
       APP_URL: 'https://staging.example.com',
     }).APP_URL,
   ).toBe('https://staging.example.com');

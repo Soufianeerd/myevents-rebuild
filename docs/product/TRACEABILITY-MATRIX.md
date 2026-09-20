@@ -4,7 +4,7 @@
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | PROD-01-001 | 01 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |
 | PROD-01-002 | 01 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |
-| PROD-01-003 | 01 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |
+| PROD-01-003 | 01 | docs/myevents/s-public.js | verified | src/app/page.tsx | - | - | tests/e2e/home.test.ts, tests/e2e/events.test.ts | docs/audit/HOME-2026-09-20.md | tests/e2e/home.test.ts | - | CTA vers /events/new vérifié : visiteur redirigé vers connexion, parcours Auth/Event existant couvert. Landing commerciale globale encore partielle. |
 | PROD-01-004 | 01 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |
 | PROD-02-001 | 02 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |
 | PROD-02-002 | 02 | docs/myevents/s-public.js | planned | - | - | - | - | - | - | - | - |

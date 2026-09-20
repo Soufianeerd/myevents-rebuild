@@ -81,13 +81,21 @@
         "local",
         "connected"
       ],
-      "status": "planned",
-      "implementation": [],
-      "tests": [],
+      "status": "verified",
+      "implementation": [
+        "src/app/page.tsx"
+      ],
+      "tests": [
+        "tests/e2e/home.test.ts",
+        "tests/e2e/events.test.ts"
+      ],
       "screens": [
         "01"
       ],
-      "evidence": {},
+      "evidence": {
+        "visual": "docs/audit/HOME-2026-09-20.md",
+        "a11y": "tests/e2e/home.test.ts"
+      },
       "coverage": {
         "structural": true,
         "actions": true,
@@ -98,7 +106,9 @@
       "sourceNeedles": [
         "Créer mon événement"
       ],
-      "notes": []
+      "notes": [
+        "CTA vers /events/new vérifié : visiteur redirigé vers connexion, parcours Auth/Event existant couvert. Landing commerciale globale encore partielle."
+      ]
     },
     {
       "id": "PROD-01-004",

@@ -133,7 +133,7 @@ export const envSchema = z
 export function deploymentEnvironment(
   input: Record<string, string | undefined>,
 ) {
-  const branch = input.VERCEL_BRANCH_URL;
+  const branch = input.VERCEL_BRANCH_URL || input.VERCEL_URL;
   if (
     !input.APP_URL &&
     input.VERCEL === '1' &&

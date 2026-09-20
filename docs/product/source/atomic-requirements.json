@@ -1220,11 +1220,25 @@
         "id": "REQ-01-CTA",
         "description": "Le CTA principal permet de créer un événement.",
         "kind": "action",
-        "status": "planned",
+        "status": "verified",
         "sourceNeedles": [
           "Créer mon événement"
         ],
-        "text": "Le CTA principal permet de créer un événement."
+        "text": "Le CTA principal permet de créer un événement.",
+        "implementation": [
+          "src/app/page.tsx"
+        ],
+        "tests": [
+          "tests/e2e/home.test.ts",
+          "tests/e2e/events.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/HOME-2026-09-20.md",
+          "a11y": "tests/e2e/home.test.ts"
+        },
+        "notes": [
+          "CTA vers /events/new vérifié : visiteur redirigé vers connexion, parcours Auth/Event existant couvert. Landing commerciale globale encore partielle."
+        ]
       },
       {
         "id": "REQ-01-FEATURES",
