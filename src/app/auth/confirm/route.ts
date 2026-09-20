@@ -4,7 +4,7 @@ import { env } from '@/lib/env';
 import { supabaseConfig } from '@/providers/supabase/config';
 
 export async function GET(request: NextRequest) {
-  if (env.APP_MODE !== 'connected')
+  if (env.APP_MODE !== 'connected' || env.CONNECTED_PROVIDER !== 'supabase')
     return new NextResponse(null, { status: 404 });
   const token = request.nextUrl.searchParams.get('token_hash');
   const config = supabaseConfig();

@@ -1,6 +1,18 @@
 import { EventId, WorkspaceId, TenantId, UserId, EventMemberId } from '../ids';
 
-export type EventLifecycleStatus = 'draft' | 'published' | 'archived';
+// Preserve the source lifecycle states during migration. Transitions remain
+// unavailable until their product sessions; editing basics must not reset them.
+export const eventLifecycleStatuses = [
+  'draft',
+  'setup',
+  'ready_for_publish',
+  'payment_required',
+  'published',
+  'suspended',
+  'completed',
+  'archived',
+] as const;
+export type EventLifecycleStatus = (typeof eventLifecycleStatuses)[number];
 
 export interface Event {
   id: EventId;

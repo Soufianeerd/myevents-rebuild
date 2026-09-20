@@ -1,6 +1,119 @@
 # Migration MyEvents de Supabase vers Neon
 
-État au 13 septembre 2026 : préparation, **aucune donnée source exportée ou migrée**.
+État au 15 septembre 2026 : **sauvegarde complète, 39 tables restaurées et
+schéma applicatif Neon en place**. Les adapters Auth/Event/Workspace sont
+branchés et testés. La reprise du compte existant nécessite son nouvel accès
+Neon confirmé, puis un rattachement explicite. Les parcours Auth avec e-mail et
+le déploiement Preview restent à valider.
+
+## Adapter applicatif du 15 septembre
+
+- `0001_application.sql` et `0002_legacy_import.sql` appliqués uniquement sur
+  `migration-staging` : 1 profil, 1 espace et 2 événements dans `myevents`.
+  Empreintes des 39 tables historiques inchangées après copie.
+- Neon Auth actif, confirmation e-mail par code obligatoire avec l'expéditeur
+  partagé gratuit. Interface de confirmation, SDK serveur, repositories Drizzle,
+  rôle `myevents_app` limité et RLS avec validation de la session.
+- `corepack pnpm dev:neon` lance le mode connecté sur le port 3300 à partir du
+  fichier privé `.env.neon.local`. Les scripts de sauvegarde/migration continuent
+  à utiliser `.env.migration.local`, avec la connexion propriétaire distincte.
+- Le compte source reste sans rattachement Neon jusqu'à confirmation du nouvel
+  accès par le propriétaire. Le script `migration:bind:identity` vérifie les deux
+  UUID explicites et les adresses confirmées avant toute association.
+- [Rapport, tests, captures et limites](./audit/NEON-ADAPTER-2026-09-15.md).
+  Aucun envoi d'e-mail ni basculement production réalisé par les tests.
+
+## Reprise du 14 septembre
+
+- Le navigateur est connecté au compte `Soufianeerd` et accède au projet source
+  `myevents`, dans `Soufianeerd's Org`, région Irlande (`eu-west-1`). Cet accès
+  navigateur ne change pas les credentials de la CLI, qui visaient un autre compte.
+- SQL en lecture seule : PostgreSQL **17.6**, base de **11 693 203 octets** au moment
+  du contrôle ; **2 événements, 2 sous-événements, 1 organisation, 1 appartenance,
+  1 compte Auth email et 1 identité**. Les trois tables privées `audit_logs`, `jobs`
+  et `webhook_events` sont vides. Aucun bucket, objet Storage ou secret Vault.
+- Six migrations applicatives existent, du 21 au 22 juillet 2026 : schémas/enums,
+  tenancy/events, infrastructure interne, contraintes/index/triggers, helpers/RLS,
+  protection et bootstrap du propriétaire. Leur résultat JSON et les données métier
+  ont d'abord été lus en mémoire via le SQL Editor. Ils sont désormais conservés
+  dans l'archive PostgreSQL durable et restaurés dans la branche de staging.
+- Source et rebuild ont des schémas différents : source `organizations`,
+  `organization_memberships`, `events(title,event_date,organization_id,created_by,...)`
+  et `sub_events(starts_at,ends_at,position,...)`. Ne pas écraser ces relations avec
+  les migrations R0 `profiles/workspaces/events`.
+- Projet Neon **myevents**, ID `twilight-mode-52723515`, PostgreSQL 17, Francfort,
+  créé dans l'organisation Free. Branche par défaut `main` :
+  `br-empty-bonus-b1xdamy1`. Branche de travail **migration-staging** :
+  `br-steep-firefly-b1trn4br`. La base `myevents` de staging contient désormais
+  les 39 tables récupérées ; `main` n'a pas été modifiée. Accès Object Storage
+  confirmé actif sur la branche, région `eu-central-1`. Aucune facturation activée.
+- Le réseau du poste ne joint pas la connexion IPv6 directe. Le tableau de bord
+  fournit le **session pooler IPv4 gratuit**, hôte
+  `aws-0-eu-west-1.pooler.supabase.com`, port **5432**, utilisateur
+  `postgres.cipzwuurweaeohgxzeti`, base `postgres`. Aucun addon IPv4 payant requis.
+- Le fichier local ignoré `.env.migration.local`, en `0600`, contient maintenant
+  l'accès source fourni par le propriétaire et la connexion Neon de staging.
+  La connexion PostgreSQL source a été validée par le dump réel en lecture seule.
+  PostgreSQL client 18.3 existe sous
+  `/opt/homebrew/opt/libpq/bin`, contrairement au client 14 par défaut trop ancien.
+
+### Sauvegarde exécutée et contrôlée
+
+`pnpm migration:backup:source` utilise ce fichier privé. Le script refuse un autre
+projet, le transaction pooler, l'absence de TLS ou un mot de passe manquant. Il ouvre
+une transaction source en lecture seule, exporte un snapshot PostgreSQL et utilise
+**le même snapshot pour les comptages et pg_dump**. Tous les schémas sont inclus.
+Le dump custom, la table des matières et le manifeste SHA-256 sont conservés en
+permissions privées sous `~/.local/share/myevents/migrations/`, hors du dépôt.
+
+Le script ne restaure rien et ne modifie aucune donnée source. Une erreur laisse
+un état incomplet et un diagnostic privé ; elle ne produit pas de manifeste de
+réussite. Le code de sortie zéro atteste la création de l'archive, pas la réussite
+de la migration. Les fichiers Storage et la configuration hors base restent des
+volets séparés, même si le comptage Storage source est actuellement nul.
+
+Archive du 14 septembre à 14:34 UTC : **345 288 octets**, SHA-256
+`3d343153f538e2160cd894711607ca65203aa782654f5b3cffadfbc5cf812470`.
+Le dossier privé est
+`~/.local/share/myevents/migrations/2026-09-14T14-34-22.278Z-8d6ee1ff-115b-4e96-8c66-e851c8b40461/`.
+Il contient `source.dump`, `contents.txt` et `manifest.json`.
+
+Le premier essai a révélé que passer une URI dans `PGDATABASE` faisait interpréter
+l'URI comme un nom de base locale. Le script utilise maintenant les paramètres
+libpq séparés (`PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD`, `PGDATABASE`, `PGSSLMODE`).
+Les tests vérifient cette connexion au niveau des processus, le snapshot partagé,
+les permissions, le SHA-256 et le refus d'une archive incomplète ou d'un client trop ancien.
+
+### Restauration de staging vérifiée
+
+`pnpm migration:restore:staging --plan <dossier-privé>` produit la sélection et les
+empreintes attendues sans connexion distante. `--apply` cible exclusivement
+l'endpoint direct de `migration-staging`, refuse une base déjà occupée, puis
+restaure en une transaction avec arrêt à la première erreur.
+
+- **392 entrées restaurées, 39 tables** dans `auth`, `public`, `private`, `storage`
+  et `supabase_migrations`, avec les extensions `pgcrypto` et `uuid-ossp`.
+- **228 entrées exclues de la restauration**, conservées dans l'archive complète
+  et listées dans `neon-excluded.txt` : ACL/owners Supabase et composants de service
+  Realtime, GraphQL, PgBouncer, Vault, event triggers et instrumentation.
+- Les comptages et SHA-256 des lignes COPY, triées sans perte de doublons,
+  correspondent pour les **39 tables**, y compris les tables Auth et de migrations.
+  Les 2 événements, 2 sous-événements, 1 organisation, 1 appartenance et 1 compte
+  source sont présents. Les anciens enregistrements de sessions sont conservés
+  comme données historiques ; ils ne constituent pas des sessions Neon Auth.
+- Les **13 policies métier** et la RLS des quatre tables métier sont présentes.
+  Aucun index ni aucune contrainte invalide. La séquence Auth vérifiée correspond
+  à l'archive : `last_value=6`, `is_called=true`.
+- Le rôle `authenticated` est `NOLOGIN`, sans privilège sur les tables métier/Auth.
+  Les accès PUBLIC aux schémas, tables, séquences et fonctions restaurés sont
+  révoqués. Ces données ne sont pas encore exposées à l'application.
+- Preuves privées : `neon-restore-plan.json`, `neon-selection.txt`,
+  `neon-excluded.txt`, `neon-restore.sql`, `neon-restore-verified.json`.
+
+Ne pas relancer `--apply` sur cette branche déjà restaurée. Pour refaire un essai,
+préparer une nouvelle branche et adapter explicitement la cible autorisée du script.
+La validation ci-dessus porte sur la récupération SQL ; la configuration des
+services externes, Neon Auth, les adapters applicatifs et Vercel restent en attente.
 
 ## Périmètre autorisé
 
@@ -13,7 +126,7 @@ pendant l'export, les essais de restauration et la validation.
 Cette demande remplace la cible Supabase de DEC-DEP-001. Le code R0 connecté reste
 actuellement un adapter Supabase : il n'est pas encore compatible Neon.
 
-## Accès et ressources constatés
+## Accès et ressources constatés le 13 septembre (historique)
 
 | Ressource                                          | État observé                                                                                                                                                                |
 | -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -125,6 +238,20 @@ fournis ne décrivent pas le schéma réel et ne doivent pas le remplacer.
   basculement production, suppression Supabase ou activation de facturation.
 
 ## Vérifications de la préparation
+
+Le 14 septembre 2026, après sauvegarde et restauration réelles,
+`corepack pnpm check:full` réussit : format, lint, types, contrats générés,
+**12 tests produit, 2 architecture, 67 unitaires, 34 intégration et 14 E2E
+(129 tests)**. Les 18 manifestes du build serveur ne contiennent ni données locales
+ni fichiers d'environnement. Dix tests couvrent la configuration de sauvegarde,
+l'orchestration des processus et le plan de restauration. Ils complètent les
+vérifications distantes décrites plus haut, sans simuler une validation Neon Auth.
+
+Un premier passage E2E a dépassé les 10 secondes pendant l'inscription du scénario
+de doublon ; le formulaire était encore en attente. La suite complète relancée
+passe, y compris ce scénario, sans modification de l'application ni de son délai.
+Aucune modification UI dans cette reprise ; les comparaisons visuelles existantes
+du socle passent et aucune nouvelle parité avec le carrousel n'est revendiquée.
 
 Le 13 septembre 2026, le script d'inventaire a été exécuté dans PGlite avec une
 table témoin, une contrainte primaire et une policy RLS. Les catalogues et l'état

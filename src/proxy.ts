@@ -5,6 +5,16 @@ import { supabaseConfig } from '@/providers/supabase/config';
 
 export async function proxy(request: NextRequest) {
   if (env.APP_MODE === 'local') return NextResponse.next();
+  if (env.CONNECTED_PROVIDER === 'neon') {
+    if (!/^\/(dashboard|events)(\/|$)/.test(request.nextUrl.pathname))
+      return NextResponse.next();
+    const { neonAuth } = await import('@/server/neon/auth');
+    const response = await neonAuth().middleware({ loginUrl: '/connexion' })(
+      request,
+    );
+    response.headers.set('Cache-Control', 'private, no-store');
+    return response;
+  }
   const config = supabaseConfig();
   let response = NextResponse.next({ request });
   const client = createServerClient(config.url, config.key, {

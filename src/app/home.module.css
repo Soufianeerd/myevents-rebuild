@@ -1,0 +1,607 @@
+@font-face {
+  font-family: 'MyEvents Editorial';
+  src: url('/fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MyEvents Script';
+  src: url('/fonts/great-vibes-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
+.page {
+  --wine: #7a1f2b;
+  --ink: #4a121a;
+  --gold: #876435;
+  background: #f9f7f2;
+  color: #2e2a25;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.page a {
+  text-decoration: none;
+}
+.page a:focus-visible,
+.page summary:focus-visible {
+  outline: 3px solid var(--wine);
+  outline-offset: 5px;
+}
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 5;
+  background: white;
+  padding: 12px 20px;
+}
+.skip:focus {
+  top: 10px;
+}
+.header {
+  max-width: 1440px;
+  margin: auto;
+  padding: 26px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-bottom: 1px solid #e4e1d9;
+}
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--wine);
+  font-family: 'MyEvents Editorial', Georgia, serif;
+  font-size: 39px;
+  line-height: 1;
+}
+.brand small {
+  display: block;
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.8;
+  margin: 9px 0 0 3px;
+}
+.emblem {
+  color: var(--gold);
+  font-size: 52px;
+  font-weight: 400;
+}
+.nav {
+  display: flex;
+  gap: 30px;
+  font-size: 13px;
+}
+.nav a {
+  padding: 10px 0;
+}
+.nav a:hover {
+  color: var(--wine);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+.primary,
+.secondary {
+  min-height: 46px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  border-radius: 7px;
+  padding: 12px 24px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.primary {
+  background: var(--wine);
+  color: white;
+  border: 1px solid var(--wine);
+}
+.primary:hover {
+  background: var(--ink);
+}
+.secondary {
+  color: var(--ink);
+  border: 1px solid #bca995;
+}
+.secondary:hover {
+  background: #efe0c7;
+}
+.hero {
+  max-width: 1440px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 38px;
+  padding: 66px 6% 58px;
+  align-items: center;
+  background: radial-gradient(ellipse at 85% 65%, #ebdfcc 0, transparent 55%);
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2.8px;
+  color: var(--wine);
+  font-size: 10px;
+  font-weight: 500;
+}
+.hero h1 {
+  font-family: 'MyEvents Editorial', Georgia, serif;
+  font-size: clamp(46px, 4.9vw, 72px);
+  line-height: 1.02;
+  font-weight: 400;
+  letter-spacing: -1.5px;
+  color: var(--ink);
+  margin: 26px 0;
+}
+.page em {
+  font-weight: 400;
+}
+.intro {
+  max-width: 480px;
+  color: #635d53;
+  font-size: 16px;
+  line-height: 1.8;
+}
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 32px 0 28px;
+}
+.previewNote {
+  font-size: 11px;
+  color: #635d53;
+  max-width: 455px;
+  padding-left: 15px;
+  border-left: 2px solid #d4b07b;
+}
+.previewNote span {
+  display: block;
+  color: var(--wine);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.artwork {
+  height: 510px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.handwritten {
+  position: absolute;
+  top: -16px;
+  right: -10px;
+  font-family: 'MyEvents Script', cursive;
+  font-size: 27px;
+  line-height: 1.2;
+  color: var(--gold);
+  transform: rotate(-8deg);
+  z-index: 2;
+}
+.envelope {
+  position: absolute;
+  width: 78%;
+  height: 285px;
+  bottom: 40px;
+  left: 1%;
+  background: linear-gradient(145deg, #9b3543, #4a121a);
+  transform: rotate(-11deg);
+  box-shadow: 8px 24px 40px #4a121a26;
+  border-radius: 8px;
+}
+.envelope::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(145deg, #7a1f2b, #4a121a);
+  border-radius: 8px;
+}
+.seal {
+  position: absolute;
+  bottom: 64px;
+  left: 42%;
+  z-index: 3;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: 'MyEvents Script', cursive;
+  color: #4a121a;
+  font-size: 29px;
+  background: #d4b07b;
+  outline: 1px solid #876435;
+  outline-offset: -6px;
+  box-shadow: 0 4px 10px #0003;
+}
+.invitation {
+  position: relative;
+  z-index: 1;
+  width: 270px;
+  height: 389px;
+  background: linear-gradient(130deg, #fffdf8, #f3e9d8);
+  border: 1px solid #d4b07b;
+  outline: 1px solid #d4b07b;
+  outline-offset: -12px;
+  text-align: center;
+  padding: 27px 22px;
+  transform: rotate(8deg) translate(29px, -22px);
+  box-shadow: 5px 15px 30px #4a121a22;
+  color: var(--ink);
+}
+.flourish {
+  font-size: 26px;
+  color: var(--gold);
+}
+.cardOverline {
+  text-transform: uppercase;
+  font-size: 8px;
+  letter-spacing: 2px;
+  margin: 12px 0;
+}
+.names {
+  font-family: 'MyEvents Script', cursive;
+  font-size: 42px;
+  line-height: 1.1;
+  margin: 10px 0 16px;
+}
+.names span {
+  font-size: 28px;
+}
+.cardRule {
+  display: block;
+  height: 1px;
+  width: 38px;
+  margin: 16px auto;
+  background: #b8925c;
+}
+.invitation > p:not(.names):not(.cardOverline) {
+  font-size: 11px;
+}
+.cardPlace {
+  margin: 15px 0 7px;
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+.artCaption {
+  position: absolute;
+  bottom: 0;
+  font-size: 10px;
+  color: #635d53;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+.occasions {
+  padding: 32px 6% 46px;
+  border-top: 1px solid #e4e1d9;
+  border-bottom: 1px solid #e4e1d9;
+  text-align: center;
+  background: #fcfbf8;
+}
+.occasions ul {
+  list-style: none;
+  margin: 28px auto 0;
+  padding: 0;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+.occasions li {
+  border-right: 1px solid #e4e1d9;
+  font-family: 'MyEvents Editorial', Georgia, serif;
+  font-size: 21px;
+  padding: 0 8px;
+}
+.occasions li:last-child {
+  border: 0;
+}
+.occasions li span {
+  display: block;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 31px;
+  margin-bottom: 8px;
+}
+.experience {
+  max-width: 1280px;
+  margin: auto;
+  padding: 78px 6% 50px;
+}
+.sectionIntro {
+  text-align: center;
+  max-width: 620px;
+  margin: auto;
+}
+.page h2:not(.eyebrow) {
+  font-family: 'MyEvents Editorial', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(35px, 3.5vw, 47px);
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 18px 0 24px;
+}
+.sectionIntro > p:last-child {
+  color: #635d53;
+  font-size: 14px;
+}
+.steps {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  margin-top: 46px;
+}
+.steps li {
+  border-top: 1px solid #d4b07b;
+  padding-top: 18px;
+}
+.stepNumber {
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.steps h3 {
+  font-family: 'MyEvents Editorial', Georgia, serif;
+  font-size: 28px;
+  color: var(--ink);
+  margin: 10px 0;
+}
+.steps p {
+  color: #635d53;
+  font-size: 13px;
+}
+.steps small {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--wine);
+  background: #f3e4e6;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-top: 12px;
+}
+.promise {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  margin-top: 45px;
+  padding: 23px;
+  background: #efe8dc;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.promise > span {
+  color: var(--gold);
+  font-size: 38px;
+}
+.promise strong {
+  color: var(--ink);
+}
+.faq {
+  max-width: 1280px;
+  padding: 45px 6% 75px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.2fr;
+  gap: 60px;
+}
+.questions details {
+  border-bottom: 1px solid #d2cec4;
+  padding: 16px 0;
+}
+.questions summary {
+  cursor: pointer;
+  min-height: 28px;
+  color: var(--ink);
+  font-size: 14px;
+  padding: 4px 0;
+}
+.questions p {
+  font-size: 13px;
+  color: #635d53;
+  margin: 14px 0 4px;
+}
+.closing {
+  text-align: center;
+  padding: 55px 20px 65px;
+  background: radial-gradient(ellipse at center, #efe0c7, #f6f1e9 70%);
+  border-top: 1px solid #e4e1d9;
+}
+.closing p:not(.eyebrow) {
+  color: #635d53;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 36px 6%;
+  background: #4a121a;
+  color: #f9f7f2;
+}
+.footer .brand {
+  color: #efe0c7;
+  font-size: 32px;
+}
+.footer .emblem {
+  color: #d4b07b;
+}
+.footer p {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 9px;
+}
+.footer > a {
+  font-size: 13px;
+  padding: 10px;
+}
+.footer a:focus-visible {
+  outline-color: #efe0c7;
+}
+@media (min-width: 1600px) {
+  .hero {
+    border-right: 1px solid #e4e1d9;
+    border-left: 1px solid #e4e1d9;
+  }
+}
+@media (max-width: 1000px) {
+  .header {
+    gap: 16px;
+    padding: 22px 4%;
+  }
+  .nav {
+    gap: 16px;
+  }
+  .brand {
+    font-size: 32px;
+  }
+  .brand small {
+    font-size: 7px;
+  }
+  .hero {
+    padding-left: 4%;
+    padding-right: 4%;
+    gap: 18px;
+  }
+  .handwritten {
+    right: 0;
+    font-size: 24px;
+  }
+  .invitation {
+    width: 240px;
+  }
+  .occasions ul {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .occasions li:nth-child(3) {
+    border: 0;
+  }
+}
+@media (max-width: 700px) {
+  .header {
+    flex-wrap: wrap;
+    padding: 18px 20px;
+  }
+  .header .secondary {
+    min-height: 42px;
+    padding: 8px 13px;
+    font-size: 12px;
+  }
+  .nav {
+    order: 3;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+    font-size: 12px;
+    border-top: 1px solid #e4e1d9;
+    padding-top: 8px;
+  }
+  .brand {
+    font-size: 31px;
+    gap: 7px;
+  }
+  .emblem {
+    font-size: 38px;
+  }
+  .brand small {
+    font-size: 6px;
+    letter-spacing: 1.4px;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 40px 24px 25px;
+    gap: 35px;
+  }
+  .hero h1 {
+    font-size: clamp(43px, 9vw, 60px);
+    margin: 20px 0;
+  }
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+  .intro {
+    font-size: 14px;
+  }
+  .actions {
+    margin: 26px 0;
+    gap: 10px;
+  }
+  .actions > a {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+  .artwork {
+    width: 100%;
+    max-width: 390px;
+    margin: auto;
+    height: 460px;
+  }
+  .handwritten {
+    font-size: 24px;
+    top: 0;
+    right: 8px;
+  }
+  .invitation {
+    width: 230px;
+    height: 350px;
+    padding: 20px;
+    transform: rotate(7deg) translate(20px, -5px);
+  }
+  .names {
+    font-size: 36px;
+  }
+  .envelope {
+    bottom: 35px;
+    height: 245px;
+  }
+  .artCaption {
+    font-size: 9px;
+  }
+  .occasions {
+    padding: 30px 16px;
+  }
+  .occasions li {
+    font-size: 17px;
+  }
+  .experience {
+    padding: 48px 24px 30px;
+  }
+  .steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 20px;
+    margin-top: 30px;
+  }
+  .promise {
+    padding: 20px 15px;
+    gap: 12px;
+  }
+  .faq {
+    grid-template-columns: 1fr;
+    padding: 30px 24px 45px;
+    gap: 5px;
+  }
+  .footer {
+    flex-wrap: wrap;
+    padding: 30px 24px;
+  }
+  .footer p {
+    order: 3;
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page *,
+  .page *::before,
+  .page *::after {
+    scroll-behavior: auto !important;
+  }
+}

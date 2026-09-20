@@ -6,6 +6,11 @@ export async function createAuthenticationProvider(): Promise<AuthenticationProv
     const { LocalAuthenticationProvider } = await import('./local');
     return new LocalAuthenticationProvider();
   }
+  if (env.CONNECTED_PROVIDER === 'neon') {
+    const { createNeonAuthenticationProvider } =
+      await import('@/server/neon/auth');
+    return createNeonAuthenticationProvider();
+  }
   const { createSupabaseServerClient } =
     await import('@/server/supabase/client');
   const { SupabaseAuthenticationProvider } =

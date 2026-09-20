@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { EmailConfirmationForm } from '../EmailConfirmationForm';
 import Link from 'next/link';
 import { Button, Input } from '@/components/ui';
 import { loginAction, type ActionState } from '../actions';
@@ -12,6 +13,9 @@ export default function LoginPage() {
     loginAction,
     initialState,
   );
+
+  if (state.confirmationEmail)
+    return <EmailConfirmationForm initialEmail={state.confirmationEmail} />;
 
   return (
     <div className="bg-white px-8 py-10 shadow-sm rounded-2xl border border-neutral-200">

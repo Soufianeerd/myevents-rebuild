@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { EmailConfirmationForm } from '../EmailConfirmationForm';
 import Link from 'next/link';
 import { Button, Input } from '@/components/ui';
 import { registerAction, type ActionState } from '../actions';
@@ -12,6 +13,9 @@ export default function RegisterPage() {
     registerAction,
     initialState,
   );
+
+  if (state.confirmationEmail)
+    return <EmailConfirmationForm initialEmail={state.confirmationEmail} />;
 
   if (state.success)
     return (

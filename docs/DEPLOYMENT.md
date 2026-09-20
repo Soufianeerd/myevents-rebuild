@@ -1,98 +1,98 @@
-# Déploiement MyEvents — Vercel Preview + Supabase Staging
+# Déploiement MyEvents — Vercel Preview + Neon
 
-> **Procédure Supabase remplacée par DEC-DEP-002 le 13 septembre 2026.** Le
-> propriétaire demande la récupération de son projet Supabase existant et une
-> migration Neon, gratuite uniquement. Consulter [NEON-MIGRATION.md](./NEON-MIGRATION.md)
-> pour l'état réel des accès et ressources. Les étapes ci-dessous décrivent
-> l'adapter R0 historique ; ne pas les exécuter pour la nouvelle cible.
+Procédure actuelle au 20 septembre 2026, DEC-DEP-002. La cible Supabase est
+remplacée par Neon. Le provider Supabase reste dans le dépôt pour compatibilité ;
+il ne doit pas être sélectionné pour ce déploiement.
 
-Cible validée par le propriétaire le 13 septembre 2026 : projet Vercel **myevents**, dépôt **Soufianeerd/myevents-rebuild**, PostgreSQL/Auth/Storage Supabase. Aucun hébergement MyEvents n'était configuré. La production et les clés Stripe Live restent interdites jusqu'à validation du parcours complet.
+## Ressources existantes
 
-## État de la livraison
+- GitHub : `Soufianeerd/myevents-rebuild`, branche `codex/neon-migration`.
+- Vercel : `myevents`, équipe `el-rhadis-projects`, Hobby,
+  projet `prj_8sjulsc7LAEwb1F3EObeXD6VG7y3`. Aucun déploiement vérifié.
+- Neon : projet `twilight-mode-52723515`, base `myevents`, branche
+  `migration-staging` (`br-steep-firefly-b1trn4br`). Ne pas utiliser `main`.
+- Les 39 tables source ont été restaurées et vérifiées ; le schéma applicatif
+  contient 1 profil, 1 espace et 2 événements historiques. Détails et sauvegardes
+  privées dans [NEON-MIGRATION](./NEON-MIGRATION.md).
 
-Le code dispose de deux modes explicites : `local` pour développer sans réseau, `connected` pour Supabase. Le mode connecté utilise Supabase Auth et des repositories PostgreSQL protégés par RLS ; aucun User/Session/ResetToken/Event/Workspace n'est persisté en JSON dans ce mode. Aucun repli local en cas de configuration absente. Les cookies sont propres à chaque requête ; aucun client Supabase authentifié n'est partagé globalement.
+## Authentification et récupération du compte
 
-Vercel refuse `APP_MODE=local`. `VERCEL_ENV=production` est également refusé jusqu'à ouverture du gate. `vercel.json` désactive les déploiements automatiques depuis main. Le build local de production utilisé par les E2E reste autorisé hors Vercel.
+Lancer `corepack pnpm dev:neon`, puis ouvrir
+`http://localhost:3300/inscription`. Le propriétaire utilise son adresse
+historique et saisit le code reçu **dans l'application**, jamais dans le chat.
+Neon exige une adresse confirmée. Une correspondance d'e-mail ne suffit pas à
+rattacher les anciennes données.
 
-Cette livraison prépare le socle persistant Auth/Event. Elle ne livre pas encore Studio, catalogue, RSVP, paiements, médias, impression ou admin. Le bucket privé est préparé ; les uploads restent fermés jusqu'à implémentation des contrôles MIME/tailles/quotas. Les providers Stripe, Resend transactionnel, Sentry et PostHog viendront dans leurs tranches fonctionnelles ; ils ne sont pas présentés comme actifs.
+Après confirmation, sélectionner explicitement les identifiants source et Neon,
+puis exécuter `corepack pnpm migration:bind:identity --plan` avec les deux UUID et
+le répertoire privé de sauvegarde. Contrôler le résultat avant `--apply` avec les
+mêmes arguments. Le script refuse une identité non confirmée, une adresse
+différente ou un autre profil déjà attribué. Ne jamais copier les anciens hashes
+ou désactiver la confirmation pour débloquer la migration.
 
-## Accès manquants
+## Configuration Vercel Preview
 
-Les connecteurs **Vercel** et **Supabase** ne sont pas disponibles dans cette session Codex. Lors de la reprise, la CLI Supabase authentifiée a permis de lister les projets de l'organisation ; aucun projet MyEvents n'est encore présent. La connexion Vercel dans le navigateur est maintenant disponible. La création du projet et de la Preview est en préparation. GitHub est accessible. Ne pas coller de clés secrètes dans la conversation.
+La CLI Vercel demande une reconnexion lors du contrôle du 20 septembre : lancer
+`npx vercel login` dans un terminal interactif et s'authentifier dans le navigateur.
+Ne pas transmettre de token dans la conversation. Lier le projet existant ; ne
+pas recréer un projet ni activer de plan payant.
 
-Aucun projet distant, domaine, région, compte payant ou base de production n'a été créé implicitement. Le nom Vercel reste demandé, pas réservé.
+Définir les variables suivantes dans **Preview seulement** :
 
-## 1. Préparer Supabase Staging
+| Variable                  | Configuration                                                                    |
+| ------------------------- | -------------------------------------------------------------------------------- |
+| `APP_MODE`                | `connected`                                                                      |
+| `CONNECTED_PROVIDER`      | `neon`                                                                           |
+| `APP_URL`                 | Origine HTTPS exacte et stable de la Preview, sans chemin                        |
+| `DATABASE_URL`            | Connexion Neon poolée, base `myevents`, rôle restreint `myevents_app`, TLS       |
+| `NEON_AUTH_BASE_URL`      | Endpoint Auth de la branche `migration-staging`, terminé par `/myevents/auth`    |
+| `NEON_AUTH_COOKIE_SECRET` | Secret aléatoire privé d'au moins 32 caractères, stable entre les redéploiements |
 
-1. Créer un projet Supabase dédié à MyEvents staging. Choisir la région et le plan dans le compte propriétaire.
-2. Exécuter **dans l'ordre** les fichiers `supabase/migrations/202609130001_foundation.sql` puis `202609130002_private_storage.sql`, via SQL Editor ou Supabase CLI authentifiée. Faire cela sur une base neuve ; les scripts ne réinitialisent pas les tables existantes.
-3. Vérifier : `profiles`, `workspaces`, `events` avec RLS actif ; bucket `event-assets` privé ; aucune table de mots de passe applicative. La création d'un utilisateur Auth déclenche un profil avec TenantId généré côté base, indépendant des métadonnées modifiables par l'utilisateur.
-4. Auth : activer email/password, confirmation e-mail, longueur minimum de mot de passe **15**, expiration OTP **1800 secondes**, rate limits et protection contre les abus. L'application borne les mots de passe à 128 caractères. Ne pas désactiver les limites Supabase pour faire passer un test.
-5. Configurer le Site URL sur une **URL Preview stable** et autoriser les URLs exactes `/auth/confirm` et `/reinitialiser-mot-de-passe`. Éviter un wildcard global sur tous les domaines Vercel.
-6. Configurer SMTP personnalisé pour l'envoi aux testeurs. Resend peut fournir le SMTP si son compte/domaine expéditeur est disponible ; le mail par défaut Supabase comporte des limitations. Ne pas annoncer les emails comme opérationnels avant réception réelle.
+Les valeurs de `.env.neon.local` sont destinées au serveur local : remplacer
+`APP_URL` et générer un secret de cookie dédié à la Preview. Les fichiers
+`.env.neon.local` et `.env.migration.local` restent privés, ignorés et en mode
+`0600`. Ne jamais utiliser la connexion propriétaire comme connexion applicative.
 
-### Templates Auth obligatoires
+Ajouter l'origine exacte de la Preview aux domaines approuvés de Neon Auth,
+sans wildcard global. Conserver les domaines préexistants. Déployer en Preview,
+jamais avec `--prod`. La première attribution d'URL peut demander un second
+déploiement pour aligner `APP_URL` et les retours de réinitialisation.
 
-Confirmation de compte, lien du template :
+`vercel.json` fournit les commandes pnpm et désactive les déploiements de `main`.
+L'application refuse le mode local sur Vercel et refuse `VERCEL_ENV=production`.
+Ces verrous restent en place. Aucun fallback JSON n'existe en mode connecté.
 
-```html
-<a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}"
-  >Confirmer mon adresse</a
->
-```
+## Vérifications avant ouverture de la Preview
 
-Réinitialisation, lien du template :
+1. Exécuter `corepack pnpm check:full` : build, traces sans secrets, types, lint,
+   contrats produit, isolation, tests unitaires/intégration et navigateur.
+2. Tester inscription et confirmation réelles, connexion/déconnexion et reset
+   avec des comptes de test autorisés. Vérifier ancien mot de passe, lien expiré
+   et révocation de session. Le test SQL distant ne prouve pas l'envoi d'e-mails.
+3. Vérifier la reprise des deux événements historiques et le CRUD entre deux
+   utilisateurs : aucune lecture ou modification inter-tenant.
+4. Vérifier cookies et redirections HTTPS, protection de la Preview et 404 de
+   `/dev/mailbox` sans et avec connexion.
+5. Redéployer et retrouver les mêmes comptes et événements. Consigner la preuve,
+   sans identifiants secrets ni données personnelles.
 
-```html
-<a href="{{ .RedirectTo }}?token={{ .TokenHash }}"
-  >Choisir un nouveau mot de passe</a
->
-```
+### Contrôles déjà réalisés
 
-L'application fixe RedirectTo selon APP_URL et ne suit aucun paramètre `next` arbitraire. Le lien de récupération transporte TokenHash : sa vérification se fait **à la soumission** et après validation du mot de passe. Il ne faut pas utiliser le template implicite par défaut à fragment `#access_token`, que cette UI ne consomme pas.
+Le 20 septembre : `check:full` **147 tests réussis**, SQL Neon distant **1 réussi**,
+UI connectée anonyme/OTP et Axe **1 réussi**. Le test distant exige une connexion
+**directe** à la branche autorisée dans `NEON_TEST_DATABASE_URL`. Le helper
+`targetConnection` de `scripts/migration/prepare-application.mjs` valide cette
+cible et transforme la connexion poolée. Toutes les fixtures sont annulées.
 
-Après reset Supabase, le provider demande une déconnexion globale. Les refresh tokens sont révoqués ; la durée résiduelle des JWT d'accès dépend de Supabase. Vérifier en staging le comportement attendu de révocation et la durée des JWT avant l'ouverture à des clients.
+Le parcours avec e-mail, le rattachement propriétaire, la Preview et la
+persistance après redéploiement restent à vérifier. La configuration seule
+n'est pas une preuve de déploiement.
 
-## 2. Préparer Vercel
+## Périmètre restant
 
-1. Importer `Soufianeerd/myevents-rebuild` dans Vercel, nom de projet **myevents**, racine `./`, framework Next.js, Node 22.x, pnpm 10.34.5 via Corepack.
-2. Garder main comme branche de production. Déployer la branche `codex/r0-deployment-readiness` en **Preview**, sans promotion. Si l'import initial propose uniquement un déploiement production, le laisser bloqué et utiliser une Preview de cette branche après la création du projet.
-3. Définir uniquement dans l'environnement **Preview** les variables ci-dessous. Une URL stable de branche ou un domaine staging permet de conserver les retours d'authentification. Une fois l'URL attribuée, aligner APP_URL et la configuration Supabase puis redéployer.
-4. Conserver la protection des Preview et autoriser les testeurs concernés. Ne pas partager un contournement de protection dans le code ou Git.
-
-| Variable                   | Valeur / provenance                                                                                           |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `APP_MODE`                 | `connected`                                                                                                   |
-| `APP_URL`                  | Origine HTTPS exacte de la Preview stable, sans chemin, query ni credentials                                  |
-| `SUPABASE_URL`             | URL du projet staging Supabase                                                                                |
-| `SUPABASE_PUBLISHABLE_KEY` | Clé publishable du projet staging ; une clé legacy anon peut être utilisée si elle est encore celle du projet |
-
-L'application n'utilise **aucune clé service_role** et refuse les clés `sb_secret_` ou JWT de rôle privilégié dans sa configuration. Les URLs APP_URL et SUPABASE_URL doivent être des origines HTTPS en production. Ne pas ajouter `LOCAL_DATA_DIR` sur Vercel. Ne pas définir manuellement les variables système VERCEL/VERCEL_ENV ni contourner le verrou de production.
-
-Chaque build vérifie aussi les manifestes serveur `.nft.json` : aucune donnée `.data`, aucun fichier `.env*` ni rapport Playwright ne doit être embarqué. Les données locales restent intactes ; elles sont exclues des fichiers de déploiement.
-
-Sources : [Vercel Git](https://vercel.com/docs/git), [configuration Git](https://vercel.com/docs/project-configuration/git-configuration), [environnements](https://vercel.com/docs/deployments/environments), [Supabase SSR](https://supabase.com/docs/guides/auth/server-side/creating-a-client), [templates e-mail](https://supabase.com/docs/guides/auth/auth-email-templates).
-
-## 3. Vérifier la Preview persistante
-
-- Inscription de deux comptes de test, réception des confirmations, connexion/déconnexion.
-- Création, ouverture, modification et suppression d'événements ; date correcte Paris/Casablanca ; pas de fuite via un ID appartenant à l'autre compte, y compris une soumission d'un formulaire ouvert avant changement de session.
-- Reset : mot de passe faible refusé sans consommation du lien, mot de passe valide accepté, ancien mot de passe refusé, lien non réutilisable, déconnexion des sessions testée.
-- `/dev/mailbox` : 404 sans authentification ET connecté.
-- Contrôle direct via SDK avec deux JWT non privilégiés des tables et du bucket : les données du second utilisateur restent inaccessibles. Les tests PostgreSQL embarqués couvrent le SQL applicatif, pas les services GoTrue/Storage distants.
-- Redéployer la Preview et vérifier que les mêmes comptes et événements persistent. Vérifier cookies Secure/HttpOnly, retour des liens mail et refresh de session.
-- Vérifier le réseau et les logs sans tokens, mots de passe ou données privées.
-
-Conserver les preuves dans `docs/audit/` sans secrets. Une configuration committée ou un build avec valeurs factices n'est pas un déploiement persistant validé.
-
-### Vérification SDK automatisée
-
-Après création et confirmation de deux comptes **de test** dans le projet staging, `corepack pnpm test:staging` exécute un scénario de persistance et d’isolation avec la clé publishable et les JWT utilisateurs. Il exige `MYEVENTS_STAGING_TESTS=1`, `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `STAGING_USER_A_EMAIL`, `STAGING_USER_A_PASSWORD`, `STAGING_USER_B_EMAIL`, `STAGING_USER_B_PASSWORD` dans l’environnement du terminal. Ces identifiants ne sont jamais versionnés. Le scénario crée un événement synthétique puis le supprime logiquement ; il échoue explicitement si les accès manquent. Il ne fait pas partie de `check:full`, qui doit rester autonome et local.
-
-## Données locales préexistantes
-
-Les données d'audit sont synthétiques et ne doivent pas être importées dans Supabase. Les fichiers locaux ne sont ni supprimés ni transférés automatiquement. Si des données métier existent dans `.data`, prévoir un import contrôlé : inventaire, sauvegarde, création/invitation des comptes Supabase, correspondance IDs utilisateurs/tenants/workspaces et conversion des anciennes dates selon leur fuseau. Ne pas copier des hashes scrypt applicatifs dans Supabase Auth ni réassigner les identités par simple correspondance d'e-mail sans vérification.
-
-## Exploitation et suite
-
-La base staging doit être séparée de la future production. Toute migration suivante sera additive autant que possible, avec sauvegarde et essai de restauration avant go-live. Le rollback Vercel ne restaure pas la base. Le passage production exige le Revenue Gate, les intégrations commerciales test, l'observabilité, les informations légales/commerciales approuvées et la levée explicite du verrou dans un changement revu.
+Les médias applicatifs, Stripe Test, emails transactionnels, Sentry et PostHog
+ne sont pas actifs. Aucun objet Storage source n'était à migrer. Ne pas annoncer
+le stockage média disponible avant les contrôles d'accès, MIME, taille et quotas.
+Le Studio, le RSVP, le commerce et le print restent des livraisons fonctionnelles
+à réaliser. La production et Stripe Live restent verrouillés jusqu'au parcours
+complet validé et à l'autorisation de mise en production.

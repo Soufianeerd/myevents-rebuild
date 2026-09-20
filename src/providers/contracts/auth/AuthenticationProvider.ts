@@ -8,6 +8,9 @@ export interface AuthIdentity {
   tenantId: TenantId;
 }
 export interface AuthenticationProvider {
+  readonly confirmationMethod?: 'code';
+  verifyEmail?(email: string, code: string): Promise<Result<void, AppError>>;
+  resendConfirmation?(email: string): Promise<void>;
   currentIdentity(): Promise<AuthIdentity | null>;
   login(email: string, password: string): Promise<Result<void, AppError>>;
   register(input: {

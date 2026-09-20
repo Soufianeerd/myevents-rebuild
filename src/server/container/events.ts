@@ -18,6 +18,20 @@ export async function createEventContainer(): Promise<EventContainer> {
     const { createContainer } = await import('./createContainer');
     return createContainer();
   }
+  if (env.CONNECTED_PROVIDER === 'neon') {
+    const { authenticatedNeonDatabase } = await import('@/server/neon/auth');
+    const { NeonEventRepository } =
+      await import('@/providers/neon/NeonEventRepository');
+    const { NeonWorkspaceRepository } =
+      await import('@/providers/neon/NeonWorkspaceRepository');
+    const db = await authenticatedNeonDatabase();
+    return {
+      eventRepository: new NeonEventRepository(db),
+      workspaceRepository: new NeonWorkspaceRepository(db),
+      clock: { now: () => new Date() },
+      idGenerator: { generate: () => crypto.randomUUID() },
+    };
+  }
   // A request-scoped client carries the authenticated user's JWT, never a service role key.
   const { createSupabaseServerClient } =
     await import('@/server/supabase/client');

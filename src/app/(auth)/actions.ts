@@ -10,6 +10,7 @@ import {
 
 export type ActionState = {
   success?: boolean;
+  confirmationEmail?: string;
   error?: string;
   fieldErrors?: Record<string, string[]>;
 };
@@ -70,7 +71,12 @@ export async function loginAction(
   const result = await (
     await createAuthenticationProvider()
   ).login(parsed.data.email, parsed.data.password);
-  if (!result.ok) return { error: result.error.message };
+  if (!result.ok) {
+    const details = result.error.details;
+    if (details && typeof details === 'object' && details.confirmationRequired)
+      return { confirmationEmail: parsed.data.email };
+    return { error: result.error.message };
+  }
   redirect('/dashboard');
 }
 export async function registerAction(
@@ -80,11 +86,13 @@ export async function registerAction(
   const parsed = registerSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success)
     return { fieldErrors: parsed.error.flatten().fieldErrors };
-  const result = await (
-    await createAuthenticationProvider()
-  ).register(parsed.data);
+  const provider = await createAuthenticationProvider();
+  const result = await provider.register(parsed.data);
   if (!result.ok) return { error: result.error.message };
-  if (result.value.confirmationRequired) return { success: true };
+  if (result.value.confirmationRequired)
+    return provider.confirmationMethod === 'code'
+      ? { confirmationEmail: parsed.data.email }
+      : { success: true };
   redirect('/dashboard');
 }
 export async function forgotPasswordAction(
@@ -112,4 +120,41 @@ export async function resetPasswordAction(
     await createAuthenticationProvider()
   ).reset(parsed.data.token, parsed.data.password);
   return result.ok ? { success: true } : { error: result.error.message };
+}
+
+export async function verifyEmailAction(
+  _previous: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const parsed = z
+    .object({
+      email: emailSchema,
+      code: z.string().regex(/^\d{6}$/, 'Saisissez le code à six chiffres.'),
+    })
+    .safeParse(Object.fromEntries(formData));
+  if (!parsed.success)
+    return { fieldErrors: parsed.error.flatten().fieldErrors };
+  const provider = await createAuthenticationProvider();
+  if (!provider.verifyEmail)
+    return { error: 'La confirmation par code n’est pas disponible.' };
+  const result = await provider.verifyEmail(
+    parsed.data.email,
+    parsed.data.code,
+  );
+  return result.ok ? { success: true } : { error: result.error.message };
+}
+export async function resendConfirmationAction(
+  _previous: ActionState,
+  formData: FormData,
+): Promise<ActionState> {
+  const parsed = z
+    .object({ email: emailSchema })
+    .safeParse(Object.fromEntries(formData));
+  if (!parsed.success)
+    return { fieldErrors: parsed.error.flatten().fieldErrors };
+  const provider = await createAuthenticationProvider();
+  if (!provider.resendConfirmation)
+    return { error: 'La confirmation par code n’est pas disponible.' };
+  await provider.resendConfirmation(parsed.data.email);
+  return { success: true };
 }
