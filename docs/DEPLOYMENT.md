@@ -32,8 +32,9 @@ ou désactiver la confirmation pour débloquer la migration.
 
 ## Configuration Vercel Preview
 
-La CLI Vercel demande une reconnexion lors du contrôle du 20 septembre : lancer
-`npx vercel login` dans un terminal interactif et s'authentifier dans le navigateur.
+La CLI Vercel a été reconnectée le 20 septembre, et le projet existant est lié au
+dépôt GitHub. En cas d’expiration ultérieure, lancer `npx vercel login` dans un
+terminal interactif et s’authentifier dans le navigateur.
 Ne pas transmettre de token dans la conversation. Lier le projet existant ; ne
 pas recréer un projet ni activer de plan payant.
 
@@ -47,6 +48,12 @@ Définir les variables suivantes dans **Preview seulement** :
 | `DATABASE_URL`            | Connexion Neon poolée, base `myevents`, rôle restreint `myevents_app`, TLS       |
 | `NEON_AUTH_BASE_URL`      | Endpoint Auth de la branche `migration-staging`, terminé par `/myevents/auth`    |
 | `NEON_AUTH_COOKIE_SECRET` | Secret aléatoire privé d'au moins 32 caractères, stable entre les redéploiements |
+
+Les variables sont configurées uniquement pour Preview. `APP_URL` explicite est
+prioritaire. Sans cette valeur, l'application peut utiliser `VERCEL_BRANCH_URL`,
+ou `VERCEL_URL` pour un premier lancement CLI, uniquement sur Vercel Preview et
+pour un hôte `.vercel.app` valide. Aucun Host de requête n'est utilisé.
+Source : [variables système Vercel](https://vercel.com/docs/environment-variables/system-environment-variables).
 
 Les valeurs de `.env.neon.local` sont destinées au serveur local : remplacer
 `APP_URL` et générer un secret de cookie dédié à la Preview. Les fichiers
@@ -78,15 +85,13 @@ Ces verrous restent en place. Aucun fallback JSON n'existe en mode connecté.
 
 ### Contrôles déjà réalisés
 
-Le 20 septembre : `check:full` **147 tests réussis**, SQL Neon distant **1 réussi**,
+Le 20 septembre, après accueil et origine Preview : `check:full` **150 tests réussis**, SQL Neon distant **1 réussi**,
 UI connectée anonyme/OTP et Axe **1 réussi**. Le test distant exige une connexion
 **directe** à la branche autorisée dans `NEON_TEST_DATABASE_URL`. Le helper
 `targetConnection` de `scripts/migration/prepare-application.mjs` valide cette
 cible et transforme la connexion poolée. Toutes les fixtures sont annulées.
 
-Le parcours avec e-mail, le rattachement propriétaire, la Preview et la
-persistance après redéploiement restent à vérifier. La configuration seule
-n'est pas une preuve de déploiement.
+La Preview a été déployée avec succès (commit `d6982b9`, déploiement `dpl_7g1gnhFGDJB7cgCJoroAESG9dmF1`) et son alias est https://myevents-staging-el-rhadis-projects.vercel.app. Le parcours avec e-mail, le rattachement propriétaire et la persistance après redéploiement restent à vérifier.
 
 ## Périmètre restant
 

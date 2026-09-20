@@ -605,3 +605,282 @@
     scroll-behavior: auto !important;
   }
 }
+/* Editorial collection: real photography and the same covers as the public demos. */
+.hero {
+  grid-template-columns: 1fr 1.1fr;
+  padding-top: 48px;
+  padding-bottom: 64px;
+  background: none;
+}
+.heroScene {
+  position: relative;
+  min-height: 570px;
+  margin-left: 25px;
+}
+.heroPhoto {
+  position: absolute;
+  inset: 0 0 35px 65px;
+  overflow: hidden;
+  border-radius: 200px 200px 3px 3px;
+}
+.heroPhoto img {
+  object-fit: cover;
+}
+.heroCard {
+  position: absolute;
+  width: 235px;
+  left: -15px;
+  bottom: 5px;
+  transform: rotate(-7deg);
+  box-shadow: 0 20px 45px #29221535;
+  transition: transform 0.35s ease;
+  background: #faf7ee;
+  animation: arrive 0.8s ease-out both;
+}
+.heroCard:hover {
+  transform: rotate(-3deg) translateY(-6px);
+}
+.cardLink {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  color: #4a121a;
+  font-size: 11px;
+}
+.sceneNote {
+  position: absolute;
+  top: 26px;
+  left: -12px;
+  font:
+    34px/1.15 'MyEvents Script',
+    cursive;
+  color: #4a121a;
+  transform: rotate(-9deg);
+  background: #f9f7f2e8;
+  padding: 15px;
+}
+.sceneCaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  writing-mode: vertical-rl;
+}
+.collection {
+  padding: 80px 6%;
+  max-width: 1440px;
+  margin: auto;
+}
+.collectionHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+  align-items: end;
+  margin-bottom: 38px;
+}
+.collectionHeading > p {
+  max-width: 320px;
+  color: #635d53;
+  font-size: 14px;
+  padding-bottom: 24px;
+}
+.modelGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 35px;
+}
+.modelPreview {
+  display: block;
+  padding: 28px 32px 0;
+  background: #e8e8dd;
+  transition: background 0.3s;
+}
+.model:nth-child(2) .modelPreview {
+  background: #e9ded9;
+}
+.model:nth-child(3) .modelPreview {
+  background: #f0e4d9;
+}
+.modelPreview > div {
+  box-shadow: 0 8px 22px #3224191c;
+  transition: transform 0.3s ease;
+}
+.modelPreview:hover > div {
+  transform: translateY(-6px) rotate(-1deg);
+}
+.modelOpen {
+  display: block;
+  text-align: center;
+  padding: 18px 0;
+  font-size: 11px;
+  color: #4a121a;
+}
+.modelMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #635d53;
+  margin: 20px 0 5px;
+}
+.model h3 {
+  font:
+    400 32px/1.2 'MyEvents Editorial',
+    Georgia,
+    serif;
+  color: #4a121a;
+  margin: 8px 0;
+}
+.model > p {
+  font-size: 13px;
+  color: #635d53;
+  max-width: 320px;
+}
+.collectionNote {
+  margin-top: 35px;
+  border-top: 1px solid #ddd6c8;
+  padding-top: 18px;
+  font-size: 11px;
+  color: #635d53;
+}
+.editorialStory {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #ede9df;
+}
+.storyPhoto {
+  position: relative;
+  min-height: 510px;
+}
+.storyPhoto img {
+  object-fit: cover;
+  object-position: center 68%;
+}
+.storyCopy {
+  padding: 70px 12%;
+  align-self: center;
+}
+.storyCopy > p:not(.eyebrow) {
+  color: #635d53;
+  font-size: 14px;
+  line-height: 1.9;
+}
+.storyCopy > a {
+  display: inline-flex;
+  gap: 35px;
+  margin-top: 28px;
+  font-size: 13px;
+  border-bottom: 1px solid #7a1f2b;
+  padding: 10px 0;
+  color: #4a121a;
+}
+@keyframes arrive {
+  from {
+    translate: 0 20px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@media (max-width: 1000px) {
+  .heroScene {
+    margin-left: 0;
+    min-height: 520px;
+  }
+  .heroCard {
+    width: 205px;
+    left: 0;
+  }
+  .modelPreview {
+    padding: 20px 20px 0;
+  }
+  .modelGrid {
+    gap: 20px;
+  }
+  .storyCopy {
+    padding: 45px 8%;
+  }
+}
+@media (max-width: 700px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 30px;
+    padding-bottom: 40px;
+  }
+  .heroScene {
+    min-height: 465px;
+    margin: 0;
+  }
+  .heroPhoto {
+    inset: 0 0 20px 35px;
+  }
+  .heroCard {
+    width: 195px;
+    left: 0;
+    bottom: 0;
+  }
+  .sceneNote {
+    font-size: 29px;
+    left: -10px;
+  }
+  .collection {
+    padding: 48px 24px;
+  }
+  .collectionHeading {
+    display: block;
+    margin-bottom: 24px;
+  }
+  .collectionHeading > p {
+    padding: 0;
+  }
+  .modelGrid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    max-width: 420px;
+    margin: auto;
+  }
+  .modelPreview {
+    padding: 28px 42px 0;
+  }
+  .editorialStory {
+    grid-template-columns: 1fr;
+  }
+  .storyPhoto {
+    min-height: 350px;
+  }
+  .storyCopy {
+    padding: 40px 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroCard,
+  .modelPreview,
+  .modelPreview > div {
+    animation: none;
+    transition: none;
+  }
+  .heroCard:hover {
+    transform: rotate(-7deg);
+  }
+  .modelPreview:hover > div {
+    transform: none;
+  }
+}
+@media (max-width: 700px) {
+  .modelGrid {
+    grid-template-columns: repeat(3, minmax(265px, 80vw));
+    max-width: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 4px 3px 18px;
+  }
+  .model {
+    scroll-snap-align: start;
+  }
+  .modelPreview {
+    padding: 24px 28px 0;
+  }
+}

@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
+import { InvitationCover } from '@/components/invitations/InvitationCover';
+import { invitationDemos } from '@/lib/invitations/demos';
 import styles from './home.module.css';
 
 export const metadata: Metadata = {
@@ -53,7 +56,7 @@ export default function Home() {
         </Link>
         <nav aria-label="Navigation principale" className={styles.nav}>
           <a href="#evenements">Événements</a>
-          <a href="#experience">L’expérience</a>
+          <a href="#modeles">Les modèles</a>
           <a href="#questions">Vos questions</a>
         </nav>
         <Link href="/connexion" className={styles.secondary}>
@@ -79,8 +82,8 @@ export default function Home() {
               <Link href="/events/new" className={styles.primary}>
                 Créer mon événement <span aria-hidden="true">↗</span>
               </Link>
-              <a href="#experience" className={styles.secondary}>
-                Découvrir MyEvents
+              <a href="#modeles" className={styles.secondary}>
+                Découvrir les modèles
               </a>
             </div>
             <p className={styles.previewNote}>
@@ -89,41 +92,33 @@ export default function Home() {
               souvenirs sont en cours de développement.
             </p>
           </div>
-          <div
-            className={styles.artwork}
-            aria-label="Composition illustrative d’une invitation de mariage"
-          >
-            <span className={styles.handwritten}>
-              Plus que des invitations,
-              <br />
-              des souvenirs qui durent.
-            </span>
-            <div className={styles.envelope} aria-hidden="true">
-              <span className={styles.seal}>M</span>
+          <div className={styles.heroScene}>
+            <div className={styles.heroPhoto}>
+              <Image
+                src="/images/editorial/jardin.jpg"
+                alt="Fleurs blanches et feuillage autour d’une table de cérémonie en plein air"
+                fill
+                sizes="(max-width: 700px) 90vw, 48vw"
+                preload
+              />
             </div>
-            <article className={styles.invitation}>
-              <span className={styles.flourish} aria-hidden="true">
-                ✧
+            <Link
+              href="/modeles/jardin-lumiere"
+              className={styles.heroCard}
+              aria-label="Ouvrir le modèle Jardin lumière"
+            >
+              <InvitationCover demo={invitationDemos[0]} eager />
+              <span className={styles.cardLink}>
+                Ouvrir l’invitation <span aria-hidden="true">↗</span>
               </span>
-              <p className={styles.cardOverline}>Nous nous marions</p>
-              <p className={styles.names}>
-                Camille
-                <br />
-                <span>&</span> Alexis
-              </p>
-              <span className={styles.cardRule} aria-hidden="true" />
-              <p>12 juin 2027</p>
-              <p className={styles.cardPlace}>
-                Une journée, mille émotions.
-                <br />
-                Une histoire, pour toujours.
-              </p>
-              <span className={styles.flourish} aria-hidden="true">
-                ♡
-              </span>
-            </article>
-            <span className={styles.artCaption}>
-              Une illustration de votre prochaine belle histoire
+            </Link>
+            <span className={styles.sceneNote}>
+              Le début d’une
+              <br />
+              belle histoire.
+            </span>
+            <span className={styles.sceneCaption}>
+              JARDIN LUMIÈRE — COLLECTION MYEVENTS
             </span>
           </div>
         </section>
@@ -145,6 +140,89 @@ export default function Home() {
               </li>
             ))}
           </ul>
+        </section>
+        <section
+          id="modeles"
+          className={styles.collection}
+          aria-labelledby="collection-title"
+        >
+          <div className={styles.collectionHeading}>
+            <div>
+              <p className={styles.eyebrow}>La collection · premiers regards</p>
+              <h2 id="collection-title">
+                À chaque histoire,
+                <br />
+                <em>sa façon de se raconter.</em>
+              </h2>
+            </div>
+            <p>
+              Du jardin ensoleillé à la fête de famille.
+              <br />
+              Ouvrez une invitation et découvrez son univers.
+            </p>
+          </div>
+          <div className={styles.modelGrid}>
+            {invitationDemos.map((demo, index) => (
+              <article key={demo.slug} className={styles.model}>
+                <Link
+                  href={`/modeles/${demo.slug}`}
+                  aria-label={`Découvrir le modèle ${demo.name}`}
+                  className={styles.modelPreview}
+                >
+                  <InvitationCover demo={demo} />
+                  <span className={styles.modelOpen}>
+                    Ouvrir la démonstration ↗
+                  </span>
+                </Link>
+                <div className={styles.modelMeta}>
+                  <span>
+                    0{index + 1} / {demo.category}
+                  </span>
+                  <span>Aperçu interactif</span>
+                </div>
+                <h3>{demo.name}</h3>
+                <p>{demo.description}</p>
+              </article>
+            ))}
+          </div>
+          <p className={styles.collectionNote}>
+            Trois démonstrations à explorer librement. La personnalisation et la
+            publication seront disponibles dans une prochaine étape.
+          </p>
+        </section>
+        <section
+          className={styles.editorialStory}
+          aria-labelledby="story-title"
+        >
+          <div className={styles.storyPhoto}>
+            <Image
+              src="/images/editorial/reception.jpg"
+              alt="Une réception au jardin, des roses rouges et des bougies sur une table en bois"
+              fill
+              sizes="(max-width: 700px) 100vw, 50vw"
+            />
+          </div>
+          <div className={styles.storyCopy}>
+            <p className={styles.eyebrow}>
+              Ce qui compte, c’est de se retrouver
+            </p>
+            <h2 id="story-title">
+              Une grande table.
+              <br />
+              Vos personnes préférées.
+              <br />
+              <em>Et le temps qui s’arrête.</em>
+            </h2>
+            <p>
+              Il y a les détails que l’on prépare pendant des mois. Et les
+              moments qui ne se prévoient pas. MyEvents se construit autour des
+              deux : vous aider à organiser, inviter, puis garder une trace de
+              ce que vous avez vécu ensemble.
+            </p>
+            <a href="#experience">
+              Découvrir l’expérience <span aria-hidden="true">↗</span>
+            </a>
+          </div>
         </section>
         <section
           id="experience"

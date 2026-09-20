@@ -1,0 +1,250 @@
+@font-face {
+  font-family: 'MyEvents Editorial';
+  src: url('/fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MyEvents Script';
+  src: url('/fonts/great-vibes-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
+.cover {
+  position: relative;
+  aspect-ratio: 3 / 4.5;
+  overflow: hidden;
+  background: #f8f5eb;
+  color: #283e2d;
+  container-type: inline-size;
+}
+.photo {
+  overflow: hidden;
+  position: absolute;
+  inset: 0;
+}
+.photo img {
+  object-fit: cover;
+}
+.words {
+  position: absolute;
+  inset: 7%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8%;
+  background: #faf7eeed;
+  border: 1px solid #c9bb98;
+}
+.overline {
+  font:
+    500 2.7cqw/1.6 Arial,
+    sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.names {
+  font:
+    400 13cqw/1.05 'MyEvents Editorial',
+    Georgia,
+    serif;
+  margin: 8% 0;
+}
+.rule {
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+  margin: 5% 0;
+}
+.date {
+  font:
+    400 3.5cqw/1.5 Arial,
+    sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.place {
+  font:
+    italic 4cqw/1.5 'MyEvents Editorial',
+    Georgia,
+    serif;
+  margin: 6% 0;
+}
+.signature {
+  font:
+    400 6cqw/1.4 'MyEvents Script',
+    cursive;
+  margin-top: 10%;
+}
+.garnet {
+  background: #5c1527;
+  color: #f8ead2;
+}
+.garnet .photo {
+  inset: 52% 11% 7%;
+  border-radius: 100px 100px 0 0;
+}
+.garnet .words {
+  background: transparent;
+  inset: 5%;
+  justify-content: flex-start;
+  padding: 8% 6%;
+  border-color: #c4a370;
+}
+.garnet .names {
+  font-family: 'MyEvents Script', cursive;
+  font-size: 12cqw;
+  margin: 7% 0 4%;
+}
+.garnet .rule {
+  margin: 3% 0;
+}
+.garnet .place,
+.garnet .signature {
+  display: none;
+}
+.editorial {
+  background: #e9b5a8;
+  color: #561a25;
+}
+.editorial .photo {
+  inset: 49% 7% 7%;
+}
+.editorial .words {
+  background: transparent;
+  border: 0;
+  inset: 0;
+  padding: 8%;
+  justify-content: flex-start;
+}
+.editorial .names {
+  font-size: 14cqw;
+  line-height: 0.93;
+  margin: 5% 0;
+}
+.editorial .rule,
+.editorial .place,
+.editorial .signature {
+  display: none;
+}
+.demo {
+  min-height: 100vh;
+  background: #eee9df;
+  color: #352f29;
+  font-family: Arial, sans-serif;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 18px 5%;
+  border-bottom: 1px solid #d5ccbe;
+  font-size: 12px;
+}
+.bar a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 8px 0;
+}
+.bar a:focus-visible,
+.opening summary:focus-visible {
+  outline: 3px solid #7a1f2b;
+  outline-offset: 5px;
+}
+.demoBody {
+  max-width: 560px;
+  margin: 40px auto 0;
+  background: #fcfaf4;
+}
+.demoHeading {
+  font:
+    400 30px/1.2 'MyEvents Editorial',
+    Georgia,
+    serif;
+  text-align: center;
+  padding: 30px 20px 0;
+}
+.disclaimer {
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.7;
+  padding: 16px 24px 28px;
+}
+.opening summary {
+  cursor: pointer;
+  list-style: none;
+  text-align: center;
+  padding: 34px 24px;
+  background: #5c1527;
+  color: #fff4e3;
+  font:
+    400 25px/1.3 'MyEvents Editorial',
+    Georgia,
+    serif;
+}
+.opening summary::-webkit-details-marker {
+  display: none;
+}
+.opening summary::after {
+  content: ' +';
+}
+.opening[open] summary::after {
+  content: ' −';
+}
+.inside {
+  padding: 40px 32px;
+  text-align: center;
+  animation: reveal 0.55s ease-out both;
+}
+.inside h2 {
+  font:
+    400 38px/1.1 'MyEvents Editorial',
+    Georgia,
+    serif;
+  margin: 10px 0 24px;
+}
+.inside p {
+  line-height: 1.9;
+  font-size: 14px;
+}
+.program {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0;
+}
+.program li {
+  display: flex;
+  gap: 24px;
+  text-align: left;
+  padding: 18px 0;
+  border-top: 1px solid #ded5c6;
+  font-size: 14px;
+}
+.program time {
+  color: #7a1f2b;
+}
+.note {
+  background: #efe9dd;
+  padding: 20px;
+}
+@keyframes reveal {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@media (max-width: 600px) {
+  .demoBody {
+    margin-top: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .inside {
+    animation: none;
+  }
+}
