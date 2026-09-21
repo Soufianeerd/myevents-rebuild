@@ -30,3 +30,7 @@ Un passage a également rencontré un timeout de navigation dans le test cumulan
 ## Limites explicites
 
 Le Studio, la personnalisation persistante, la publication, le RSVP et l’achat ne sont pas implémentés par cette livraison. Les pages le précisent. Aucun prix, avis client ou compteur d’usage inventé. La validation visuelle ne constitue pas une validation du parcours commercial complet.
+
+## Déploiement vérifié
+
+Commit applicatif `097cbd5`, Vercel Preview `dpl_7BgtcwfTzN6g6gg7XHwCsJ3Pu8yo`, état READY. Alias https://myevents-staging-el-rhadis-projects.vercel.app réaffecté à cette version. Lecture HTTP authentifiée avec la CLI Vercel : accueil contenant les trois modèles et démonstration Soirée grenat contenant son ouverture et son programme. Aucun changement de production, aucune reconnexion Neon, aucun paiement.

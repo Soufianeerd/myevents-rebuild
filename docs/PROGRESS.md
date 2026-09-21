@@ -71,4 +71,4 @@ Mis à jour le 21 septembre 2026. Ce suivi ne remplace ni le cahier des charges 
 
 ## Accueil éditorial — 21 septembre 2026
 
-Photographies réelles documentées, trois modèles HTML/CSS ouvrables et animations accessibles. Studio et commerce restent non livrés. Voir `docs/audit/HOME-EDITORIAL-2026-09-21.md`. Preview Vercel existante disponible sur https://myevents-staging-el-rhadis-projects.vercel.app ; la mise à jour visuelle est en validation.
+Photographies réelles documentées, trois modèles HTML/CSS ouvrables et animations accessibles. Studio et commerce restent non livrés. Voir `docs/audit/HOME-EDITORIAL-2026-09-21.md`. Preview Vercel existante disponible sur https://myevents-staging-el-rhadis-projects.vercel.app ; la mise à jour visuelle est déployée et vérifiée (commit `097cbd5`, 154 tests réussis).
