@@ -4,6 +4,10 @@ import { sql } from 'drizzle-orm';
 import { randomUUID, createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { beforeAll, afterAll, it, expect } from 'vitest';
+import { NeonPlanningRepository } from '@/providers/neon/NeonPlanningRepository';
+import { NeonGuestRepository } from '@/providers/neon/NeonGuestRepository';
+import { guestSchema } from '@/core/guests/models';
+import { planningSchema } from '@/core/planning/models';
 import { NeonDesignRepository } from '@/providers/neon/NeonDesignRepository';
 import { newThankYou } from '@/core/designs/models';
 import { NeonMediaRepository } from '@/providers/neon/NeonMediaRepository';
@@ -58,6 +62,8 @@ beforeAll(async () => {
   await db.exec(
     await readFile('neon/migrations/0006_business_preview.sql', 'utf8'),
   );
+  await db.exec(await readFile('neon/migrations/0007_planning.sql', 'utf8'));
+  await db.exec(await readFile('neon/migrations/0008_guests.sql', 'utf8'));
   const profile = (
     await scoped(owner, session).query(
       sql`SELECT * FROM myevents.ensure_identity()`,
@@ -353,4 +359,52 @@ it('gates preview activation separately from payments and prevents cross-tenant 
       o.offer.name.includes('preview'),
     ),
   ).toBe(false);
+});
+
+it('persists planning without sharing tasks or budget with other accounts', async () => {
+  const planning = new NeonPlanningRepository(scoped(owner, session)),
+    otherPlanning = new NeonPlanningRepository(scoped(other, otherSession));
+  const document = planningSchema.parse({
+    tasks: [{ id: randomUUID(), title: 'Réserver le lieu', status: 'doing' }],
+    budget: [
+      {
+        id: randomUUID(),
+        title: 'Lieu',
+        planned: 100000,
+        actual: 110000,
+        paid: 30000,
+      },
+    ],
+  });
+  expect((await planning.save(eventId, tenant, document, 0)).revision).toBe(1);
+  expect((await planning.get(eventId, tenant))?.document.budget[0].paid).toBe(
+    30000,
+  );
+  expect(await otherPlanning.get(eventId, tenant)).toBeNull();
+  await expect(
+    otherPlanning.save(eventId, tenant, document, 1),
+  ).rejects.toThrow();
+  await expect(planning.save(eventId, tenant, document, 0)).rejects.toThrow();
+});
+
+it('isolates guest contacts and rejects stale saves', async () => {
+  const guests = new NeonGuestRepository(scoped(owner, session)),
+    otherGuests = new NeonGuestRepository(scoped(other, otherSession));
+  const document = {
+    guests: [
+      guestSchema.parse({
+        id: randomUUID(),
+        name: 'Alice',
+        email: 'alice@example.invalid',
+        household: 'Famille Martin',
+      }),
+    ],
+  };
+  expect((await guests.save(eventId, tenant, document, 0)).revision).toBe(1);
+  expect((await guests.get(eventId, tenant))?.document).toEqual(document);
+  expect(await otherGuests.get(eventId, tenant)).toBeNull();
+  await expect(
+    otherGuests.save(eventId, tenant, document, 1),
+  ).rejects.toThrow();
+  await expect(guests.save(eventId, tenant, document, 0)).rejects.toThrow();
 });

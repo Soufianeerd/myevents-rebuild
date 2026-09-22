@@ -58,3 +58,8 @@ PROD-01-001/002/004 restent partielles ; PROD-01-003 est couvert par
 ## Vérification métier partielle — 22 septembre 2026
 
 §7–23, §30–36, §40 : **verified sur le sous-parcours testé**, sans validation globale de ces sections. Document Studio → publication → RSVP propriétaire et QR → dépôt photo → réception → carte recto/verso persistante. Preuves : [BUSINESS-2026-09-22](../audit/BUSINESS-2026-09-22.md), tests de domaine, RLS PostgreSQL et navigateur cités dans ce rapport. Les exigences manquantes restent ouvertes. La priorité donnée par le propriétaire à la construction métier est exécutée par un mode de démonstration de staging sans faux paiement ; Stripe et emails ne bloquent plus ce parcours.
+
+### Extension métier — 22 septembre 2026
+
+- §22 / GUEST-23-001..004, GUEST-24-001 : carnet manuel, recherche/filtres, groupes/foyers, CSV avec mapping/aperçu/dédoublonnage et export sécurisé implémentés. Domaine `core/guests`, adaptateurs local/Neon, UI `/events/[id]/invites`. Tests unitaires CSV/doublons et intégration RLS/conflits réussis. Couverture **partielle**, Excel et invitations individualisées encore ouverts.
+- §24–29 : organisation multi-types, tâches, budget, prestataires, lieux/programme, notes et synthèse événement implémentés ; `core/planning`, `/events/[id]/organisation`, migration 0007. Calculs en centimes, intégrité des lieux, isolation tenant et révisions vérifiés par tests unitaires/intégration. Couverture **partielle**, les exports, documents et finitions des écrans restent ouverts.

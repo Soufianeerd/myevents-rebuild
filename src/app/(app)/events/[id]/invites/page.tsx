@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Guests from './Guests';
+import { guestState } from '@/server/guests/service';
 import { eventScope } from '@/server/experience/service';
 import styles from '../workspace.module.css';
 export default async function GuestsPage({
@@ -12,11 +14,18 @@ export default async function GuestsPage({
     repository.get(id, context.tenantId),
     repository.responses(id, context.tenantId),
   ]);
+  const contacts = await guestState(id);
   const fields = record?.published?.fields ?? record?.draft.fields ?? [];
   return (
     <div className={styles.workspace}>
       <Link href={`/events/${id}`}>← {event.name}</Link>
       <h1>Invités & réponses</h1>
+      <Guests
+        eventId={id}
+        initial={contacts.document}
+        revision={contacts.revision}
+      />
+      <h2>Réponses reçues</h2>
       <p>
         Les réponses envoyées depuis votre invitation apparaissent ici. Les
         colonnes suivent vos questions RSVP.

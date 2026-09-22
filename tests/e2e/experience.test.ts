@@ -99,5 +99,88 @@ test('business preview: Studio → published invitation → guest RSVP → owner
     path: info.outputPath('cartes-desktop.png'),
     fullPage: true,
   });
+  await page.goto(`${eventUrl}/organisation`);
+  await page.getByRole('button', { name: 'Ajouter une tâche' }).click();
+  await page.getByRole('textbox', { name: /^Titre/ }).fill('Réserver le lieu');
+  await page.getByLabel('Responsable').fill('Camille');
+  await page.getByRole('button', { name: 'Enregistrer', exact: true }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Réserver le lieu' }),
+  ).toBeVisible();
+  await page.getByRole('checkbox', { name: 'Tâche terminée' }).check();
+  await expect(
+    page.getByText('1/1 tâches terminées', { exact: true }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Budget (0)', exact: true }).click();
+  await page.getByRole('button', { name: 'Ajouter une dépense' }).click();
+  await page
+    .getByRole('textbox', { name: /^Dépense/ })
+    .fill('Location du lieu');
+  await page.getByLabel('Budget prévu (€)', { exact: true }).fill('1000');
+  await page.getByLabel('Coût réel (€)', { exact: true }).fill('1100');
+  await page.getByLabel('Montant payé (€)', { exact: true }).fill('300');
+  await page.getByRole('button', { name: 'Enregistrer', exact: true }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Location du lieu' }),
+  ).toBeVisible();
+  await page.reload();
+  await expect(
+    page.getByText('1/1 tâches terminées', { exact: true }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Budget (1)', exact: true }).click();
+  await expect(
+    page.getByRole('heading', { name: 'Location du lieu' }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath('organisation-desktop.png'),
+    fullPage: true,
+  });
+  await page.goto(`${eventUrl}/invites`);
+  await page
+    .getByRole('button', { name: 'Ajouter un invité', exact: true })
+    .click();
+  const card = page
+    .locator('form')
+    .filter({ has: page.getByRole('heading', { name: 'Fiche invité' }) });
+  await card.getByLabel('Nom', { exact: true }).fill('Alice Martin');
+  await card
+    .getByLabel('E-mail', { exact: true })
+    .fill('alice@example.invalid');
+  await card.getByLabel('Foyer', { exact: true }).fill('Famille Martin');
+  await card.getByRole('button', { name: 'Enregistrer l’invité' }).click();
+  await expect(
+    page.getByRole('button', { name: 'Modifier Alice Martin' }),
+  ).toBeVisible();
+  await page.getByText('Importer un fichier CSV', { exact: true }).click();
+  await page.getByLabel('Fichier CSV', { exact: true }).setInputFiles({
+    name: 'invites.csv',
+    mimeType: 'text/csv',
+    buffer: Buffer.from(
+      'name;email;household\nAlice doublon;alice@example.invalid;Martin\nBob Martin;bob@example.invalid;Martin',
+    ),
+  });
+  await page.getByRole('button', { name: 'Confirmer l’import' }).click();
+  await expect(page.getByRole('status')).toContainText(
+    '1 invités importés, 1 doublons ignorés',
+  );
+  await page.getByLabel('Sélectionner Bob Martin', { exact: true }).check();
+  await page.getByLabel('Nouveau groupe', { exact: true }).fill('Famille');
+  await page.getByRole('button', { name: 'Appliquer le groupe' }).click();
+  await expect(page.getByRole('status')).toContainText('Liste enregistrée');
+  await page.reload();
+  await page
+    .getByRole('combobox', { name: 'Filtrer par groupe', exact: true })
+    .selectOption('Famille');
+  await expect(
+    page.getByRole('button', { name: 'Modifier Bob Martin' }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Modifier Alice Martin' }),
+  ).toHaveCount(0);
+  await expect(page.getByText('Invitée test', { exact: true })).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath('invites-desktop.png'),
+    fullPage: true,
+  });
   await context.close();
 });

@@ -175,7 +175,7 @@ const navGroups = [
     title: 'Gestion',
     items: [
       { label: 'Dashboard', href: '/dashboard', icon: <HomeIcon /> },
-      { label: 'Mon événement', href: '/programme', icon: <CalendarIcon /> },
+      { label: 'Organisation', href: '/programme', icon: <CalendarIcon /> },
       { label: 'Invités & réponses', href: '/invites', icon: <UsersIcon /> },
       { label: 'Envois & RSVP', href: '/envois', icon: <MailIcon /> },
     ],
@@ -206,7 +206,7 @@ export const Sidebar = ({
   const pathname = usePathname();
   const eventPath = pathname.match(/^\/events\/[0-9a-f-]{36}/)?.[0];
   const destinations: Record<string, string> = {
-    '/programme': eventPath ?? '/dashboard',
+    '/programme': eventPath ? `${eventPath}/organisation` : '/dashboard',
     '/invites': eventPath ? `${eventPath}/invites` : '/dashboard',
     '/envois': eventPath ? `${eventPath}/invites` : '/dashboard',
     '/studio': eventPath ? `${eventPath}/studio` : '/dashboard',

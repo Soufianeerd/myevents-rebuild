@@ -1,4 +1,8 @@
 import { businessPreviewEnabled } from '@/server/experience/service';
+import { planningState } from '@/server/planning/service';
+import { guestState } from '@/server/guests/service';
+import { budgetSummary, taskSummary } from '@/core/planning/models';
+import styles from './workspace.module.css';
 import { PreviewAccess } from './PreviewAccess';
 import * as React from 'react';
 import { formatEventDate } from '@/core/events/dates';
@@ -20,6 +24,17 @@ export default async function EventDetailPage({
     notFound();
   }
 
+  const [planning, contacts] = await Promise.all([
+    planningState(id),
+    guestState(id),
+  ]);
+  const tasks = taskSummary(planning.document.tasks);
+  const budget = budgetSummary(planning.document.budget);
+  const euros = (cents: number) =>
+    new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(cents / 100);
   return (
     <div className="mx-auto max-w-5xl">
       <div className="mb-6 flex flex-col sm:flex-row items-start justify-between gap-6">
@@ -48,6 +63,7 @@ export default async function EventDetailPage({
         className="flex flex-wrap gap-[12px] my-[24px]"
       >
         {[
+          ['organisation', 'Organisation, programme & budget'],
           ['studio', 'Personnaliser mon invitation'],
           ['offres', 'Formules et paiements'],
           ['invites', 'Invités & réponses'],
@@ -63,6 +79,64 @@ export default async function EventDetailPage({
           </Link>
         ))}
       </nav>
+      <section
+        className={styles.workspace}
+        aria-label="Vue d’ensemble de l’événement"
+      >
+        <div className={styles.stats}>
+          <span>{contacts.document.guests.length} contacts</span>
+          <span>
+            {contacts.responses.filter((r) => r.presence === 'yes').length}{' '}
+            réponses positives
+          </span>
+          <span>
+            {tasks.done}/{tasks.total} tâches terminées
+          </span>
+          <span>{euros(budget.actual)} de dépenses</span>
+        </div>
+        <div className={styles.grid}>
+          <article className={styles.card}>
+            <h2>À organiser</h2>
+            {planning.document.tasks
+              .filter((t) => t.status !== 'done')
+              .slice(0, 4)
+              .map((t) => (
+                <p key={t.id}>
+                  {t.title}
+                  {t.responsible ? ` · ${t.responsible}` : ''}
+                </p>
+              ))}
+            {!planning.document.tasks.some((t) => t.status !== 'done') && (
+              <p>Aucune tâche en attente.</p>
+            )}
+            <Link href={`/events/${id}/organisation`}>
+              Gérer les tâches et le budget →
+            </Link>
+          </article>
+          <article className={styles.card}>
+            <h2>Programme</h2>
+            {[...planning.document.moments]
+              .sort((a, b) => a.start.localeCompare(b.start))
+              .slice(0, 4)
+              .map((m) => (
+                <p key={m.id}>
+                  <strong>{m.title}</strong>
+                  <br />
+                  {formatEventDate(m.start, event.timezone)}
+                </p>
+              ))}
+            {!planning.document.moments.length && (
+              <p>
+                Ajoutez les moments de votre événement pour retrouver ici le
+                programme.
+              </p>
+            )}
+            <Link href={`/events/${id}/organisation`}>
+              Organiser le programme et les lieux →
+            </Link>
+          </article>
+        </div>
+      </section>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="min-w-0 break-words rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold tracking-tight text-neutral-900 mb-4">
