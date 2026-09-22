@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { readGuestFile } from '@/features/guests/readGuestFile';
 import {
   guestSchema,
+  mapGuestRows,
   guestStatuses,
-  parseCsv,
   mergeGuestImport,
   guestsCsv,
   type Guest,
@@ -19,6 +20,11 @@ const labels = {
   group: 'Groupe',
   table: 'Table',
   notes: 'Notes',
+} as const;
+const importLabels = {
+  ...labels,
+  status: 'Statut',
+  maxCompanions: 'Accompagnants maximum',
 } as const;
 const statuses = {
   not_invited: 'Pas encore invité',
@@ -46,6 +52,9 @@ export default function Guests({
     [query, setQuery] = useState(''),
     [status, setStatus] = useState(''),
     [group, setGroup] = useState(''),
+    [sort, setSort] = useState<'name' | 'household' | 'group' | 'table'>(
+      'name',
+    ),
     [selected, setSelected] = useState<string[]>([]),
     [bulkGroup, setBulkGroup] = useState(''),
     [rows, setRows] = useState<string[][]>([]),
@@ -79,7 +88,11 @@ export default function Guests({
           .toLocaleLowerCase('fr')
           .includes(query.toLocaleLowerCase('fr')),
     )
-    .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    .sort(
+      (a, b) =>
+        a[sort].localeCompare(b[sort], 'fr') ||
+        a.name.localeCompare(b.name, 'fr'),
+    );
   function download(guests: Guest[]) {
     const url = URL.createObjectURL(
       new Blob([guestsCsv(guests)], { type: 'text/csv;charset=utf-8' }),
@@ -156,6 +169,18 @@ export default function Guests({
           </select>
         </label>
       </div>
+      <label>
+        Trier les invités
+        <select
+          value={sort}
+          onChange={(e) => setSort(e.target.value as typeof sort)}
+        >
+          <option value="name">Nom</option>
+          <option value="household">Foyer</option>
+          <option value="group">Groupe</option>
+          <option value="table">Table</option>
+        </select>
+      </label>
       {editing && (
         <form
           className={styles.card}
@@ -239,16 +264,17 @@ export default function Guests({
         </form>
       )}
       <details className={styles.card}>
-        <summary>Importer un fichier CSV</summary>
+        <summary>Importer un fichier CSV ou Excel</summary>
         <p>
-          Choisissez un fichier UTF-8 de 2 Mo maximum. Vérifiez les colonnes
-          avant de confirmer. Les adresses e-mail déjà présentes sont ignorées.
+          Choisissez un fichier CSV UTF-8 ou Excel (.xlsx) de 2 Mo maximum. La
+          première feuille Excel est utilisée. Vérifiez les colonnes avant de
+          confirmer. Les adresses e-mail déjà présentes sont ignorées.
         </p>
         <label>
-          Fichier CSV
+          Fichier CSV ou Excel
           <input
             type="file"
-            accept=".csv,text/csv"
+            accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             disabled={busy}
             onChange={async (e) => {
               try {
@@ -256,20 +282,22 @@ export default function Guests({
                 if (!file) return;
                 if (file.size > 2000000)
                   throw new Error('Le fichier dépasse 2 Mo.');
-                const parsed = parseCsv(await file.text());
+                const parsed = await readGuestFile(file);
                 if (parsed.length < 2)
                   throw new Error('Le fichier ne contient aucun invité.');
                 setRows(parsed);
                 setMapping(
                   Object.fromEntries(
-                    Object.keys(labels).map((key) => [
+                    Object.keys(importLabels).map((key) => [
                       key,
                       String(
                         parsed[0].findIndex(
                           (h) =>
                             h.trim().toLowerCase() === key ||
                             h.trim().toLowerCase() ===
-                              labels[key as keyof typeof labels].toLowerCase(),
+                              importLabels[
+                                key as keyof typeof importLabels
+                              ].toLowerCase(),
                         ),
                       ),
                     ]),
@@ -287,7 +315,7 @@ export default function Guests({
         {!!rows.length && (
           <>
             <div className={styles.grid}>
-              {Object.entries(labels).map(([key, label]) => (
+              {Object.entries(importLabels).map(([key, label]) => (
                 <label key={key}>
                   {label}
                   <select
@@ -326,22 +354,9 @@ export default function Guests({
               disabled={busy || Number(mapping.name) < 0}
               onClick={async () => {
                 try {
-                  const guests = rows.slice(1).map((row, i) => {
-                    const result = guestSchema.safeParse({
-                      id: crypto.randomUUID(),
-                      ...Object.fromEntries(
-                        Object.keys(labels).map((key) => [
-                          key,
-                          row[Number(mapping[key])] ?? '',
-                        ]),
-                      ),
-                    });
-                    if (!result.success)
-                      throw new Error(
-                        `Ligne ${i + 2} : nom ou e-mail invalide. Aucun invité importé.`,
-                      );
-                    return result.data;
-                  });
+                  const guests = mapGuestRows(rows, mapping, () =>
+                    crypto.randomUUID(),
+                  );
                   const merged = mergeGuestImport(book, guests);
                   if (await save(merged.document)) {
                     setRows([]);

@@ -151,8 +151,10 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   await expect(
     page.getByRole('button', { name: 'Modifier Alice Martin' }),
   ).toBeVisible();
-  await page.getByText('Importer un fichier CSV', { exact: true }).click();
-  await page.getByLabel('Fichier CSV', { exact: true }).setInputFiles({
+  await page
+    .getByText('Importer un fichier CSV ou Excel', { exact: true })
+    .click();
+  await page.getByLabel('Fichier CSV ou Excel', { exact: true }).setInputFiles({
     name: 'invites.csv',
     mimeType: 'text/csv',
     buffer: Buffer.from(
@@ -178,6 +180,19 @@ test('business preview: Studio → published invitation → guest RSVP → owner
     page.getByRole('button', { name: 'Modifier Alice Martin' }),
   ).toHaveCount(0);
   await expect(page.getByText('Invitée test', { exact: true })).toBeVisible();
+  await page
+    .getByRole('combobox', { name: 'Filtrer par groupe', exact: true })
+    .selectOption('');
+  await page
+    .getByText('Importer un fichier CSV ou Excel', { exact: true })
+    .click();
+  await page
+    .getByLabel('Fichier CSV ou Excel', { exact: true })
+    .setInputFiles('tests/fixtures/invites.xlsx');
+  await page.getByRole('button', { name: 'Confirmer l’import' }).click();
+  await expect(
+    page.getByRole('button', { name: 'Modifier Claire Durand' }),
+  ).toBeVisible();
   await page.screenshot({
     path: info.outputPath('invites-desktop.png'),
     fullPage: true,

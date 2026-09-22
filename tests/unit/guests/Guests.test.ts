@@ -2,6 +2,7 @@ import { it, expect } from 'vitest';
 import { randomUUID } from 'node:crypto';
 import {
   guestSchema,
+  mapGuestRows,
   guestBookSchema,
   parseCsv,
   guestsCsv,
@@ -49,4 +50,24 @@ it('exports quoted Unicode CSV with spreadsheet formula protection', () => {
   const rows = parseCsv(guestsCsv([guest]));
   expect(rows[1][0]).toBe('Élodie');
   expect(rows[1][8]).toBe('\'=HYPERLINK("url")');
+});
+
+it('imports exported statuses and companion limits without silently resetting them', () => {
+  const guest = guestSchema.parse({
+    id: randomUUID(),
+    name: 'Alice',
+    status: 'yes',
+    maxCompanions: 3,
+  });
+  const rows = parseCsv(guestsCsv([guest]));
+  const mapping = Object.fromEntries(
+    rows[0].map((key, index) => [key, String(index)]),
+  );
+  expect(mapGuestRows(rows, mapping, randomUUID)[0]).toMatchObject({
+    name: 'Alice',
+    status: 'yes',
+    maxCompanions: 3,
+  });
+  rows[1][7] = '-1';
+  expect(() => mapGuestRows(rows, mapping, randomUUID)).toThrow('Ligne 2');
 });

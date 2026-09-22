@@ -118,3 +118,41 @@ export function guestsCsv(guests: Guest[]) {
     ].join('\r\n')
   );
 }
+
+export const guestImportFields = [
+  'name',
+  'email',
+  'phone',
+  'household',
+  'group',
+  'table',
+  'status',
+  'maxCompanions',
+  'notes',
+] as const;
+export function mapGuestRows(
+  rows: string[][],
+  mapping: Record<string, string>,
+  id: () => string,
+): Guest[] {
+  if (!Number.isInteger(Number(mapping.name)) || Number(mapping.name) < 0)
+    throw new Error('Choisissez la colonne Nom.');
+  return rows.slice(1).map((row, index) => {
+    const values = Object.fromEntries(
+      guestImportFields.map((key) => [key, row[Number(mapping[key])] ?? '']),
+    );
+    const result = guestSchema.safeParse({
+      ...values,
+      id: id(),
+      status: values.status || 'not_invited',
+      maxCompanions: values.maxCompanions.trim()
+        ? Number(values.maxCompanions)
+        : 0,
+    });
+    if (!result.success)
+      throw new Error(
+        `Ligne ${index + 2} : vérifiez le nom, l’e-mail, le statut et les accompagnants. Aucun invité importé.`,
+      );
+    return result.data;
+  });
+}
