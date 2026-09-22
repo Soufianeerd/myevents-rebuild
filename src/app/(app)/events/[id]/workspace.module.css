@@ -1,0 +1,160 @@
+.workspace {
+  max-width: 1280px;
+  margin: auto;
+  color: #372d29;
+  font:
+    14px/1.7 Arial,
+    sans-serif;
+}
+.workspace h1 {
+  font:
+    42px/1.2 Georgia,
+    serif;
+  color: #641d2b;
+  margin: 20px 0;
+}
+.workspace h2 {
+  font:
+    25px/1.3 Georgia,
+    serif;
+  color: #641d2b;
+  margin: 24px 0 15px;
+}
+.workspace a {
+  color: #6c1e2c;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+  margin: 28px 0;
+}
+.card {
+  padding: 26px;
+  background: #fffdf9;
+  border: 1px solid #e0d4c4;
+  border-radius: 10px;
+}
+.card h2 {
+  margin-top: 0;
+}
+.card p {
+  margin: 18px 0;
+}
+.price {
+  font:
+    38px Georgia,
+    serif;
+  color: #701d2d;
+}
+.notice {
+  background: #f6ead9;
+  border: 1px solid #d2b68c;
+  padding: 18px 22px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+.workspace button,
+.workspace .link {
+  display: inline-flex;
+  padding: 12px 20px;
+  background: #701d2d;
+  color: #fff;
+  border: 0;
+  border-radius: 6px;
+  font:
+    14px Arial,
+    sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+}
+.workspace button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.workspace :focus-visible {
+  outline: 3px solid #aa783c;
+  outline-offset: 4px;
+}
+.enabled {
+  color: #295132;
+  font-weight: bold;
+}
+.tableWrap {
+  overflow: auto;
+  background: white;
+  border: 1px solid #e0d4c4;
+  margin: 20px 0;
+}
+.workspace table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.workspace th,
+.workspace td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e0d4c4;
+}
+.workspace th {
+  background: #f5eee4;
+}
+.stats {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.stats span {
+  padding: 18px;
+  background: #fffdf9;
+  border: 1px solid #e0d4c4;
+  border-radius: 8px;
+}
+.workspace label {
+  display: block;
+  margin: 12px 0;
+}
+.workspace input:not([type='checkbox']):not([type='radio']),
+.workspace select,
+.workspace textarea {
+  display: block;
+  width: 100%;
+  padding: 11px 12px;
+  margin-top: 7px;
+  border: 1px solid #cbbbaf;
+  border-radius: 5px;
+  background: #fff;
+  color: #372d29;
+  font: inherit;
+}
+.workspace input[type='checkbox'],
+.workspace input[type='radio'] {
+  accent-color: #701d2d;
+  margin-right: 9px;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+.workspace audio {
+  width: 100%;
+}
+.workspace img {
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 600px) {
+  .workspace h1 {
+    font-size: 32px;
+  }
+  .card {
+    padding: 20px;
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

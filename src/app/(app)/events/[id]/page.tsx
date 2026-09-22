@@ -1,3 +1,5 @@
+import { businessPreviewEnabled } from '@/server/experience/service';
+import { PreviewAccess } from './PreviewAccess';
 import * as React from 'react';
 import { formatEventDate } from '@/core/events/dates';
 import { notFound } from 'next/navigation';
@@ -40,6 +42,27 @@ export default async function EventDetailPage({
         </div>
       </div>
 
+      {businessPreviewEnabled() && <PreviewAccess eventId={event.id} />}
+      <nav
+        aria-label="Gérer cet événement"
+        className="flex flex-wrap gap-[12px] my-[24px]"
+      >
+        {[
+          ['studio', 'Personnaliser mon invitation'],
+          ['offres', 'Formules et paiements'],
+          ['invites', 'Invités & réponses'],
+          ['souvenirs', 'QR codes & souvenirs'],
+          ['cartes', 'Cartes de remerciement'],
+        ].map(([path, label]) => (
+          <Link
+            key={path}
+            href={`/events/${event.id}/${path}`}
+            className="rounded-[8px] border border-neutral-300 bg-white px-[18px] py-[12px] text-primary font-medium"
+          >
+            {label}
+          </Link>
+        ))}
+      </nav>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="min-w-0 break-words rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold tracking-tight text-neutral-900 mb-4">

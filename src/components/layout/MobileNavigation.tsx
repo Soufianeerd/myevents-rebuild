@@ -8,15 +8,18 @@ import {
   DrawerTitle,
   DrawerDescription,
 } from '@/components/ui';
+import type { SafeUser } from '@/core/auth';
 import { Sidebar } from './Sidebar';
 
 interface MobileNavigationProps {
+  user?: SafeUser;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   returnFocusRef?: React.RefObject<HTMLElement | null>;
 }
 
 export const MobileNavigation = ({
+  user,
   open,
   onOpenChange,
   returnFocusRef,
@@ -40,7 +43,7 @@ export const MobileNavigation = ({
             Navigation principale de l&apos;application
           </DrawerDescription>
         </div>
-        <Sidebar className="w-full h-full" />
+        <Sidebar user={user} className="w-full h-full" />
       </DrawerContent>
     </Drawer>
   );

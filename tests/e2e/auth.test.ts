@@ -42,7 +42,7 @@ test.describe('Authentication & Security Flow', () => {
 
     // Verify user menu
     await page.click('button[aria-label="Menu utilisateur"]');
-    await expect(page.getByText('Test User')).toBeVisible();
+    await expect(page.getByRole('menu').getByText('Test User')).toBeVisible();
 
     // 2. Logout
     await page.click('text=Déconnexion');

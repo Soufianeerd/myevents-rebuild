@@ -21,10 +21,11 @@ export const AppShell = ({ children, user }: AppShellProps) => {
       <SkipLink />
 
       {/* Desktop Sidebar */}
-      <Sidebar className="hidden md:flex" />
+      <Sidebar user={user} className="hidden md:flex" />
 
       {/* Mobile Sidebar (Drawer) */}
       <MobileNavigation
+        user={user}
         open={isMobileMenuOpen}
         onOpenChange={setIsMobileMenuOpen}
         returnFocusRef={menuTriggerRef}

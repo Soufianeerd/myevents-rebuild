@@ -22,7 +22,12 @@ export default defineConfig({
   webServer: {
     command: `corepack pnpm start --hostname 127.0.0.1 --port ${port}`,
     url: baseURL,
-    env: { APP_MODE: 'local', APP_URL: baseURL, LOCAL_DATA_DIR: dataDir },
+    env: {
+      APP_MODE: 'local',
+      APP_URL: baseURL,
+      LOCAL_DATA_DIR: dataDir,
+      BUSINESS_PREVIEW: 'true',
+    },
     reuseExistingServer: false,
     timeout: 120_000,
   },

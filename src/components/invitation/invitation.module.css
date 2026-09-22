@@ -1,0 +1,287 @@
+@font-face {
+  font-family: InvitationEditorial;
+  src: url('/fonts/cormorant-garamond-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
+@font-face {
+  font-family: InvitationScript;
+  src: url('/fonts/great-vibes-latin-400-normal.woff2') format('woff2');
+  font-display: swap;
+}
+.invitation {
+  min-height: 100%;
+  padding: 24px;
+  color: #421722;
+  overflow-wrap: anywhere;
+  --section-font-size: 32px;
+}
+.paper {
+  max-width: 700px;
+  margin: auto;
+  box-shadow: 0 16px 65px #27181115;
+}
+.section {
+  overflow: hidden;
+}
+.section h1 {
+  font-size: clamp(36px, 6vw, 72px);
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 10px 0 24px;
+}
+.section h2 {
+  font-size: var(--section-font-size);
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 8px 0 22px;
+}
+.editorial h1,
+.editorial h2 {
+  font-family: InvitationEditorial, Georgia, serif;
+}
+.script h1,
+.script h2 {
+  font-family: InvitationScript, cursive;
+}
+.sans h1,
+.sans h2 {
+  font-family: Arial, sans-serif;
+}
+.identity {
+  font:
+    11px/1.5 Arial,
+    sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.text {
+  white-space: pre-line;
+  font:
+    16px/1.9 Arial,
+    sans-serif;
+}
+.photo {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 160px 160px 4px 4px;
+}
+.photo img {
+  object-fit: cover;
+}
+.program {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0;
+  font:
+    15px/1.6 Arial,
+    sans-serif;
+}
+.program li {
+  display: flex;
+  gap: 24px;
+  text-align: left;
+  padding: 20px 0;
+  border-top: 1px solid currentColor;
+}
+.program time {
+  min-width: 55px;
+}
+.program p {
+  font-size: 13px;
+  margin-top: 6px;
+}
+.opening {
+  max-width: 650px;
+  min-height: 75vh;
+  margin: auto;
+  background: #611c2a;
+  color: #fff3db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 35px;
+  text-align: center;
+  position: relative;
+  isolation: isolate;
+}
+.opening h1 {
+  font:
+    48px/1.1 InvitationEditorial,
+    Georgia,
+    serif;
+  margin: 25px 0;
+}
+.opening p {
+  font:
+    12px Arial,
+    sans-serif;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.envelope::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 50% 40%, 100% 0);
+  background: #8a3542;
+  z-index: -1;
+}
+.curtains {
+  background: repeating-linear-gradient(
+    90deg,
+    #5a1925 0,
+    #862939 10%,
+    #5a1925 20%
+  );
+}
+.seal {
+  border-radius: 50%;
+  width: 78px;
+  height: 78px;
+  background: #e5c58f;
+  color: #4a121a;
+  font:
+    40px InvitationScript,
+    cursive;
+  margin: 30px;
+  border: 3px double #875926;
+  cursor: pointer;
+}
+.skip {
+  background: transparent;
+  color: #fff3db;
+  text-decoration: underline;
+  padding: 15px;
+  border: 0;
+  cursor: pointer;
+}
+.form {
+  font:
+    14px/1.6 Arial,
+    sans-serif;
+  text-align: left;
+  color: #342f2a;
+  background: #fffdf8;
+  padding: 24px;
+  border-radius: 8px;
+}
+.form label:not(.inline) {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 15px 0;
+}
+.form input:not([type='checkbox']):not([type='radio']),
+.form select,
+.form textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #b8afa2;
+  border-radius: 5px;
+  padding: 10px;
+  background: #fff;
+  color: #302823;
+  font: inherit;
+}
+.form fieldset {
+  border: 0;
+  padding: 12px 0;
+  margin: 8px 0;
+}
+.inline {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+  padding: 8px 0;
+  font-size: 13px;
+}
+.inline input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: #721d2b;
+}
+.form button {
+  background: #721d2b;
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  padding: 13px 20px;
+  cursor: pointer;
+  margin-top: 15px;
+  font: inherit;
+}
+.form button:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+.form :focus-visible,
+.opening :focus-visible {
+  outline: 3px solid #b47932;
+  outline-offset: 3px;
+}
+.notice,
+.help {
+  font-size: 12px;
+}
+.notice {
+  padding: 10px;
+  background: #eee7da;
+}
+.success {
+  padding: 24px;
+  background: #eef5e9;
+  color: #284927;
+  font:
+    16px/1.7 Arial,
+    sans-serif;
+}
+.reveal {
+  animation: reveal 0.5s ease-out both;
+}
+.zoom {
+  animation: zoom 0.5s ease-out both;
+}
+@keyframes reveal {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes zoom {
+  from {
+    transform: scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@media (max-width: 600px) {
+  .invitation {
+    padding: 0;
+  }
+  .section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .form {
+    padding: 18px;
+  }
+  .opening {
+    min-height: 90vh;
+  }
+  .section h1 {
+    font-size: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .zoom {
+    animation: none;
+  }
+}

@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { SafeUser } from '@/core/auth';
 import { cn } from '@/lib/utils/cn';
 import { isActiveRoute } from '@/lib/utils/navigation';
 
@@ -174,8 +175,8 @@ const navGroups = [
     title: 'Gestion',
     items: [
       { label: 'Dashboard', href: '/dashboard', icon: <HomeIcon /> },
-      { label: 'Programme', href: '/programme', icon: <CalendarIcon /> },
-      { label: 'Invités & Groupes', href: '/invites', icon: <UsersIcon /> },
+      { label: 'Mon événement', href: '/programme', icon: <CalendarIcon /> },
+      { label: 'Invités & réponses', href: '/invites', icon: <UsersIcon /> },
       { label: 'Envois & RSVP', href: '/envois', icon: <MailIcon /> },
     ],
   },
@@ -195,8 +196,24 @@ const navGroups = [
   },
 ];
 
-export const Sidebar = ({ className }: { className?: string }) => {
+export const Sidebar = ({
+  className,
+  user,
+}: {
+  className?: string;
+  user?: SafeUser;
+}) => {
   const pathname = usePathname();
+  const eventPath = pathname.match(/^\/events\/[0-9a-f-]{36}/)?.[0];
+  const destinations: Record<string, string> = {
+    '/programme': eventPath ?? '/dashboard',
+    '/invites': eventPath ? `${eventPath}/invites` : '/dashboard',
+    '/envois': eventPath ? `${eventPath}/invites` : '/dashboard',
+    '/studio': eventPath ? `${eventPath}/studio` : '/dashboard',
+    '/qr': eventPath ? `${eventPath}/souvenirs` : '/dashboard',
+    '/photos': eventPath ? `${eventPath}/souvenirs` : '/dashboard',
+    '/audio': eventPath ? `${eventPath}/souvenirs` : '/dashboard',
+  };
 
   return (
     <aside
@@ -207,7 +224,7 @@ export const Sidebar = ({ className }: { className?: string }) => {
     >
       <div className="pl-2">
         <div className="font-serif text-[22px] font-medium leading-7 tracking-[3.4px] text-white">
-          MYEVENT&apos;S
+          MyEvents
         </div>
         <div className="mt-[3px] text-[9px] font-medium uppercase tracking-[1.6px] text-neutral-400">
           Espace Organisateur
@@ -216,14 +233,14 @@ export const Sidebar = ({ className }: { className?: string }) => {
 
       <div className="mt-[18px] flex shrink-0 items-center gap-[10px] rounded-xl border border-[rgba(212,176,123,0.18)] bg-[rgba(255,255,255,0.05)] p-[10px]">
         <div className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-full border border-[rgba(212,176,123,0.5)] bg-primary text-[11px] font-medium text-accent">
-          MM
+          ME
         </div>
         <div className="min-w-0 flex-1">
           <div className="text-[12px] font-medium leading-[18px] text-[#f3efe7]">
-            Mariage de M & M
+            {eventPath ? 'Mon événement' : 'Mes événements'}
           </div>
           <div className="text-[11px] leading-[16px] text-neutral-400">
-            12 Septembre 2026
+            {eventPath ? 'Organisation & souvenirs' : 'Tous vos moments réunis'}
           </div>
         </div>
       </div>
@@ -239,11 +256,16 @@ export const Sidebar = ({ className }: { className?: string }) => {
             </div>
             <div className="flex flex-col gap-1">
               {group.items.map((item) => {
-                const isActive = isActiveRoute(pathname, item.href);
+                const isActive =
+                  isActiveRoute(
+                    pathname,
+                    destinations[item.href] ?? item.href,
+                    item.href === '/programme',
+                  ) && !['/envois', '/photos', '/audio'].includes(item.href);
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={destinations[item.href] ?? item.href}
                     className={cn(
                       'flex h-[33px] items-center gap-[11px] rounded-[10px] border border-transparent px-[9px] text-[13px] text-neutral-400 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus-ring',
                       isActive
@@ -265,10 +287,10 @@ export const Sidebar = ({ className }: { className?: string }) => {
         <div className="h-[30px] w-[30px] shrink-0 rounded-full bg-neutral-700" />
         <div className="min-w-0 flex-1">
           <div className="text-[12px] font-medium leading-[18px] text-white">
-            Jean Dupont
+            {user ? `${user.firstName} ${user.lastName}` : 'Mon espace'}
           </div>
           <div className="text-[11px] leading-[16px] text-neutral-300">
-            Plan gratuit
+            Compte organisateur
           </div>
         </div>
       </div>
