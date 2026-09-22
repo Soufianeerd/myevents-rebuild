@@ -63,3 +63,7 @@ PROD-01-001/002/004 restent partielles ; PROD-01-003 est couvert par
 
 - §22 / GUEST-23-001..004, GUEST-24-001 : carnet manuel, recherche/filtres, groupes/foyers, CSV avec mapping/aperçu/dédoublonnage et export sécurisé implémentés. Domaine `core/guests`, adaptateurs local/Neon, UI `/events/[id]/invites`. Tests unitaires CSV/doublons et intégration RLS/conflits réussis. Couverture **partielle**, Excel et invitations individualisées encore ouverts.
 - §24–29 : organisation multi-types, tâches, budget, prestataires, lieux/programme, notes et synthèse événement implémentés ; `core/planning`, `/events/[id]/organisation`, migration 0007. Calculs en centimes, intégrité des lieux, isolation tenant et révisions vérifiés par tests unitaires/intégration. Couverture **partielle**, les exports, documents et finitions des écrans restent ouverts.
+
+### §23 — invitation individuelle (23 septembre 2026)
+
+Sous-parcours **verified** : émission d’un lien par contact du propriétaire, accès invité prérempli, limite d’accompagnants, réponse actualisable et rattachement CRM. Évidences : migration 0009, `bindGuestResponse`, `NeonExperience.test.ts` (isolation, limite, mise à jour unique, suspension/suppression), `experience.test.ts` (parcours navigateur complet), audit métier. GAP-002 reste partiel : un lien de foyer comportant plusieurs fiches nominatives et les envois externes ne sont pas couverts.

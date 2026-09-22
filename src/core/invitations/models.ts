@@ -18,7 +18,13 @@ export const rsvpFieldSchema = z
       .regex(/^[a-z][a-z0-9_]{0,39}$/)
       .refine(
         (id) =>
-          !['guest_name', 'guest_email', 'presence', 'consent'].includes(id),
+          ![
+            'guest_name',
+            'guest_email',
+            'guest_companions',
+            'presence',
+            'consent',
+          ].includes(id),
         'Identifiant réservé.',
       ),
     label: z.string().trim().min(1).max(100),
@@ -141,6 +147,8 @@ export const rsvpResponseSchema = z.object({
     ]),
   ),
   consent: z.literal(true),
+  guestId: z.uuid().optional(),
+  companions: z.number().int().min(0).max(50).optional(),
 });
 export type RsvpResponse = z.infer<typeof rsvpResponseSchema>;
 export function validateRsvp(
@@ -214,8 +222,31 @@ export interface InvitationRecord {
   }>;
   updatedAt: string;
 }
+export const invitedGuestSchema = z.object({
+  id: z.uuid(),
+  name: z.string(),
+  email: z.string(),
+  maxCompanions: z.number().int().min(0).max(50),
+});
+export type InvitedGuest = z.infer<typeof invitedGuestSchema>;
 export type PublicInvitation = {
+  guest?: InvitedGuest;
   eventId: string;
   document: InvitationDocument;
   revision: number;
 };
+
+export function bindGuestResponse(
+  response: RsvpResponse,
+  guest?: InvitedGuest,
+): RsvpResponse {
+  if ((response.companions ?? 0) > (guest?.maxCompanions ?? 0))
+    throw new Error('Le nombre d’accompagnants dépasse votre invitation.');
+  return {
+    ...response,
+    guestId: guest?.id,
+    id: response.id,
+    name: guest?.name ?? response.name,
+    companions: response.presence === 'yes' ? (response.companions ?? 0) : 0,
+  };
+}

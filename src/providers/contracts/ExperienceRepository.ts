@@ -24,6 +24,12 @@ export interface ExperienceRepository {
     now: string,
   ): Promise<void>;
   suspend(eventId: string, tenantId: string): Promise<void>;
+  issueGuestLink(
+    eventId: string,
+    tenantId: string,
+    guestId: string,
+    tokenHash: string,
+  ): Promise<void>;
   getPublic(tokenHash: string): Promise<PublicInvitation | null>;
   respond(
     tokenHash: string,

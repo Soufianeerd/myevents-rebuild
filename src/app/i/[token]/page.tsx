@@ -21,6 +21,7 @@ export default async function PublishedInvitation({
         document={invitation.document}
         rsvp={
           <RsvpForm
+            guest={invitation.guest}
             document={invitation.document}
             token={token}
             revision={invitation.revision}

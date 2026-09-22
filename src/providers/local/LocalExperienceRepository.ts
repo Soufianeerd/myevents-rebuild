@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { LocalJsonStore } from './persistence/LocalJsonStore';
 import { LocalEventRepository } from './LocalEventRepository';
+import { LocalGuestRepository } from './LocalGuestRepository';
+import { bindGuestResponse } from '@/core/invitations/models';
 import type { ExperienceRepository } from '../contracts/ExperienceRepository';
 import type {
   InvitationDocument,
@@ -20,6 +22,7 @@ interface State {
   responses: Record<string, Array<RsvpResponse & { createdAt: string }>>;
   orders: Order[];
   previews?: string[];
+  guestLinks?: Record<string, { eventId: string; guestId: string }>;
 }
 const empty = (): State => ({
   invitations: {},
@@ -30,6 +33,7 @@ const empty = (): State => ({
 export class LocalExperienceRepository implements ExperienceRepository {
   private store: LocalJsonStore<State>;
   private events: LocalEventRepository;
+  private guests: LocalGuestRepository;
   constructor(directory: string) {
     this.store = new LocalJsonStore({
       baseDir: directory,
@@ -40,6 +44,7 @@ export class LocalExperienceRepository implements ExperienceRepository {
       ),
     });
     this.events = new LocalEventRepository(directory);
+    this.guests = new LocalGuestRepository(directory);
   }
   private async requireEvent(id: string, tenant: string) {
     if (!(await this.events.findById(id as never, tenant as never)))
@@ -149,21 +154,84 @@ export class LocalExperienceRepository implements ExperienceRepository {
       return state;
     });
   }
+  async issueGuestLink(
+    id: string,
+    tenant: string,
+    guestId: string,
+    hash: string,
+  ) {
+    await this.requireEvent(id, tenant);
+    const guest = (await this.guests.get(id, tenant))?.document.guests.find(
+      (g) => g.id === guestId,
+    );
+    if (!guest) throw new Error('Invité introuvable.');
+    await this.store.update((data) => {
+      const state = data ?? empty();
+      if (
+        !state.invitations[id]?.published ||
+        !Object.values(state.links).includes(id)
+      )
+        throw new Error(
+          'Publiez votre invitation dans le Studio avant de créer un lien personnel.',
+        );
+      assertProduct(
+        state.previews?.includes(id)
+          ? [...productKeys]
+          : productsFromOrders(
+              state.orders.filter(
+                (o) => o.eventId === id && o.tenantId === tenant,
+              ),
+            ),
+        'invitation',
+      );
+      state.guestLinks = {
+        ...state.guestLinks,
+        [hash]: { eventId: id, guestId },
+      };
+      return state;
+    });
+  }
   async getPublic(hash: string) {
     const state = await this.store.read();
-    const record = state?.invitations[state.links[hash]];
+    const link = state?.guestLinks?.[hash];
+    const record = state?.invitations[link?.eventId ?? state.links[hash]];
     if (
+      !state ||
       !record?.published ||
+      !Object.values(state.links).includes(record.eventId) ||
       !(await this.events.findById(
         record.eventId as never,
         record.tenantId as never,
       ))
     )
       return null;
+    const products = state.previews?.includes(record.eventId)
+      ? [...productKeys]
+      : productsFromOrders(
+          state.orders.filter(
+            (o) =>
+              o.eventId === record.eventId && o.tenantId === record.tenantId,
+          ),
+        );
+    if (!products.includes('invitation')) return null;
+    const guest = link
+      ? (
+          await this.guests.get(record.eventId, record.tenantId)
+        )?.document.guests.find((g) => g.id === link.guestId)
+      : undefined;
+    if (link && !guest) return null;
     return {
       eventId: record.eventId,
       document: record.published,
       revision: record.publishedRevision!,
+      guest: guest
+        ? {
+            id: guest.id,
+            name: guest.name,
+            email: guest.email,
+            maxCompanions: guest.maxCompanions,
+          }
+        : undefined,
     };
   }
   async respond(
@@ -178,11 +246,20 @@ export class LocalExperienceRepository implements ExperienceRepository {
     await this.store.update((data) => {
       const state = data || empty();
       const record = state.invitations[publicDoc.eventId];
-      if (!record?.published || state.links[hash] !== record.eventId)
+      if (
+        !record?.published ||
+        record.publishedRevision !== revision ||
+        !Object.values(state.links).includes(record.eventId)
+      )
         throw new Error('Invitation indisponible.');
       const rows = state.responses[record.eventId] ?? [];
-      if (!rows.some((r) => r.id === response.id))
-        rows.push({ ...response, createdAt: now });
+      const bound = bindGuestResponse(response, publicDoc.guest);
+      const index = rows.findIndex((r) =>
+        publicDoc.guest ? r.guestId === publicDoc.guest.id : r.id === bound.id,
+      );
+      if (publicDoc.guest && index >= 0)
+        rows[index] = { ...bound, id: rows[index].id, createdAt: now };
+      else if (index < 0) rows.push({ ...bound, createdAt: now });
       state.responses[record.eventId] = rows;
       return state;
     });

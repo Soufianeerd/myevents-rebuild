@@ -18,3 +18,15 @@ export async function saveGuestsAction(
     };
   }
 }
+
+export async function guestLinkAction(id: string, guestId: string) {
+  try {
+    const { guestInvitationLink } = await import('@/server/experience/service');
+    return { ok: true as const, url: await guestInvitationLink(id, guestId) };
+  } catch (error) {
+    return {
+      ok: false as const,
+      error: error instanceof Error ? error.message : 'Lien indisponible.',
+    };
+  }
+}

@@ -1,6 +1,9 @@
 'use client';
 import { useState, useRef, type FormEvent } from 'react';
-import type { InvitationDocument } from '@/core/invitations/models';
+import type {
+  InvitationDocument,
+  InvitedGuest,
+} from '@/core/invitations/models';
 import { rsvpAction } from '@/app/i/[token]/actions';
 import styles from './invitation.module.css';
 export function RsvpForm({
@@ -8,11 +11,13 @@ export function RsvpForm({
   token,
   revision,
   preview = false,
+  guest,
 }: {
   document: InvitationDocument;
   token?: string;
   revision?: number;
   preview?: boolean;
+  guest?: InvitedGuest;
 }) {
   const [status, setStatus] = useState(''),
     [busy, setBusy] = useState(false),
@@ -45,6 +50,7 @@ export function RsvpForm({
           name: data.get('guest_name'),
           email: data.get('guest_email'),
           presence: data.get('presence'),
+          companions: Number(data.get('guest_companions') ?? 0),
           consent: data.get('consent') === 'on',
           answers,
         },
@@ -77,11 +83,19 @@ export function RsvpForm({
       )}
       <label>
         Votre nom{' '}
-        <input name="guest_name" required maxLength={150} autoComplete="name" />
+        <input
+          name="guest_name"
+          required
+          maxLength={150}
+          autoComplete="name"
+          defaultValue={guest?.name}
+          readOnly={!!guest}
+        />
       </label>
       <label>
         Votre adresse e-mail{' '}
         <input
+          defaultValue={guest?.email}
           name="guest_email"
           type="email"
           required
@@ -100,6 +114,19 @@ export function RsvpForm({
           malheureusement
         </label>
       </fieldset>
+      {guest && guest.maxCompanions > 0 && (
+        <label>
+          Nombre d’accompagnants (maximum {guest.maxCompanions})
+          <input
+            type="number"
+            name="guest_companions"
+            min={0}
+            max={guest.maxCompanions}
+            defaultValue={0}
+            required
+          />
+        </label>
+      )}
       {document.fields.map((field) => (
         <div key={field.id}>
           {field.type === 'multiple' ? (

@@ -147,6 +147,7 @@ test('business preview: Studio → published invitation → guest RSVP → owner
     .getByLabel('E-mail', { exact: true })
     .fill('alice@example.invalid');
   await card.getByLabel('Foyer', { exact: true }).fill('Famille Martin');
+  await card.getByLabel('Accompagnants maximum', { exact: true }).fill('2');
   await card.getByRole('button', { name: 'Enregistrer l’invité' }).click();
   await expect(
     page.getByRole('button', { name: 'Modifier Alice Martin' }),
@@ -195,6 +196,49 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   ).toBeVisible();
   await page.screenshot({
     path: info.outputPath('invites-desktop.png'),
+    fullPage: true,
+  });
+  await page
+    .getByRole('button', { name: 'Lien pour Alice Martin', exact: true })
+    .click();
+  await expect(page.getByRole('status')).toContainText('Lien personnel prêt');
+  const personalUrl = await page
+    .getByLabel('Lien personnel', { exact: true })
+    .inputValue();
+  await guest.goto(personalUrl);
+  const reveal = guest.getByRole('button', {
+    name: 'Passer l’introduction',
+    exact: true,
+  });
+  if (await reveal.count()) await reveal.click();
+  await expect(guest.locator('[name=guest_name]')).toHaveValue('Alice Martin');
+  await expect(guest.locator('[name=guest_email]')).toHaveValue(
+    'alice@example.invalid',
+  );
+  await guest.locator('[name=guest_companions]').fill('2');
+  await guest.locator('[name=presence][value=yes]').check();
+  await guest.locator('[name=consent]').check();
+  await guest.getByRole('button', { name: /Envoyer/ }).click();
+  await expect(guest.getByRole('status')).toContainText('bien été enregistrée');
+  await page.reload();
+  const alice = page.getByRole('row').filter({
+    has: page.getByRole('button', {
+      name: 'Modifier Alice Martin',
+      exact: true,
+    }),
+  });
+  await expect(alice).toContainText('Présent');
+  await guest.reload();
+  if (await reveal.count()) await reveal.click();
+  await guest.locator('[name=presence][value=no]').check();
+  await guest.locator('[name=consent]').check();
+  await guest.getByRole('button', { name: /Envoyer/ }).click();
+  await expect(guest.getByRole('status')).toContainText('bien été enregistrée');
+  await page.reload();
+  await expect(alice).toContainText('Absent');
+  await expect(page.getByText('2 réponses', { exact: true })).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath('invites-personnels-desktop.png'),
     fullPage: true,
   });
   await context.close();

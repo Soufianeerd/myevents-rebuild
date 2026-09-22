@@ -3,6 +3,7 @@ import type { ScopedDatabase } from './database';
 import type { ExperienceRepository } from '../contracts/ExperienceRepository';
 import {
   invitationDocumentSchema,
+  invitedGuestSchema,
   type InvitationDocument,
   type InvitationRecord,
   type RsvpResponse,
@@ -94,13 +95,31 @@ export class NeonExperienceRepository implements ExperienceRepository {
     void _tenant;
     await this.db.query(sql`SELECT myevents.suspend_invitation(${id})`);
   }
+  async issueGuestLink(
+    id: string,
+    _tenant: string,
+    guestId: string,
+    hash: string,
+  ) {
+    void _tenant;
+    await this.db.query(
+      sql`SELECT myevents.issue_guest_link(${id},${guestId},${hash})`,
+    );
+  }
   async getPublic(hash: string) {
-    const rows = await this.db.query(
+    let rows = await this.db.query(
       sql`SELECT * FROM myevents.public_invitation(${hash})`,
     );
+    if (!rows.length)
+      rows = await this.db.query(
+        sql`SELECT * FROM myevents.public_guest_invitation(${hash})`,
+      );
     return rows[0]
       ? {
           eventId: String(rows[0].event_id),
+          guest: rows[0].guest
+            ? invitedGuestSchema.parse(rows[0].guest)
+            : undefined,
           document: invitationDocumentSchema.parse(rows[0].document),
           revision: Number(rows[0].revision),
         }
@@ -114,7 +133,9 @@ export class NeonExperienceRepository implements ExperienceRepository {
   ) {
     void _now;
     await this.db.query(
-      sql`SELECT myevents.submit_rsvp(${hash},${JSON.stringify(response)}::jsonb,${revision})`,
+      response.guestId
+        ? sql`SELECT myevents.submit_guest_rsvp(${hash},${JSON.stringify(response)}::jsonb,${revision})`
+        : sql`SELECT myevents.submit_rsvp(${hash},${JSON.stringify(response)}::jsonb,${revision})`,
     );
   }
   async responses(id: string, tenant: string) {

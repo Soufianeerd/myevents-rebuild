@@ -64,6 +64,7 @@ beforeAll(async () => {
   );
   await db.exec(await readFile('neon/migrations/0007_planning.sql', 'utf8'));
   await db.exec(await readFile('neon/migrations/0008_guests.sql', 'utf8'));
+  await db.exec(await readFile('neon/migrations/0009_guest_links.sql', 'utf8'));
   const profile = (
     await scoped(owner, session).query(
       sql`SELECT * FROM myevents.ensure_identity()`,
@@ -407,4 +408,89 @@ it('isolates guest contacts and rejects stale saves', async () => {
     otherGuests.save(eventId, tenant, document, 1),
   ).rejects.toThrow();
   await expect(guests.save(eventId, tenant, document, 0)).rejects.toThrow();
+});
+
+it('binds personal invitations to one guest, limits companions and updates a single response', async () => {
+  const contacts = new NeonGuestRepository(scoped(owner, session));
+  const record = (await contacts.get(eventId, tenant))!;
+  const guest = { ...record.document.guests[0], maxCompanions: 2 };
+  await contacts.save(eventId, tenant, { guests: [guest] }, record.revision);
+  const invitation = (await repo.get(eventId, tenant))!;
+  await repo.publish(
+    eventId,
+    tenant,
+    invitation.revision,
+    'a'.repeat(64),
+    new Date().toISOString(),
+  );
+  const hash = 'b'.repeat(64);
+  await expect(
+    stranger.issueGuestLink(eventId, tenant, guest.id, hash),
+  ).rejects.toThrow();
+  await repo.issueGuestLink(eventId, tenant, guest.id, hash);
+  const publicDoc = (await anonymous.getPublic(hash))!;
+  expect(publicDoc.guest).toMatchObject({
+    id: guest.id,
+    name: 'Alice',
+    maxCompanions: 2,
+  });
+  const response = {
+    id: randomUUID(),
+    guestId: guest.id,
+    name: 'Other name',
+    email: guest.email,
+    presence: 'yes' as const,
+    answers: {},
+    consent: true as const,
+    companions: 3,
+  };
+  await expect(
+    anonymous.respond(
+      hash,
+      response,
+      publicDoc.revision,
+      new Date().toISOString(),
+    ),
+  ).rejects.toThrow();
+  await anonymous.respond(
+    hash,
+    { ...response, companions: 2 },
+    publicDoc.revision,
+    new Date().toISOString(),
+  );
+  await anonymous.respond(
+    hash,
+    { ...response, companions: 1, presence: 'no' },
+    publicDoc.revision,
+    new Date().toISOString(),
+  );
+  const rows = (await repo.responses(eventId, tenant)).filter(
+    (r) => r.guestId === guest.id,
+  );
+  expect(rows).toHaveLength(1);
+  expect(rows[0]).toMatchObject({
+    guestId: guest.id,
+    name: 'Alice',
+    presence: 'no',
+    companions: 0,
+  });
+  await repo.suspend(eventId, tenant);
+  expect(await anonymous.getPublic(hash)).toBeNull();
+  await expect(
+    anonymous.respond(
+      hash,
+      { ...response, companions: 0 },
+      publicDoc.revision,
+      new Date().toISOString(),
+    ),
+  ).rejects.toThrow();
+  await repo.publish(
+    eventId,
+    tenant,
+    invitation.revision,
+    'a'.repeat(64),
+    new Date().toISOString(),
+  );
+  await contacts.save(eventId, tenant, { guests: [] }, record.revision + 1);
+  expect(await anonymous.getPublic(hash)).toBeNull();
 });

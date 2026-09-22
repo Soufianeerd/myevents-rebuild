@@ -21,6 +21,7 @@ export default async function GuestsPage({
       <Link href={`/events/${id}`}>← {event.name}</Link>
       <h1>Invités & réponses</h1>
       <Guests
+        responses={responses}
         eventId={id}
         initial={contacts.document}
         revision={contacts.revision}
@@ -55,6 +56,8 @@ export default async function GuestsPage({
                 <th>Nom</th>
                 <th>E-mail</th>
                 <th>Présence</th>
+                <th>Accompagnants</th>
+                <th>Contact associé</th>
                 {fields.map((f) => (
                   <th key={f.id}>{f.label}</th>
                 ))}
@@ -67,6 +70,11 @@ export default async function GuestsPage({
                   <td>{r.name}</td>
                   <td>{r.email}</td>
                   <td>{r.presence === 'yes' ? 'Présent' : 'Absent'}</td>
+                  <td>{r.companions ?? 0}</td>
+                  <td>
+                    {contacts.document.guests.find((g) => g.id === r.guestId)
+                      ?.name ?? 'Lien général'}
+                  </td>
                   {fields.map((f) => (
                     <td key={f.id}>
                       {Array.isArray(r.answers[f.id])

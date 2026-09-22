@@ -1,3 +1,4 @@
+import { bindGuestResponse } from '@/core/invitations/models';
 import { describe, it, expect } from 'vitest';
 import { randomUUID } from 'node:crypto';
 import {
@@ -140,4 +141,34 @@ describe('Invitation document and RSVP', () => {
     ]);
     expect(productsFromOrders([{ ...order, status: 'refunded' }])).toEqual([]);
   });
+});
+
+it('binds RSVP identity to the invitation and refuses excessive companions', () => {
+  const response = {
+    id: randomUUID(),
+    name: 'Visitor',
+    email: 'guest@example.invalid',
+    presence: 'yes' as const,
+    consent: true as const,
+    answers: {},
+    companions: 2,
+  };
+  const guest = {
+    id: randomUUID(),
+    name: 'Alice',
+    email: 'alice@example.invalid',
+    maxCompanions: 1,
+  };
+  expect(() => bindGuestResponse(response, guest)).toThrow();
+  expect(
+    bindGuestResponse({ ...response, companions: 1 }, guest),
+  ).toMatchObject({
+    id: response.id,
+    guestId: guest.id,
+    name: 'Alice',
+    companions: 1,
+  });
+  expect(
+    bindGuestResponse({ ...response, companions: 0, guestId: guest.id }),
+  ).toMatchObject({ guestId: undefined });
 });

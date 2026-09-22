@@ -17,11 +17,19 @@ export async function GET(
     ]);
     const fields = record?.published?.fields ?? record?.draft.fields ?? [];
     const csv = [
-      ['Nom', 'E-mail', 'Présence', ...fields.map((f) => f.label), 'Date'],
+      [
+        'Nom',
+        'E-mail',
+        'Présence',
+        'Accompagnants',
+        ...fields.map((f) => f.label),
+        'Date',
+      ],
       ...rows.map((row) => [
         row.name,
         row.email,
         row.presence === 'yes' ? 'Présent' : 'Absent',
+        row.companions ?? 0,
         ...fields.map((f) => row.answers[f.id] ?? ''),
         row.createdAt,
       ]),

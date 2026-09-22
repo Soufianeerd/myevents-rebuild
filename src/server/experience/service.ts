@@ -9,6 +9,7 @@ import { assertProduct } from '@/core/commerce/catalog';
 import {
   invitationDocumentSchema,
   validateRsvp,
+  bindGuestResponse,
 } from '@/core/invitations/models';
 
 export async function experienceRepository(
@@ -126,7 +127,10 @@ export async function submitResponse(
   if (!doc) throw new Error('Cette invitation n’est plus disponible.');
   if (doc.revision !== z.number().int().parse(revision))
     throw new Error('L’invitation a changé. Rechargez la page.');
-  const response = validateRsvp(doc.document, input, new Date());
+  const response = bindGuestResponse(
+    validateRsvp(doc.document, input, new Date()),
+    doc.guest,
+  );
   await (
     await experienceRepository(false)
   ).respond(tokenHash(token), response, doc.revision, new Date().toISOString());
@@ -162,4 +166,17 @@ export async function activateBusinessPreview(id: string) {
           ).toISOString(),
         },
       );
+}
+
+export async function guestInvitationLink(id: string, guestId: string) {
+  z.uuid().parse(guestId);
+  const { context, repository } = await eventScope(id);
+  const token = tokenFor(id, `guest:${guestId}`);
+  await repository.issueGuestLink(
+    id,
+    context.tenantId,
+    guestId,
+    tokenHash(token),
+  );
+  return `${appOrigin()}/i/${token}`;
 }

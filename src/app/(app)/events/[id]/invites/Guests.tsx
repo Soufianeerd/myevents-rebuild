@@ -10,7 +10,7 @@ import {
   type Guest,
   type GuestBook,
 } from '@/core/guests/models';
-import { saveGuestsAction } from './actions';
+import { saveGuestsAction, guestLinkAction } from './actions';
 import styles from '../workspace.module.css';
 const labels = {
   name: 'Nom',
@@ -38,16 +38,26 @@ const statuses = {
 export default function Guests({
   eventId,
   initial,
+  responses,
   revision: initialRevision,
 }: {
   eventId: string;
   initial: GuestBook;
+  responses: Array<{
+    guestId?: string;
+    presence: 'yes' | 'no';
+    companions?: number;
+  }>;
   revision: number;
 }) {
   const [book, setBook] = useState(initial),
     [revision, setRevision] = useState(initialRevision),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState(''),
+    [personalLink, setPersonalLink] = useState<{
+      name: string;
+      url: string;
+    } | null>(null),
     [editing, setEditing] = useState<Guest | null>(null),
     [query, setQuery] = useState(''),
     [status, setStatus] = useState(''),
@@ -141,6 +151,38 @@ export default function Guests({
         <button onClick={() => download([])}>Modèle CSV</button>
       </div>
       <p role="status">{message}</p>
+      {personalLink && (
+        <div className={styles.notice}>
+          <strong>Invitation de {personalLink.name}</strong>
+          <p>
+            Ce lien préremplit l’invité et lui permet d’actualiser sa réponse.
+            Partagez-le uniquement avec la personne concernée.
+          </p>
+          <a href={personalLink.url} target="_blank" rel="noreferrer">
+            Ouvrir l’invitation personnelle
+          </a>
+          <label>
+            Lien personnel
+            <input
+              readOnly
+              value={personalLink.url}
+              onFocus={(e) => e.target.select()}
+            />
+          </label>
+          <button
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(personalLink.url);
+                setMessage('Lien copié.');
+              } catch {
+                setMessage('Sélectionnez le lien ci-dessus pour le copier.');
+              }
+            }}
+          >
+            Copier le lien personnel
+          </button>
+        </div>
+      )}
       <div className={styles.grid}>
         <label>
           Rechercher un invité
@@ -402,6 +444,7 @@ export default function Guests({
               <th>Foyer / groupe</th>
               <th>Table</th>
               <th>Statut manuel</th>
+              <th>RSVP reçu</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -434,8 +477,38 @@ export default function Guests({
                 <td>{g.table || '—'}</td>
                 <td>{statuses[g.status]}</td>
                 <td>
+                  {responses.find((r) => r.guestId === g.id)?.presence === 'yes'
+                    ? 'Présent'
+                    : responses.find((r) => r.guestId === g.id)?.presence ===
+                        'no'
+                      ? 'Absent'
+                      : 'Sans réponse'}
+                </td>
+                <td>
                   <button disabled={busy} onClick={() => setEditing(g)}>
                     Modifier {g.name}
+                  </button>
+                  <button
+                    disabled={busy}
+                    onClick={async () => {
+                      setBusy(true);
+                      try {
+                        const result = await guestLinkAction(eventId, g.id);
+                        if (!result.ok) throw new Error(result.error);
+                        setPersonalLink({ name: g.name, url: result.url });
+                        setMessage('Lien personnel prêt.');
+                      } catch (error) {
+                        setMessage(
+                          error instanceof Error
+                            ? error.message
+                            : 'Lien indisponible.',
+                        );
+                      } finally {
+                        setBusy(false);
+                      }
+                    }}
+                  >
+                    Lien pour {g.name}
                   </button>
                 </td>
               </tr>
