@@ -8,6 +8,7 @@ import { createInvitationDocument } from '@/core/invitations/templates';
 import { assertProduct } from '@/core/commerce/catalog';
 import {
   invitationDocumentSchema,
+  type InvitationDocument,
   validateRsvp,
   bindGuestResponse,
 } from '@/core/invitations/models';
@@ -73,6 +74,7 @@ export async function studioState(id: string) {
   return {
     event,
     record,
+    assets: await (await import('@/server/media/service')).designImages(id),
     document: record?.draft ?? createInvitationDocument(event, randomUUID),
     products,
     publicUrl: record?.published
@@ -90,6 +92,7 @@ export async function saveInvitation(
     throw new Error('Le document est trop volumineux.');
   const version = z.number().int().min(0).parse(revision);
   const { event, context, repository } = await eventScope(id);
+  await validateInvitationImages(id, context.tenantId, document);
   return repository.save(
     event.id,
     context.tenantId,
@@ -104,6 +107,10 @@ export async function publishInvitation(id: string, revision: unknown) {
     await repository.entitlements(event.id, context.tenantId),
     'invitation',
   );
+  const draft = (await repository.get(event.id, context.tenantId))?.draft;
+  if (!draft)
+    throw new Error('Enregistrez votre invitation avant de la publier.');
+  await validateInvitationImages(id, context.tenantId, draft);
   const token = tokenFor(event.id);
   await repository.publish(
     event.id,
@@ -179,4 +186,21 @@ export async function guestInvitationLink(id: string, guestId: string) {
     tokenHash(token),
   );
   return `${appOrigin()}/i/${token}`;
+}
+
+async function validateInvitationImages(
+  id: string,
+  tenant: string,
+  document: InvitationDocument,
+) {
+  const ids = document.sections.flatMap((s) => (s.mediaId ? [s.mediaId] : []));
+  if (!ids.length) return;
+  const { mediaRepository } = await import('@/server/media/service');
+  const images = (await (await mediaRepository()).list(id, tenant)).filter(
+    (m) => m.status === 'ready' && m.mime.startsWith('image/'),
+  );
+  if (ids.some((ref) => !images.some((image) => image.id === ref)))
+    throw new Error(
+      'Une image n’est plus disponible dans cet événement. Choisissez une autre photo.',
+    );
 }

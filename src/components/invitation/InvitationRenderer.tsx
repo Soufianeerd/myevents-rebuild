@@ -7,10 +7,12 @@ export function InvitationRenderer({
   document,
   preview = false,
   rsvp,
+  mediaUrls = {},
 }: {
   document: InvitationDocument;
   preview?: boolean;
   rsvp?: ReactNode;
+  mediaUrls?: Record<string, string>;
 }) {
   const [opened, setOpened] = useState(preview || document.opening === 'none');
   return (
@@ -62,16 +64,24 @@ export function InvitationRenderer({
                   {section.text && (
                     <p className={styles.text}>{section.text}</p>
                   )}
-                  {section.type === 'image' && section.image && (
-                    <div className={styles.photo}>
-                      <Image
-                        src={section.image}
-                        alt={section.title || 'Photographie de l’invitation'}
-                        fill
-                        sizes="(max-width: 700px) 100vw, 650px"
-                      />
-                    </div>
-                  )}
+                  {section.type === 'image' &&
+                    (section.mediaId
+                      ? mediaUrls[section.mediaId]
+                      : section.image) && (
+                      <div className={styles.photo}>
+                        <Image
+                          src={
+                            section.mediaId
+                              ? mediaUrls[section.mediaId]
+                              : section.image
+                          }
+                          unoptimized={!!section.mediaId}
+                          alt={section.title || 'Photographie de l’invitation'}
+                          fill
+                          sizes="(max-width: 700px) 100vw, 650px"
+                        />
+                      </div>
+                    )}
                   {section.type === 'program' && (
                     <ol className={styles.program}>
                       {section.items.map((item, index) => (

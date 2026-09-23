@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef, useEffect, type DragEvent } from 'react';
 import Link from 'next/link';
+import { ImageUpload } from '@/components/invitation/ImageUpload';
 import {
   invitationDocumentSchema,
   sectionSchema,
@@ -31,6 +32,7 @@ const labels: Record<InvitationSection['type'], string> = {
 };
 export function Studio({
   eventId,
+  initialAssets,
   initial,
   initialRevision,
   history,
@@ -38,12 +40,14 @@ export function Studio({
   canPublish,
 }: {
   eventId: string;
+  initialAssets: Array<{ id: string; name: string; url: string }>;
   initial: InvitationDocument;
   initialRevision: number;
   history: InvitationRecord['history'];
   publicUrl: string | null;
   canPublish: boolean;
 }) {
+  const [assets, setAssets] = useState(initialAssets);
   const [document, setDocument] = useState(initial),
     [selected, setSelected] = useState(initial.sections[0].id),
     [status, setStatus] = useState(
@@ -62,7 +66,8 @@ export function Studio({
     saving = useRef<Promise<boolean> | null>(null),
     dragged = useRef<string | null>(null);
   function change(next: InvitationDocument) {
-    setUndo((old) => [...old, document]);
+    const previous = current.current;
+    setUndo((old) => [...old, previous]);
     setRedo([]);
     current.current = next;
     dirty.current = true;
@@ -147,8 +152,8 @@ export function Studio({
     document.sections.find((s) => s.id === selected) ?? document.sections[0];
   function patchSection(patch: Partial<InvitationSection>) {
     change({
-      ...document,
-      sections: document.sections.map((s) =>
+      ...current.current,
+      sections: current.current.sections.map((s) =>
         s.id === section.id ? { ...s, ...patch } : s,
       ),
     });
@@ -402,6 +407,9 @@ export function Studio({
               style={{ width, maxWidth: '100%' }}
             >
               <InvitationRenderer
+                mediaUrls={Object.fromEntries(
+                  assets.map((asset) => [asset.id, asset.url]),
+                )}
                 document={document}
                 preview
                 rsvp={<RsvpForm document={document} preview />}
@@ -437,28 +445,52 @@ export function Studio({
               />
             </label>
             {section.type === 'image' && (
-              <label>
-                Photographie
-                <select
-                  value={section.image}
-                  onChange={(e) =>
-                    patchSection({
-                      image: e.target.value as InvitationSection['image'],
-                    })
-                  }
-                >
-                  <option value="">Aucune</option>
-                  <option value="/images/editorial/jardin.jpg">
-                    Jardin fleuri
-                  </option>
-                  <option value="/images/editorial/reception.jpg">
-                    Réception au jardin
-                  </option>
-                  <option value="/images/editorial/anniversaire.jpg">
-                    Anniversaire
-                  </option>
-                </select>
-              </label>
+              <div>
+                <label>
+                  Photographie
+                  <select
+                    value={
+                      section.mediaId
+                        ? `asset:${section.mediaId}`
+                        : section.image
+                    }
+                    onChange={(e) =>
+                      patchSection({
+                        image: e.target.value.startsWith('asset:')
+                          ? ''
+                          : (e.target.value as InvitationSection['image']),
+                        mediaId: e.target.value.startsWith('asset:')
+                          ? e.target.value.slice(6)
+                          : undefined,
+                      })
+                    }
+                  >
+                    <option value="">Aucune</option>
+                    <option value="/images/editorial/jardin.jpg">
+                      Jardin fleuri
+                    </option>
+                    <option value="/images/editorial/reception.jpg">
+                      Réception au jardin
+                    </option>
+                    <option value="/images/editorial/anniversaire.jpg">
+                      Anniversaire
+                    </option>
+                    {assets.map((asset) => (
+                      <option key={asset.id} value={`asset:${asset.id}`}>
+                        {asset.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <ImageUpload
+                  key={section.id}
+                  eventId={eventId}
+                  onUploaded={(asset) => {
+                    setAssets((previous) => [...previous, asset]);
+                    patchSection({ mediaId: asset.id, image: '' });
+                  }}
+                />
+              </div>
             )}
             {section.type === 'program' && (
               <div>

@@ -31,6 +31,20 @@ test('business preview: Studio → published invitation → guest RSVP → owner
     path: info.outputPath('studio-desktop.png'),
     fullPage: true,
   });
+  await page.getByRole('button', { name: 'Photo', exact: true }).click();
+  await page
+    .getByLabel('Importer ma photo', { exact: true })
+    .setInputFiles('public/images/editorial/reception.jpg');
+  await expect(
+    page.getByText(
+      'Photo importée. Elle sera visible après publication de l’invitation.',
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await page.screenshot({
+    path: info.outputPath('studio-photo-personnelle.png'),
+    fullPage: true,
+  });
   await page.getByRole('button', { name: 'Publier', exact: true }).click();
   await expect(
     page.getByRole('button', { name: 'Copier', exact: true }),
@@ -41,6 +55,12 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   await guest.goto(link);
   const opening = guest.getByRole('button', { name: /Passer|ouvrir/i });
   if (await opening.count()) await opening.first().click();
+  const publishedPhoto = guest.getByAltText('Photographie de l’invitation');
+  await expect(publishedPhoto).toBeVisible();
+  const imageUrl = (await publishedPhoto.getAttribute('src'))!;
+  const imageResponse = await guest.request.get(imageUrl);
+  expect(imageResponse.status()).toBe(200);
+  expect(imageResponse.headers()['content-type']).toContain('image/jpeg');
   await guest.locator('[name=guest_name]').fill('Invitée test');
   await guest.locator('[name=guest_email]').fill('invitee@example.invalid');
   await guest.locator('[name=presence][value=yes]').check();

@@ -8,7 +8,7 @@ import {
   tokenHash,
   appOrigin,
 } from '@/server/experience/service';
-import { mediaRepository, mediaStorage } from '@/server/media/service';
+import { mediaRepository } from '@/server/media/service';
 import {
   designSchema,
   newThankYou,
@@ -39,11 +39,8 @@ export async function designState(id: string) {
   const images = media.filter(
     (m) => m.status === 'ready' && m.mime.startsWith('image/'),
   );
-  const storage = images.length ? await mediaStorage() : null;
   const assets: Record<string, string> = Object.fromEntries(
-    await Promise.all(
-      images.map(async (m) => [m.id, await storage!.readUrl(m.objectKey)]),
-    ),
+    images.map((m) => [m.id, `/events/${id}/assets/${m.id}`]),
   );
   for (const kind of ['audio', 'photo_video'] as const)
     if (products.includes(kind))

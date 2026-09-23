@@ -18,6 +18,11 @@ export default async function PublishedInvitation({
   return (
     <main>
       <InvitationRenderer
+        mediaUrls={Object.fromEntries(
+          invitation.document.sections
+            .filter((s) => s.mediaId)
+            .map((s) => [s.mediaId!, `/i/${token}/images/${s.mediaId}`]),
+        )}
         document={invitation.document}
         rsvp={
           <RsvpForm

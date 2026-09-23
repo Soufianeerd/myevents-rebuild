@@ -22,6 +22,14 @@ export interface MediaRepository {
   ): Promise<void>;
   spaces(eventId: string, tenantId: string): Promise<MediaSpace[]>;
   publicSpace(hash: string): Promise<PublicMediaSpace | null>;
+  reserveDesign(
+    eventId: string,
+    tenantId: string,
+    id: string,
+    uploadHash: string,
+    input: UploadRequest,
+  ): Promise<string>;
+  publicInvitationImage(hash: string, id: string): Promise<string | null>;
   reserve(
     hash: string,
     id: string,

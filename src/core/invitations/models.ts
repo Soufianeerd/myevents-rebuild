@@ -61,6 +61,7 @@ export const sectionSchema = z.object({
   title: z.string().max(180).default(''),
   text: z.string().max(4000).default(''),
   visible: z.boolean().default(true),
+  mediaId: z.uuid().optional(),
   image: z
     .enum([
       '',

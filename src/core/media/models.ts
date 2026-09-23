@@ -42,6 +42,7 @@ export interface MediaItem {
   eventId: string;
   tenantId: string;
   kind: MediaKind;
+  purpose?: 'guest' | 'design';
   objectKey: string;
   name: string;
   author: string;

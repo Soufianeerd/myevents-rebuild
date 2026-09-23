@@ -139,20 +139,24 @@ export async function ownerMedia(id: string) {
     event,
     spaces,
     products,
+    usedBytes: items.reduce((sum, item) => sum + item.size, 0),
     items: await Promise.all(
-      items.map(async (i) => ({
-        id: i.id,
-        name: i.name,
-        author: i.author,
-        mime: i.mime,
-        size: i.size,
-        kind: i.kind,
-        status: i.status,
-        hidden: i.hidden,
-        favorite: i.favorite,
-        createdAt: i.createdAt,
-        url: i.status === 'ready' ? await storage!.readUrl(i.objectKey) : null,
-      })),
+      items
+        .filter((i) => i.purpose !== 'design')
+        .map(async (i) => ({
+          id: i.id,
+          name: i.name,
+          author: i.author,
+          mime: i.mime,
+          size: i.size,
+          kind: i.kind,
+          status: i.status,
+          hidden: i.hidden,
+          favorite: i.favorite,
+          createdAt: i.createdAt,
+          url:
+            i.status === 'ready' ? await storage!.readUrl(i.objectKey) : null,
+        })),
     ),
     links: Object.fromEntries(
       spaces.map((s) => [
@@ -207,9 +211,84 @@ export async function moderateMedia(
   );
   if (!item) throw new Error('Fichier introuvable.');
   if (patch.status === 'deleted') {
+    const invitation = await (
+      await import('@/server/experience/service')
+    ).experienceRepository();
+    const record = await invitation.get(eventId, context.tenantId);
+    if (
+      record?.published?.sections.some(
+        (s) => s.visible && s.type === 'image' && s.mediaId === id,
+      )
+    )
+      throw new Error(
+        'Retirez cette photo de l’invitation publiée avant de la supprimer.',
+      );
+  }
+  await repo.moderate(id, eventId, context.tenantId, patch);
+  if (patch.status === 'deleted') {
     const storage = await mediaStorage();
     await storage.delete(item.objectKey);
     await storage.delete(`${item.objectKey}.upload`);
   }
-  await repo.moderate(id, eventId, context.tenantId, patch);
+}
+
+export async function beginDesignImage(id: string, input: unknown) {
+  const { context, repository: experience } = await eventScope(id);
+  const products = await experience.entitlements(id, context.tenantId);
+  if (!products.includes('invitation') && !products.includes('thank_you'))
+    throw new Error(
+      'Activez votre invitation ou vos cartes avant d’importer vos images.',
+    );
+  const data = validateUpload('photo_video', input);
+  if (!data.mime.startsWith('image/'))
+    throw new Error('Choisissez une image JPEG, PNG, WebP ou GIF.');
+  const media = await mediaRepository(),
+    assetId = randomUUID(),
+    secret = randomBytes(32).toString('hex');
+  const key = await media.reserveDesign(
+    id,
+    context.tenantId,
+    assetId,
+    tokenHash(secret),
+    data,
+  );
+  try {
+    return {
+      id: assetId,
+      secret,
+      ...(await (await mediaStorage()).createUpload(key, data.mime, data.size)),
+    };
+  } catch (error) {
+    await media.cancel(assetId, tokenHash(secret));
+    throw error;
+  }
+}
+export async function designImages(id: string) {
+  const { context } = await eventScope(id);
+  return (await (await mediaRepository()).list(id, context.tenantId))
+    .filter((m) => m.status === 'ready' && m.mime.startsWith('image/'))
+    .map((m) => ({
+      id: m.id,
+      name: m.name,
+      url: `/events/${id}/assets/${m.id}`,
+    }));
+}
+export async function ownerImageUrl(id: string, assetId: string) {
+  z.uuid().parse(assetId);
+  const { context } = await eventScope(id);
+  const item = (
+    await (await mediaRepository()).list(id, context.tenantId)
+  ).find(
+    (m) =>
+      m.id === assetId && m.status === 'ready' && m.mime.startsWith('image/'),
+  );
+  if (!item) return null;
+  return (await mediaStorage()).readUrl(item.objectKey);
+}
+export async function invitationImageUrl(token: string, assetId: string) {
+  z.uuid().parse(assetId);
+  const key = await (
+    await mediaRepository(false)
+  ).publicInvitationImage(tokenHash(token), assetId);
+  return key ? (await mediaStorage()).readUrl(key) : null;
 }

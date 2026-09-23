@@ -86,6 +86,67 @@ export class LocalMediaRepository implements MediaRepository {
       allowDownload: space.allowDownload,
     };
   }
+  async reserveDesign(
+    eventId: string,
+    tenant: string,
+    id: string,
+    uploadHash: string,
+    input: UploadRequest,
+  ) {
+    const event = await this.events.findById(eventId as never, tenant as never);
+    if (!event) throw new Error('Événement introuvable.');
+    const products = await this.experience.entitlements(eventId, tenant);
+    if (!products.includes('invitation') && !products.includes('thank_you'))
+      throw new Error('Activez votre invitation ou vos cartes.');
+    if (!input.mime.startsWith('image/') || input.size > 20 * 1024 * 1024)
+      throw new Error('Image invalide.');
+    const key = `${tenant}/${eventId}/${id}`;
+    await this.store.update((data) => {
+      const state = data ?? { spaces: [], items: [] };
+      if (
+        state.items
+          .filter((i) => i.tenantId === tenant && i.status !== 'deleted')
+          .reduce((sum, i) => sum + i.size, 0) +
+          input.size >
+        3000000000
+      )
+        throw new Error('Quota atteint.');
+      state.items.push({
+        id,
+        eventId,
+        tenantId: tenant,
+        kind: 'photo_video',
+        purpose: 'design',
+        objectKey: key,
+        uploadHash,
+        ...input,
+        status: 'pending',
+        hidden: true,
+        favorite: false,
+        createdAt: new Date().toISOString(),
+      });
+      return state;
+    });
+    return key;
+  }
+  async publicInvitationImage(hash: string, id: string) {
+    const invitation = await this.experience.getPublic(hash);
+    if (
+      !invitation ||
+      !invitation.document.sections.some(
+        (s) => s.visible && s.type === 'image' && s.mediaId === id,
+      )
+    )
+      return null;
+    const item = (await this.store.read())?.items.find(
+      (i) =>
+        i.id === id &&
+        i.eventId === invitation.eventId &&
+        i.status === 'ready' &&
+        i.mime.startsWith('image/'),
+    );
+    return item?.objectKey ?? null;
+  }
   async reserve(
     hash: string,
     id: string,
@@ -194,6 +255,7 @@ export class LocalMediaRepository implements MediaRepository {
           i.eventId === space.eventId &&
           i.kind === space.kind &&
           i.status === 'ready' &&
+          i.purpose !== 'design' &&
           !i.hidden,
       )
       .map((i) => ({

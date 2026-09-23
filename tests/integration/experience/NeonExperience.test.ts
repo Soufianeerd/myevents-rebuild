@@ -65,6 +65,9 @@ beforeAll(async () => {
   await db.exec(await readFile('neon/migrations/0007_planning.sql', 'utf8'));
   await db.exec(await readFile('neon/migrations/0008_guests.sql', 'utf8'));
   await db.exec(await readFile('neon/migrations/0009_guest_links.sql', 'utf8'));
+  await db.exec(
+    await readFile('neon/migrations/0010_design_images.sql', 'utf8'),
+  );
   const profile = (
     await scoped(owner, session).query(
       sql`SELECT * FROM myevents.ensure_identity()`,
@@ -493,4 +496,82 @@ it('binds personal invitations to one guest, limits companions and updates a sin
   );
   await contacts.save(eventId, tenant, { guests: [] }, record.revision + 1);
   expect(await anonymous.getPublic(hash)).toBeNull();
+});
+
+it('keeps design images private until published and requires ownership without a gallery entitlement', async () => {
+  const media = new NeonMediaRepository(scoped(owner, session)),
+    otherMedia = new NeonMediaRepository(scoped(other, otherSession)),
+    publicMedia = new NeonMediaRepository(scoped('', ''));
+  const id = randomUUID(),
+    upload = 'c'.repeat(64),
+    input = {
+      name: 'Photo personnelle.jpg',
+      mime: 'image/jpeg' as const,
+      size: 200,
+      author: 'Owner',
+      consent: true as const,
+    };
+  await db.query('DELETE FROM myevents.preview_access WHERE event_id=$1', [
+    eventId,
+  ]);
+  await db.query(
+    "UPDATE myevents.orders SET status='refunded' WHERE event_id=$1 AND offer->'products' ? 'photo_video'",
+    [eventId],
+  );
+  expect(await repo.entitlements(eventId, tenant)).toContain('invitation');
+  expect(await repo.entitlements(eventId, tenant)).not.toContain('photo_video');
+  await expect(
+    otherMedia.reserveDesign(eventId, tenant, id, upload, input),
+  ).rejects.toThrow();
+  await media.reserveDesign(eventId, tenant, id, upload, input);
+  const key = `${tenant}/${eventId}/${randomUUID()}`;
+  await publicMedia.complete(id, upload, 200, 'image/jpeg', key);
+  expect(
+    await publicMedia.publicInvitationImage('a'.repeat(64), id),
+  ).toBeNull();
+  let record = (await repo.get(eventId, tenant))!;
+  const document = {
+    ...record.draft,
+    sections: record.draft.sections.map((s, index) =>
+      index === 0 ? { ...s, type: 'image' as const, mediaId: id } : s,
+    ),
+  };
+  record = await repo.save(
+    eventId,
+    tenant,
+    document,
+    record.revision,
+    new Date().toISOString(),
+  );
+  expect(
+    await publicMedia.publicInvitationImage('a'.repeat(64), id),
+  ).toBeNull();
+  await repo.publish(
+    eventId,
+    tenant,
+    record.revision,
+    'a'.repeat(64),
+    new Date().toISOString(),
+  );
+  expect(await publicMedia.publicInvitationImage('a'.repeat(64), id)).toBe(key);
+  expect(
+    await publicMedia.publicInvitationImage('d'.repeat(64), id),
+  ).toBeNull();
+  await expect(
+    media.moderate(id, eventId, tenant, { status: 'deleted' }),
+  ).rejects.toThrow();
+  await repo.suspend(eventId, tenant);
+  expect(
+    await publicMedia.publicInvitationImage('a'.repeat(64), id),
+  ).toBeNull();
+  await media.moderate(id, eventId, tenant, { status: 'deleted' });
+  await expect(
+    repo.publish(
+      eventId,
+      tenant,
+      record.revision,
+      'a'.repeat(64),
+      new Date().toISOString(),
+    ),
+  ).rejects.toThrow();
 });

@@ -16,6 +16,7 @@ function item(r: Record<string, unknown>): MediaItem {
     eventId: String(r.event_id),
     tenantId: String(r.tenant_id),
     kind: r.kind as MediaKind,
+    purpose: r.purpose === 'design' ? 'design' : 'guest',
     objectKey: String(r.object_key),
     name: String(r.name),
     author: String(r.author),
@@ -72,6 +73,25 @@ export class NeonMediaRepository implements MediaRepository {
           allowDownload: Boolean(r.allow_download),
         }
       : null;
+  }
+  async reserveDesign(
+    eventId: string,
+    _tenant: string,
+    id: string,
+    uploadHash: string,
+    input: UploadRequest,
+  ) {
+    void _tenant;
+    const rows = await this.db.query(
+      sql`SELECT myevents.reserve_design_image(${eventId},${id},${uploadHash},${JSON.stringify(input)}::jsonb) AS object_key`,
+    );
+    return String(rows[0].object_key);
+  }
+  async publicInvitationImage(hash: string, id: string) {
+    const rows = await this.db.query(
+      sql`SELECT myevents.public_invitation_image(${hash},${id}) AS object_key`,
+    );
+    return rows[0]?.object_key ? String(rows[0].object_key) : null;
   }
   async reserve(
     hash: string,

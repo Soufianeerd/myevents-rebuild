@@ -81,8 +81,8 @@ export default async function Page({
       <h2>Vos souvenirs reçus</h2>
       <p>
         {data.items.filter((i) => i.status === 'ready').length} souvenirs ·{' '}
-        {(data.items.reduce((sum, i) => sum + i.size, 0) / 1000000).toFixed(1)}{' '}
-        Mo pour cet événement
+        {(data.usedBytes / 1000000).toFixed(1)} Mo pour cet événement, images du
+        Studio comprises
       </p>
       <div className={styles.grid}>
         {data.items.map((item) => (

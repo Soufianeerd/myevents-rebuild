@@ -67,3 +67,7 @@ PROD-01-001/002/004 restent partielles ; PROD-01-003 est couvert par
 ### §23 — invitation individuelle (23 septembre 2026)
 
 Sous-parcours **verified** : émission d’un lien par contact du propriétaire, accès invité prérempli, limite d’accompagnants, réponse actualisable et rattachement CRM. Évidences : migration 0009, `bindGuestResponse`, `NeonExperience.test.ts` (isolation, limite, mise à jour unique, suspension/suppression), `experience.test.ts` (parcours navigateur complet), audit métier. GAP-002 reste partiel : un lien de foyer comportant plusieurs fiches nominatives et les envois externes ne sont pas couverts.
+
+### §10 / §34 / §45 — images personnelles (23 septembre 2026)
+
+Sous-parcours **verified** : import de photo propriétaire dans une section image, sauvegarde par référence, publication, lecture invitée, confidentialité du brouillon et séparation des souvenirs collaboratifs. Évidences : migration 0010, `ImageUpload`, `validateInvitationImages`, `NeonExperience.test.ts`, `experience.test.ts`, audit et capture Studio. La personnalisation globale, les fonds vidéo, le recadrage et la gestion complète de bibliothèque restent partiels.

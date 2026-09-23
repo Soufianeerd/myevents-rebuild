@@ -9,6 +9,7 @@ export default async function StudioPage({
   const state = await studioState(id);
   return (
     <Studio
+      initialAssets={state.assets}
       eventId={id}
       initial={state.document}
       initialRevision={state.record?.revision ?? 0}
