@@ -24,7 +24,8 @@ const owner = randomUUID(),
   session = randomUUID(),
   otherSession = randomUUID(),
   eventId = randomUUID(),
-  secret = 'test-fulfillment-secret-with-at-least-32-characters';
+  secret = 'test-fulfillment-secret-with-at-least-32-characters',
+  operatorSecret = 'test-operator-secret-with-at-least-32-characters';
 let tenant: string;
 const scoped = (user: string, sessionId: string) => ({
   query: (statement: Parameters<typeof dialect.sqlToQuery>[0]) =>
@@ -78,6 +79,7 @@ beforeAll(async () => {
     '0014_rsvp_context',
     '0015_profile_names',
     '0016_invitation_music',
+    '0017_operator',
   ])
     await db.exec(await readFile(`neon/migrations/${file}.sql`, 'utf8'));
   const profile = (
@@ -97,6 +99,9 @@ beforeAll(async () => {
   );
   await db.query("INSERT INTO myevents.service_secrets VALUES('payments',$1)", [
     createHash('sha256').update(secret).digest('hex'),
+  ]);
+  await db.query("INSERT INTO myevents.service_secrets VALUES('operator',$1)", [
+    createHash('sha256').update(operatorSecret).digest('hex'),
   ]);
 }, 120000);
 afterAll(() => db.close());
@@ -927,4 +932,58 @@ it('persists household response links with CAS and RLS while preserving original
   expect((await contacts.get(own.id, tenant))?.document.guests).toEqual([]);
   expect(await repo.responses(own.id, tenant)).toEqual(allResponses);
   expect(await anonymous.getPublic(personalHash)).toBeNull();
+});
+
+it('lets only the operator secret read the overview and record print stages, visible to the owner alone', async () => {
+  const { NeonOperatorRepository } =
+    await import('@/providers/neon/NeonOperatorRepository');
+  const service = scoped('', '');
+  const operator = new NeonOperatorRepository(
+    service,
+    scoped(owner, session),
+    operatorSecret,
+  );
+  const overview = await operator.overview();
+  const request = overview.requests.find((r) => r.eventId === eventId);
+  expect(request).toMatchObject({ stage: 'requested', eventName: 'Test' });
+  expect(overview.totals.events).toBeGreaterThanOrEqual(1);
+  await expect(
+    new NeonOperatorRepository(service, null, 'x'.repeat(40)).overview(),
+  ).rejects.toThrow();
+  await expect(
+    new NeonOperatorRepository(service, null, undefined).overview(),
+  ).rejects.toThrow();
+  await operator.setStage({
+    requestId: request!.id,
+    stage: 'quote_sent',
+    note: 'Devis envoyé par e-mail',
+  });
+  expect(await operator.latestStages(eventId, tenant)).toEqual([
+    expect.objectContaining({
+      requestId: request!.id,
+      stage: 'quote_sent',
+      note: 'Devis envoyé par e-mail',
+    }),
+  ]);
+  expect(
+    (await operator.overview()).requests.find((r) => r.id === request!.id)
+      ?.stage,
+  ).toBe('quote_sent');
+  expect(
+    await new NeonOperatorRepository(
+      service,
+      scoped(other, otherSession),
+      operatorSecret,
+    ).latestStages(eventId, tenant),
+  ).toEqual([]);
+  await expect(
+    scoped(owner, session).query(
+      sql`INSERT INTO myevents.material_request_stages(request_id,tenant_id,stage) VALUES(${request!.id},${tenant},'shipped')`,
+    ),
+  ).rejects.toThrow();
+  await expect(
+    scoped(owner, session).query(
+      sql`SELECT myevents.operator_overview(${'y'.repeat(40)})`,
+    ),
+  ).rejects.toThrow();
 });

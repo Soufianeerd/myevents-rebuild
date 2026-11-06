@@ -48,6 +48,19 @@ try {
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
+let operator = {};
+try {
+  if ((await stat('.env.operator.local')).mode & 0o077)
+    throw new Error('Operator configuration must have permissions 0600.');
+  const values = parseEnv(await readFile('.env.operator.local', 'utf8'));
+  operator = Object.fromEntries(
+    ['OPERATOR_SECRET', 'OPERATOR_EMAILS']
+      .filter((key) => values[key])
+      .map((key) => [key, values[key]]),
+  );
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 const child = spawn(
   process.execPath,
   [
@@ -65,6 +78,7 @@ const child = spawn(
       ...config,
       ...media,
       ...payments,
+      ...operator,
       BUSINESS_PREVIEW: 'true',
     },
   },

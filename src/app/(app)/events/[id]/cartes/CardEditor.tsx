@@ -14,6 +14,7 @@ import type { PrintMaterial } from '@/core/designs/printing';
 import editor from './cards.module.css';
 import { MaterialRequestForm } from './MaterialRequestForm';
 import type { MaterialRequest } from '@/core/designs/requests';
+import type { PrintStage } from '@/core/admin/models';
 import { ImageUpload } from '@/components/invitation/ImageUpload';
 type Initial = {
   document: Design;
@@ -22,6 +23,7 @@ type Initial = {
   assets: Record<string, string>;
   imageChoices: { id: string; name: string }[];
   requests: MaterialRequest[];
+  requestStages: Record<string, { stage: PrintStage; note: string }>;
   invitationTheme: {
     background: string;
     font: DesignElement['font'];
@@ -517,6 +519,7 @@ export function CardEditor({
         revision={revision}
         disabled={dirty || revision < 1 || busy}
         initial={initial.requests}
+        stages={initial.requestStages}
       />
       <PrintOrderForm
         eventId={eventId}

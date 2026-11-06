@@ -66,6 +66,35 @@ try {
       "INSERT INTO myevents.service_secrets(name,hash) VALUES('payments',$1) ON CONFLICT DO NOTHING",
       [hash],
     );
+    // Operator back-office secret (0017): generated once, stored privately.
+    let operator;
+    try {
+      if ((await stat('.env.operator.local')).mode & 0o077)
+        throw new Error('Private permissions required.');
+      operator = parseEnv(await readFile('.env.operator.local', 'utf8'));
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      operator = { OPERATOR_SECRET: randomBytes(32).toString('hex') };
+      await writeFile(
+        '.env.operator.local',
+        `OPERATOR_SECRET=${operator.OPERATOR_SECRET}\n`,
+        { mode: 0o600 },
+      );
+    }
+    const operatorHash = createHash('sha256')
+      .update(operator.OPERATOR_SECRET)
+      .digest('hex');
+    const currentOperator = (
+      await client.query(
+        "SELECT hash FROM myevents.service_secrets WHERE name='operator'",
+      )
+    ).rows[0];
+    if (currentOperator && currentOperator.hash !== operatorHash)
+      throw new Error('Existing operator secret does not match.');
+    await client.query(
+      "INSERT INTO myevents.service_secrets(name,hash) VALUES('operator',$1) ON CONFLICT DO NOTHING",
+      [operatorHash],
+    );
     await client.query('COMMIT');
     console.log(
       'Additive staging migrations committed; source schemas unchanged.',

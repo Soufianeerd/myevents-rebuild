@@ -4,6 +4,7 @@ import {
   materialRequestInputSchema,
   type MaterialRequest,
 } from '@/core/designs/requests';
+import { printStageLabels, type PrintStage } from '@/core/admin/models';
 import { requestMaterialAction } from './actions';
 import styles from '../workspace.module.css';
 export function MaterialRequestForm({
@@ -11,11 +12,13 @@ export function MaterialRequestForm({
   revision,
   disabled,
   initial,
+  stages = {},
 }: {
   eventId: string;
   revision: number;
   disabled: boolean;
   initial: MaterialRequest[];
+  stages?: Record<string, { stage: PrintStage; note: string }>;
 }) {
   const [requests, setRequests] = useState(initial);
   const [busy, setBusy] = useState(false);
@@ -119,7 +122,13 @@ export function MaterialRequestForm({
             {requests.map((request) => (
               <li key={request.id}>
                 {request.quantity} exemplaires · {request.material} · Carte
-                version {request.revision} — En attente d’étude
+                version {request.revision} —{' '}
+                {stages[request.id]
+                  ? printStageLabels[stages[request.id].stage]
+                  : 'En attente d’étude'}
+                {stages[request.id]?.note
+                  ? ` · ${stages[request.id].note}`
+                  : ''}
               </li>
             ))}
           </ul>

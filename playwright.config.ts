@@ -27,6 +27,7 @@ export default defineConfig({
       APP_URL: baseURL,
       LOCAL_DATA_DIR: dataDir,
       BUSINESS_PREVIEW: 'true',
+      OPERATOR_EMAILS: 'operator@example.test',
     },
     reuseExistingServer: false,
     timeout: 120_000,

@@ -31,13 +31,16 @@ export async function designRepository(): Promise<DesignRepository> {
 const repository = designRepository;
 export async function designState(id: string) {
   const { event, context, repository: experience } = await eventScope(id);
-  const [record, orders, media, invitation, requests] = await Promise.all([
-    (await repository()).get(id, context.tenantId),
-    experience.entitlements(id, context.tenantId),
-    (await mediaRepository()).list(id, context.tenantId),
-    experience.get(id, context.tenantId),
-    (await repository()).requests(id, context.tenantId),
-  ]);
+  const { printRequestStages } = await import('@/server/admin/service');
+  const [record, orders, media, invitation, requests, stages] =
+    await Promise.all([
+      (await repository()).get(id, context.tenantId),
+      experience.entitlements(id, context.tenantId),
+      (await mediaRepository()).list(id, context.tenantId),
+      experience.get(id, context.tenantId),
+      (await repository()).requests(id, context.tenantId),
+      printRequestStages(id),
+    ]);
   const products = orders;
   const images = media.filter(
     (m) => m.status === 'ready' && m.mime.startsWith('image/'),
@@ -53,6 +56,9 @@ export async function designState(id: string) {
       );
   return {
     requests,
+    requestStages: Object.fromEntries(
+      stages.map((s) => [s.requestId, { stage: s.stage, note: s.note }]),
+    ),
     invitationTheme: invitation
       ? {
           background: invitation.draft.background,
