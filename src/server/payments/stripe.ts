@@ -1,6 +1,10 @@
 import Stripe from 'stripe';
 import { randomBytes, randomUUID } from 'node:crypto';
-import { testOffers, type Order, type Offer } from '@/core/commerce/catalog';
+import {
+  getCheckoutOffer,
+  parseCheckoutOffer,
+  type Order,
+} from '@/core/commerce/catalog';
 import {
   appOrigin,
   eventScope,
@@ -19,13 +23,10 @@ export function paymentReady() {
   );
 }
 export async function createCheckout(eventId: string, offerId: string) {
-  if (!paymentReady())
-    throw new Error('Le paiement de test n’est pas encore configuré.');
-  const offer = testOffers.find((o) => o.id === offerId && o.active);
-  if (!offer) throw new Error('Offre indisponible.');
-  return checkoutOffer(eventId, offer);
+  return checkoutOffer(eventId, getCheckoutOffer(offerId));
 }
-export async function checkoutOffer(eventId: string, offer: Offer) {
+export async function checkoutOffer(eventId: string, input: unknown) {
+  const offer = parseCheckoutOffer(input);
   if (!paymentReady()) throw new Error('Stripe Test doit être configuré.');
   const stripe = stripeClient();
   const { event, context, repository } = await eventScope(eventId);

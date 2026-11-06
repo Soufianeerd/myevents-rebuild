@@ -37,11 +37,25 @@
   border: 1px solid #e0d4c4;
   border-radius: 10px;
 }
+.mediaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 22px;
+  margin: 28px 0;
+  align-items: start;
+}
+.mediaGrid .card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .card h2 {
   margin-top: 0;
 }
 .card p {
   margin: 18px 0;
+}
+.exportCard {
+  margin: 24px 0;
 }
 .price {
   font:

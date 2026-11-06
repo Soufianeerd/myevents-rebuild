@@ -59,41 +59,39 @@ export default async function OffersPage({
         </p>
       )}
       <div className={styles.grid}>
-        {testOffers
-          .filter((o) => o.active)
-          .map((offer) => (
-            <article key={offer.id} className={styles.card}>
-              <h2>{offer.name}</h2>
-              <strong className={styles.price}>
-                {(offer.amount / 100).toLocaleString('fr-FR', {
-                  style: 'currency',
-                  currency: 'EUR',
-                })}
-              </strong>
-              <p>
-                {offer.products
-                  .map(
-                    (p) =>
-                      ({
-                        invitation: 'Invitation et RSVP',
-                        audio: 'QR Audio',
-                        photo_video: 'QR Photo / Vidéo',
-                        thank_you: 'Éditeur de cartes',
-                      })[p],
-                  )
-                  .join(' + ')}
-              </p>
-              {offer.products.every((p) => products.includes(p)) ? (
-                <p className={styles.enabled}>Déjà activé</p>
-              ) : (
-                <CheckoutButton
-                  eventId={id}
-                  offerId={offer.id}
-                  enabled={ready}
-                />
-              )}
-            </article>
-          ))}
+        {testOffers.map((offer) => (
+          <article key={offer.id} className={styles.card}>
+            <h2>{offer.name}</h2>
+            <strong className={styles.price}>
+              {offer.amount === null
+                ? 'Prix à configurer'
+                : (offer.amount / 100).toLocaleString('fr-FR', {
+                    style: 'currency',
+                    currency: 'EUR',
+                  })}
+            </strong>
+            <p>
+              {offer.products
+                .map(
+                  (p) =>
+                    ({
+                      invitation: 'Invitation et RSVP',
+                      audio: 'QR Audio',
+                      photo_video: 'QR Photo / Vidéo',
+                      thank_you: 'Éditeur de cartes',
+                    })[p],
+                )
+                .join(' + ')}
+            </p>
+            {offer.products.every((p) => products.includes(p)) ? (
+              <p className={styles.enabled}>Déjà activé</p>
+            ) : !offer.active ? (
+              <p>Cette offre n’est pas encore ouverte à l’achat.</p>
+            ) : (
+              <CheckoutButton eventId={id} offerId={offer.id} enabled={ready} />
+            )}
+          </article>
+        ))}
       </div>
       <h2>Mes commandes</h2>
       {orders.length ? (

@@ -67,6 +67,30 @@ export const spaceSchema = z.object({
   availableAt: z.iso.datetime(),
   allowDownload: z.boolean(),
 });
+export function validateSpace(kind: MediaKind, value: unknown) {
+  const config = spaceSchema.parse(value);
+  if (kind === 'audio' && (config.collaborative || config.allowDownload))
+    throw new Error('Le livre audio reste privé pour l’organisateur.');
+  return config;
+}
+// Older saved audio settings must never grant access to guest recordings.
+export function privateAudioSpace<
+  T extends Pick<MediaSpace, 'kind' | 'collaborative' | 'allowDownload'>,
+>(space: T): T {
+  return space.kind === 'audio'
+    ? { ...space, collaborative: false, allowDownload: false }
+    : space;
+}
+export function isGalleryOpen(
+  space: Pick<MediaSpace, 'kind' | 'collaborative' | 'availableAt'>,
+  now: number,
+) {
+  return (
+    space.kind === 'photo_video' &&
+    space.collaborative &&
+    new Date(space.availableAt).getTime() <= now
+  );
+}
 export function compatibleMime(declared: string, detected: string) {
   if (declared === detected) return true;
   return (
@@ -76,4 +100,58 @@ export function compatibleMime(declared: string, detected: string) {
     (['audio/wav', 'audio/x-wav'].includes(declared) &&
       detected === 'audio/wav')
   );
+}
+
+export interface MediaUsage {
+  photos: number;
+  videos: number;
+  audio: number;
+  studio: number;
+  pending: number;
+  total: number;
+  limit: number;
+}
+export function summarizeMediaUsage(
+  items: Array<Pick<MediaItem, 'size' | 'mime' | 'purpose' | 'status'>>,
+): MediaUsage {
+  const result: MediaUsage = {
+    photos: 0,
+    videos: 0,
+    audio: 0,
+    studio: 0,
+    pending: 0,
+    total: 0,
+    limit: 3000000000,
+  };
+  for (const item of items) {
+    if (item.status === 'deleted') continue;
+    result.total += item.size;
+    if (item.status === 'pending') result.pending += item.size;
+    const category =
+      item.purpose === 'design'
+        ? 'studio'
+        : item.mime.startsWith('audio/')
+          ? 'audio'
+          : item.mime.startsWith('video/')
+            ? 'videos'
+            : 'photos';
+    result[category] += item.size;
+  }
+  return result;
+}
+export function storageAlert(usage: Pick<MediaUsage, 'total' | 'limit'>) {
+  const percent = usage.limit
+    ? Math.floor((usage.total * 100) / usage.limit)
+    : 100;
+  return {
+    percent: Math.min(100, percent),
+    level:
+      percent >= 100
+        ? 'full'
+        : percent >= 90
+          ? 'critical'
+          : percent >= 75
+            ? 'warning'
+            : 'normal',
+  } as const;
 }

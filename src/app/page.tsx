@@ -19,6 +19,32 @@ const occasions = [
   'Événement professionnel',
   'Et tous les autres',
 ];
+const occasionStories = [
+  {
+    title: 'Mariages & fiançailles',
+    description: 'Réunir ceux qui comptent.',
+    image: 'jardin.jpg',
+    alt: 'Décor floral blanc autour d’une table de mariage dans un jardin',
+  },
+  {
+    title: 'Hennés & traditions',
+    description: 'Célébrer à votre manière.',
+    image: 'henne.jpg',
+    alt: 'Mains décorées au henné, entourées de guirlandes de fleurs orange',
+  },
+  {
+    title: 'Anniversaires & fêtes',
+    description: 'Faire place aux petits et grands moments.',
+    image: 'anniversaire.jpg',
+    alt: 'Gâteau d’anniversaire et ses bougies colorées',
+  },
+  {
+    title: 'Rencontres professionnelles',
+    description: 'Rassembler une équipe, partager une idée.',
+    image: 'entreprise.jpg',
+    alt: 'Une personne sur scène s’adressant au public d’une conférence',
+  },
+];
 const steps = [
   ['Créez', 'Un compte, tous vos événements.'],
   ['Personnalisez', 'Une invitation qui vous ressemble.'],
@@ -87,9 +113,9 @@ export default function Home() {
               </a>
             </div>
             <p className={styles.previewNote}>
-              <span>Version de préparation</span> La création de compte et la
-              gestion des événements sont disponibles. Invitations, RSVP et
-              souvenirs sont en cours de développement.
+              <span>Version de préparation</span> Préparez votre invitation,
+              suivez les réponses et rassemblez vos souvenirs dans votre espace.
+              L’ouverture des achats est en préparation.
             </p>
           </div>
           <div className={styles.heroScene}>
@@ -140,6 +166,24 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <div className={styles.occasionStories}>
+            {occasionStories.map((occasion) => (
+              <figure key={occasion.title}>
+                <div className={styles.occasionPhoto}>
+                  <Image
+                    src={`/images/editorial/${occasion.image}`}
+                    alt={occasion.alt}
+                    fill
+                    sizes="(max-width: 700px) 44vw, (max-width: 1000px) 42vw, 21vw"
+                  />
+                </div>
+                <figcaption>
+                  <strong>{occasion.title}</strong>
+                  <span>{occasion.description}</span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </section>
         <section
           id="modeles"
@@ -186,8 +230,8 @@ export default function Home() {
             ))}
           </div>
           <p className={styles.collectionNote}>
-            Trois démonstrations à explorer librement. La personnalisation et la
-            publication seront disponibles dans une prochaine étape.
+            Trois démonstrations à explorer librement. Créez votre événement
+            pour personnaliser votre invitation dans le Studio.
           </p>
         </section>
         <section
@@ -248,16 +292,15 @@ export default function Home() {
                 <span className={styles.stepNumber}>0{index + 1}</span>
                 <h3>{title}</h3>
                 <p>{text}</p>
-                {index > 0 && <small>En préparation</small>}
               </li>
             ))}
           </ol>
           <div className={styles.promise}>
             <span aria-hidden="true">♡</span>
             <p>
-              Votre invitation sera <strong>un lien à partager.</strong>
+              Votre invitation est <strong>un lien à partager.</strong>
               <br />
-              Les QR codes accompagneront vos espaces photo, vidéo et audio.
+              Les QR codes donnent accès à vos espaces photo, vidéo et audio.
             </p>
           </div>
         </section>
@@ -278,9 +321,11 @@ export default function Home() {
             <details>
               <summary>Que puis-je faire dès maintenant ?</summary>
               <p>
-                Créer votre compte, puis créer, consulter, modifier et supprimer
-                vos événements dans votre espace. Les invitations, le Studio et
-                le RSVP seront ajoutés au fur et à mesure de leur validation.
+                Créer votre compte et gérer vos événements. Dans chaque espace,
+                préparez votre invitation dans le Studio, retrouvez les réponses
+                RSVP, organisez votre budget et vos tâches, puis consultez les
+                souvenirs selon les services activés. Les achats restent fermés
+                pendant cette phase de préparation.
               </p>
             </details>
             <details>

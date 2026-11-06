@@ -28,11 +28,17 @@ export function createInvitationDocument(
     deadline: null,
     fields: [],
     sections: [
-      { id: id(), type: 'identity', title: 'Vous êtes invités' },
+      {
+        id: id(),
+        type: 'identity',
+        title: 'Vous êtes invités',
+        style: { fontSize: 14 },
+      },
       {
         id: id(),
         type: 'title',
         title: event.name,
+        style: { fontSize: 52 },
         text: new Intl.DateTimeFormat('fr-FR', {
           dateStyle: 'long',
           timeStyle: 'short',

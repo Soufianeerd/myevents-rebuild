@@ -1,3 +1,5 @@
+import { assertProduct } from '@/core/commerce/catalog';
+import { invitationAssetIds } from '@/core/invitations/presentation';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { fileTypeFromBuffer } from 'file-type';
 import { z } from 'zod';
@@ -10,7 +12,9 @@ import {
 } from '@/server/experience/service';
 import {
   mediaKindSchema,
-  spaceSchema,
+  validateSpace,
+  isGalleryOpen,
+  privateAudioSpace,
   validateUpload,
   compatibleMime,
 } from '@/core/media/models';
@@ -75,7 +79,7 @@ export async function configureSpace(
     context.tenantId,
     type,
     tokenHash(tokenFor(event.id, type)),
-    spaceSchema.parse(input),
+    validateSpace(type, input),
   );
 }
 export async function beginUpload(token: string, input: unknown) {
@@ -127,36 +131,40 @@ export async function finishUpload(id: string, secret: string) {
 export async function ownerMedia(id: string) {
   const { event, context, repository } = await eventScope(id);
   const repo = await mediaRepository();
-  const [spaces, items, products] = await Promise.all([
+  const [spaces, items, products, usage] = await Promise.all([
     repo.spaces(id, context.tenantId),
     repo.list(id, context.tenantId),
     repository.entitlements(id, context.tenantId),
+    repo.usage(context.tenantId),
   ]);
-  const storage = items.some((i) => i.status === 'ready')
-    ? await mediaStorage()
-    : null;
   return {
     event,
     spaces,
     products,
+    usage,
     usedBytes: items.reduce((sum, item) => sum + item.size, 0),
     items: await Promise.all(
-      items
-        .filter((i) => i.purpose !== 'design')
-        .map(async (i) => ({
-          id: i.id,
-          name: i.name,
-          author: i.author,
-          mime: i.mime,
-          size: i.size,
-          kind: i.kind,
-          status: i.status,
-          hidden: i.hidden,
-          favorite: i.favorite,
-          createdAt: i.createdAt,
-          url:
-            i.status === 'ready' ? await storage!.readUrl(i.objectKey) : null,
-        })),
+      items.map(async (i) => ({
+        id: i.id,
+        name: i.name,
+        author: i.author,
+        mime: i.mime,
+        size: i.size,
+        kind: i.kind,
+        purpose: i.purpose ?? 'guest',
+        status: i.status,
+        hidden: i.hidden,
+        favorite: i.favorite,
+        createdAt: i.createdAt,
+        url:
+          i.status === 'ready'
+            ? `/events/${id}/souvenirs/fichiers/${i.id}`
+            : null,
+        download:
+          i.status === 'ready'
+            ? `/events/${id}/souvenirs/fichiers/${i.id}?download=1`
+            : null,
+      })),
     ),
     links: Object.fromEntries(
       spaces.map((s) => [
@@ -169,10 +177,10 @@ export async function ownerMedia(id: string) {
 export async function guestMedia(token: string) {
   const repo = await mediaRepository(false);
   const hash = tokenHash(token);
-  const space = await repo.publicSpace(hash);
-  if (!space) return null;
-  const items = await repo.shared(hash);
-  const storage = items.length ? await mediaStorage() : null;
+  const result = await repo.publicSpace(hash);
+  if (!result) return null;
+  const space = privateAudioSpace(result);
+  const items = isGalleryOpen(space, Date.now()) ? await repo.shared(hash) : [];
   return {
     space,
     items: await Promise.all(
@@ -181,9 +189,9 @@ export async function guestMedia(token: string) {
         name: i.name,
         author: i.author,
         mime: i.mime,
-        url: await storage!.readUrl(i.objectKey),
+        url: `/souvenirs/${token}/fichiers/${i.id}`,
         download: space.allowDownload
-          ? await storage!.readUrl(i.objectKey, i.name)
+          ? `/souvenirs/${token}/fichiers/${i.id}?download=1`
           : null,
       })),
     ),
@@ -210,15 +218,21 @@ export async function moderateMedia(
     (i) => i.id === id,
   );
   if (!item) throw new Error('Fichier introuvable.');
+  if (
+    patch.hidden !== undefined &&
+    (item.kind === 'audio' || item.purpose === 'design')
+  )
+    throw new Error(
+      'Seules les photos et vidéos des invités sont partageables.',
+    );
   if (patch.status === 'deleted') {
     const invitation = await (
       await import('@/server/experience/service')
     ).experienceRepository();
     const record = await invitation.get(eventId, context.tenantId);
     if (
-      record?.published?.sections.some(
-        (s) => s.visible && s.type === 'image' && s.mediaId === id,
-      )
+      record?.published &&
+      invitationAssetIds(record.published, true).includes(id)
     )
       throw new Error(
         'Retirez cette photo de l’invitation publiée avant de la supprimer.',
@@ -280,7 +294,10 @@ export async function ownerImageUrl(id: string, assetId: string) {
     await (await mediaRepository()).list(id, context.tenantId)
   ).find(
     (m) =>
-      m.id === assetId && m.status === 'ready' && m.mime.startsWith('image/'),
+      m.id === assetId &&
+      m.status === 'ready' &&
+      (m.mime.startsWith('image/') ||
+        (m.purpose === 'design' && m.mime.startsWith('audio/'))),
   );
   if (!item) return null;
   return (await mediaStorage()).readUrl(item.objectKey);
@@ -291,4 +308,79 @@ export async function invitationImageUrl(token: string, assetId: string) {
     await mediaRepository(false)
   ).publicInvitationImage(tokenHash(token), assetId);
   return key ? (await mediaStorage()).readUrl(key) : null;
+}
+
+export async function mediaFileUrl(
+  scope: string,
+  id: string,
+  download: boolean,
+  guest: boolean,
+) {
+  z.uuid().parse(id);
+  if (guest) {
+    const repo = await mediaRepository(false);
+    const hash = tokenHash(scope);
+    const space = await repo.publicSpace(hash);
+    if (!space || !isGalleryOpen(space, Date.now())) return null;
+    const item = (await repo.shared(hash)).find((m) => m.id === id);
+    if (!item || (download && !item.allowDownload)) return null;
+    return (await mediaStorage()).readUrl(
+      item.objectKey,
+      download ? item.name : undefined,
+    );
+  }
+  const { context } = await eventScope(scope);
+  const item = (
+    await (await mediaRepository()).list(scope, context.tenantId)
+  ).find((m) => m.id === id && m.status === 'ready');
+  return item
+    ? (await mediaStorage()).readUrl(
+        item.objectKey,
+        download ? item.name : undefined,
+      )
+    : null;
+}
+
+export async function designMusic(id: string) {
+  const { context } = await eventScope(id);
+  return (await (await mediaRepository()).list(id, context.tenantId))
+    .filter(
+      (m) =>
+        m.status === 'ready' &&
+        m.purpose === 'design' &&
+        m.mime.startsWith('audio/'),
+    )
+    .map((m) => ({
+      id: m.id,
+      name: m.name,
+      url: `/events/${id}/assets/${m.id}`,
+    }));
+}
+export async function beginDesignAudio(id: string, input: unknown) {
+  const { context, repository: experience } = await eventScope(id);
+  assertProduct(
+    await experience.entitlements(id, context.tenantId),
+    'invitation',
+  );
+  const data = validateUpload('audio', input),
+    media = await mediaRepository(),
+    assetId = randomUUID(),
+    secret = randomBytes(32).toString('hex');
+  const key = await media.reserveDesign(
+    id,
+    context.tenantId,
+    assetId,
+    tokenHash(secret),
+    data,
+  );
+  try {
+    return {
+      id: assetId,
+      secret,
+      ...(await (await mediaStorage()).createUpload(key, data.mime, data.size)),
+    };
+  } catch (error) {
+    await media.cancel(assetId, tokenHash(secret));
+    throw error;
+  }
 }

@@ -1,3 +1,9 @@
+import {
+  summarizeMediaUsage,
+  validateSpace,
+  privateAudioSpace,
+  isGalleryOpen,
+} from '@/core/media/models';
 import { sql } from 'drizzle-orm';
 import type { ScopedDatabase } from './database';
 import type {
@@ -30,6 +36,19 @@ function item(r: Record<string, unknown>): MediaItem {
 }
 export class NeonMediaRepository implements MediaRepository {
   constructor(private db: ScopedDatabase) {}
+  async usage(tenant: string) {
+    const rows = await this.db.query(
+      sql`SELECT mime,purpose,status,sum(size) AS size FROM myevents.media_items WHERE tenant_id=${tenant} AND status<>'deleted' GROUP BY mime,purpose,status`,
+    );
+    return summarizeMediaUsage(
+      rows.map((r) => ({
+        size: Number(r.size),
+        mime: String(r.mime),
+        purpose: r.purpose === 'design' ? 'design' : 'guest',
+        status: r.status as MediaItem['status'],
+      })),
+    );
+  }
   async configure(
     id: string,
     _tenant: string,
@@ -38,8 +57,9 @@ export class NeonMediaRepository implements MediaRepository {
     config: Omit<MediaSpace, 'eventId' | 'kind'>,
   ) {
     void _tenant;
+    const settings = validateSpace(kind, config);
     await this.db.query(
-      sql`SELECT myevents.configure_media(${id},${kind},${hash},${JSON.stringify(config)}::jsonb)`,
+      sql`SELECT myevents.configure_media(${id},${kind},${hash},${JSON.stringify(settings)}::jsonb)`,
     );
   }
   async spaces(id: string, _tenant: string) {
@@ -48,14 +68,16 @@ export class NeonMediaRepository implements MediaRepository {
       await this.db.query(
         sql`SELECT * FROM myevents.media_spaces WHERE event_id=${id}`,
       )
-    ).map((r) => ({
-      eventId: String(r.event_id),
-      kind: r.kind as MediaKind,
-      enabled: Boolean(r.enabled),
-      collaborative: Boolean(r.collaborative),
-      availableAt: new Date(String(r.available_at)).toISOString(),
-      allowDownload: Boolean(r.allow_download),
-    }));
+    ).map((r) =>
+      privateAudioSpace({
+        eventId: String(r.event_id),
+        kind: r.kind as MediaKind,
+        enabled: Boolean(r.enabled),
+        collaborative: Boolean(r.collaborative),
+        availableAt: new Date(String(r.available_at)).toISOString(),
+        allowDownload: Boolean(r.allow_download),
+      }),
+    );
   }
   async publicSpace(hash: string): Promise<PublicMediaSpace | null> {
     const r = (
@@ -64,14 +86,14 @@ export class NeonMediaRepository implements MediaRepository {
       )
     )[0];
     return r
-      ? {
+      ? privateAudioSpace({
           eventId: String(r.event_id),
           kind: r.kind as MediaKind,
           title: String(r.title),
           collaborative: Boolean(r.collaborative),
           availableAt: new Date(String(r.available_at)).toISOString(),
           allowDownload: Boolean(r.allow_download),
-        }
+        })
       : null;
   }
   async reserveDesign(
@@ -136,6 +158,8 @@ export class NeonMediaRepository implements MediaRepository {
     ).map(item);
   }
   async shared(hash: string) {
+    const space = await this.publicSpace(hash);
+    if (!space || !isGalleryOpen(space, Date.now())) return [];
     return (
       await this.db.query(sql`SELECT * FROM myevents.shared_media(${hash})`)
     ).map((r) => ({

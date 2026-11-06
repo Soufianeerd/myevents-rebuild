@@ -30,3 +30,37 @@ export async function guestLinkAction(id: string, guestId: string) {
     };
   }
 }
+
+export async function prepareRemindersAction(id: string, selected: unknown) {
+  try {
+    const { prepareReminders } = await import('@/server/guests/service');
+    return {
+      ok: true as const,
+      reminders: await prepareReminders(id, selected),
+    };
+  } catch (error) {
+    return {
+      ok: false as const,
+      error: error instanceof Error ? error.message : 'Préparation impossible.',
+    };
+  }
+}
+
+export async function attachResponseAction(
+  id: string,
+  input: unknown,
+  revision: number,
+) {
+  try {
+    const { attachResponse } = await import('@/server/guests/service');
+    const record = await attachResponse(id, input, revision);
+    revalidatePath(`/events/${id}/invites`);
+    return { ok: true as const, record };
+  } catch (error) {
+    return {
+      ok: false as const,
+      error:
+        error instanceof Error ? error.message : 'Rattachement impossible.',
+    };
+  }
+}

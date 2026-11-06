@@ -9,7 +9,7 @@ import {
   invitationDocumentSchema,
   validateRsvp,
 } from '@/core/invitations/models';
-import { productsFromOrders, testOffers } from '@/core/commerce/catalog';
+import { productsFromOrders, getCheckoutOffer } from '@/core/commerce/catalog';
 const make = () =>
   createInvitationDocument(
     {
@@ -131,7 +131,7 @@ describe('Invitation document and RSVP', () => {
       sessionId: 'cs_test',
       createdAt: 'now',
       paidAt: null,
-      offer: testOffers.find((o) => o.id === 'experience-complete')!,
+      offer: getCheckoutOffer('experience-complete'),
     };
     expect(productsFromOrders([{ ...order, status: 'pending' }])).toEqual([]);
     expect(productsFromOrders([{ ...order, status: 'paid' }])).toEqual([

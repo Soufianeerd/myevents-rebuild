@@ -14,6 +14,8 @@ export const guestSchema = z.object({
   email: z.union([z.literal(''), z.email()]).default(''),
   phone: z.string().trim().max(50).default(''),
   household: z.string().trim().max(150).default(''),
+  householdAssigned: z.boolean().optional(),
+  responseId: z.uuid().optional(),
   group: z.string().trim().max(100).default(''),
   table: z.string().trim().max(100).default(''),
   status: z.enum(guestStatuses).default('not_invited'),
@@ -25,7 +27,13 @@ export const guestBookSchema = z
   .refine(
     (book) => new Set(book.guests.map((g) => g.id)).size === book.guests.length,
     'Identifiants invités dupliqués.',
-  );
+  )
+  .refine((book) => {
+    const ids = book.guests.flatMap((guest) =>
+      guest.responseId ? [guest.responseId] : [],
+    );
+    return new Set(ids).size === ids.length;
+  }, 'Une réponse ne peut être rattachée qu’à un seul contact.');
 export type Guest = z.infer<typeof guestSchema>;
 export type GuestBook = z.infer<typeof guestBookSchema>;
 export interface GuestBookRecord {

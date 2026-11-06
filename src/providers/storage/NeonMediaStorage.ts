@@ -85,6 +85,21 @@ export class NeonMediaStorage implements MediaStorage {
       { expiresIn: 60 },
     );
   }
+  async read(key: string) {
+    const object = await this.client.send(
+      new GetObjectCommand({ Bucket: this.bucket, Key: key }),
+    );
+    if (!object.Body) throw new Error('Fichier indisponible.');
+    return object.Body.transformToByteArray();
+  }
+  async stream(key: string, signal?: AbortSignal) {
+    const object = await this.client.send(
+      new GetObjectCommand({ Bucket: this.bucket, Key: key }),
+      { abortSignal: signal },
+    );
+    if (!object.Body) throw new Error('Fichier indisponible.');
+    return object.Body.transformToWebStream();
+  }
   async delete(key: string) {
     await this.client.send(
       new DeleteObjectCommand({ Bucket: this.bucket, Key: key }),

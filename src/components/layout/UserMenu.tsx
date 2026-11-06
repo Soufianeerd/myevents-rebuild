@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -43,8 +44,12 @@ export const UserMenu = ({ user }: UserMenuProps) => {
           <p className="text-xs text-neutral-500 truncate">{user.email}</p>
         </div>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profil</DropdownMenuItem>
-        <DropdownMenuItem>Facturation</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/profil">Profil</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/facturation">Facturation</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>Équipe</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

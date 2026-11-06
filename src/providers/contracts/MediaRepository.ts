@@ -1,5 +1,6 @@
 import type {
   MediaItem,
+  MediaUsage,
   MediaKind,
   MediaSpace,
   UploadRequest,
@@ -13,6 +14,7 @@ export type PublicMediaSpace = {
   allowDownload: boolean;
 };
 export interface MediaRepository {
+  usage(tenantId: string): Promise<MediaUsage>;
   configure(
     eventId: string,
     tenantId: string,

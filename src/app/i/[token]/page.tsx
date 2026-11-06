@@ -1,3 +1,4 @@
+import { invitationAssetIds } from '@/core/invitations/presentation';
 import { notFound } from 'next/navigation';
 import { publicInvitation } from '@/server/experience/service';
 import { InvitationRenderer } from '@/components/invitation/InvitationRenderer';
@@ -19,9 +20,10 @@ export default async function PublishedInvitation({
     <main>
       <InvitationRenderer
         mediaUrls={Object.fromEntries(
-          invitation.document.sections
-            .filter((s) => s.mediaId)
-            .map((s) => [s.mediaId!, `/i/${token}/images/${s.mediaId}`]),
+          invitationAssetIds(invitation.document, true).map((id) => [
+            id,
+            `/i/${token}/images/${id}`,
+          ]),
         )}
         document={invitation.document}
         rsvp={

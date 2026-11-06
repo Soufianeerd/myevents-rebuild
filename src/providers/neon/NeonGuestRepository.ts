@@ -6,6 +6,8 @@ import {
 } from '@/core/guests/models';
 import type { GuestRepository } from '../contracts/GuestRepository';
 import type { ScopedDatabase } from './database';
+import { validateResponseLinks } from '@/core/guests/reconciliation';
+import { rsvpResponseSchema } from '@/core/invitations/models';
 function record(r: Record<string, unknown>): GuestBookRecord {
   return {
     eventId: String(r.event_id),
@@ -31,6 +33,16 @@ export class NeonGuestRepository implements GuestRepository {
     document: GuestBook,
     revision: number,
   ) {
+    document = guestBookSchema.parse(document);
+    if (document.guests.some((guest) => guest.responseId)) {
+      const responses = await this.db.query(
+        sql`SELECT response FROM myevents.rsvp_responses WHERE event_id=${id} AND tenant_id=${tenant}`,
+      );
+      validateResponseLinks(
+        document,
+        responses.map((row) => rsvpResponseSchema.parse(row.response)),
+      );
+    }
     const rows =
       revision === 0
         ? await this.db.query(

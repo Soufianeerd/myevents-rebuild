@@ -1,5 +1,16 @@
 'use server';
 import { saveDesign } from '@/server/designs/service';
+export async function requestMaterialAction(id: string, input: unknown) {
+  try {
+    const { requestMaterial } = await import('@/server/designs/service');
+    return { ok: true as const, request: await requestMaterial(id, input) };
+  } catch (error) {
+    return {
+      ok: false as const,
+      error: error instanceof Error ? error.message : 'Demande indisponible.',
+    };
+  }
+}
 export async function saveDesignAction(
   id: string,
   input: unknown,

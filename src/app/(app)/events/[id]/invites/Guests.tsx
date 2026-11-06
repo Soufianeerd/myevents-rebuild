@@ -1,5 +1,16 @@
 'use client';
 import { useState } from 'react';
+import { ReminderPanel } from './ReminderPanel';
+import { GuestCollections } from './GuestCollections';
+import { ResponseAssignments } from './ResponseAssignments';
+import {
+  assignCollection,
+  collectionKey,
+  guestCollections,
+  type CollectionKind,
+} from '@/core/guests/groupings';
+import { replyFor } from '@/core/guests/responses';
+import type { RsvpResponse } from '@/core/invitations/models';
 import { readGuestFile } from '@/features/guests/readGuestFile';
 import {
   guestSchema,
@@ -9,8 +20,13 @@ import {
   guestsCsv,
   type Guest,
   type GuestBook,
+  type GuestBookRecord,
 } from '@/core/guests/models';
-import { saveGuestsAction, guestLinkAction } from './actions';
+import {
+  saveGuestsAction,
+  guestLinkAction,
+  attachResponseAction,
+} from './actions';
 import styles from '../workspace.module.css';
 const labels = {
   name: 'Nom',
@@ -43,11 +59,7 @@ export default function Guests({
 }: {
   eventId: string;
   initial: GuestBook;
-  responses: Array<{
-    guestId?: string;
-    presence: 'yes' | 'no';
-    companions?: number;
-  }>;
+  responses: Array<RsvpResponse & { createdAt: string }>;
   revision: number;
 }) {
   const [book, setBook] = useState(initial),
@@ -62,21 +74,44 @@ export default function Guests({
     [query, setQuery] = useState(''),
     [status, setStatus] = useState(''),
     [group, setGroup] = useState(''),
+    [household, setHousehold] = useState(''),
     [sort, setSort] = useState<'name' | 'household' | 'group' | 'table'>(
       'name',
     ),
     [selected, setSelected] = useState<string[]>([]),
     [bulkGroup, setBulkGroup] = useState(''),
+    [bulkHousehold, setBulkHousehold] = useState(''),
     [rows, setRows] = useState<string[][]>([]),
     [mapping, setMapping] = useState<Record<string, string>>({});
+  function applyRecord(record: GuestBookRecord) {
+    setBook(record.document);
+    setRevision(record.revision);
+    setEditing(null);
+    setHousehold(
+      (current) =>
+        guestCollections(record.document.guests, responses, 'household').find(
+          (item) => item.key === collectionKey(current),
+        )?.name ?? '',
+    );
+    setGroup(
+      (current) =>
+        guestCollections(record.document.guests, responses, 'group').find(
+          (item) => item.key === collectionKey(current),
+        )?.name ?? '',
+    );
+    setSelected((ids) =>
+      ids.filter((id) =>
+        record.document.guests.some((guest) => guest.id === id),
+      ),
+    );
+  }
   async function save(next: GuestBook) {
     setBusy(true);
     setMessage('');
     try {
       const result = await saveGuestsAction(eventId, next, revision);
       if (!result.ok) throw new Error(result.error);
-      setBook(result.record.document);
-      setRevision(result.record.revision);
+      applyRecord(result.record);
       setMessage('Liste enregistrée.');
       return true;
     } catch (error) {
@@ -91,8 +126,11 @@ export default function Guests({
   const visible = book.guests
     .filter(
       (g) =>
-        (!status || g.status === status) &&
-        (!group || g.group === group) &&
+        (!status ||
+          (replyFor(g, responses)?.presence ?? g.status) === status) &&
+        (!group || collectionKey(g.group) === collectionKey(group)) &&
+        (!household ||
+          collectionKey(g.household) === collectionKey(household)) &&
         [g.name, g.email, g.household, g.phone]
           .join(' ')
           .toLocaleLowerCase('fr')
@@ -103,6 +141,19 @@ export default function Guests({
         a[sort].localeCompare(b[sort], 'fr') ||
         a.name.localeCompare(b.name, 'fr'),
     );
+  const chosen = visible.filter((guest) => selected.includes(guest.id));
+  const households = guestCollections(book.guests, responses, 'household');
+  const groups = guestCollections(book.guests, responses, 'group');
+  function filterCollection(kind: CollectionKind, name: string) {
+    setHousehold(kind === 'household' ? name : '');
+    setGroup(kind === 'group' ? name : '');
+    setQuery('');
+    setStatus('');
+    setSelected([]);
+    document
+      .getElementById('guest-list')
+      ?.scrollIntoView({ behavior: 'instant' });
+  }
   function download(guests: Guest[]) {
     const url = URL.createObjectURL(
       new Blob([guestsCsv(guests)], { type: 'text/csv;charset=utf-8' }),
@@ -122,14 +173,8 @@ export default function Guests({
       </p>
       <div className={styles.stats}>
         <span>{book.guests.length} contacts</span>
-        <span>
-          {new Set(book.guests.map((g) => g.household).filter(Boolean)).size}{' '}
-          foyers
-        </span>
-        <span>
-          {new Set(book.guests.map((g) => g.group).filter(Boolean)).size}{' '}
-          groupes
-        </span>
+        <span>{households.length} foyers</span>
+        <span>{groups.length} groupes</span>
       </div>
       <div className={styles.stats}>
         <button
@@ -150,7 +195,48 @@ export default function Guests({
         </button>
         <button onClick={() => download([])}>Modèle CSV</button>
       </div>
-      <p role="status">{message}</p>
+      <GuestCollections
+        book={book}
+        responses={responses}
+        busy={busy}
+        onSave={save}
+        onFilter={filterCollection}
+      />
+      <ResponseAssignments
+        book={book}
+        responses={responses}
+        busy={busy}
+        onAttach={async (responseId, guestId) => {
+          setBusy(true);
+          setMessage('');
+          try {
+            const result = await attachResponseAction(
+              eventId,
+              { responseId, guestId },
+              revision,
+            );
+            if (!result.ok) throw new Error(result.error);
+            applyRecord(result.record);
+            setMessage('Réponse rattachée au carnet.');
+          } catch (error) {
+            setMessage(
+              error instanceof Error
+                ? error.message
+                : 'Rattachement impossible.',
+            );
+          } finally {
+            setBusy(false);
+          }
+        }}
+      />
+      <ReminderPanel
+        eventId={eventId}
+        guests={book.guests}
+        responses={responses}
+      />
+      <p role="status" aria-label="État du carnet">
+        {message}
+      </p>
       {personalLink && (
         <div className={styles.notice}>
           <strong>Invitation de {personalLink.name}</strong>
@@ -183,14 +269,26 @@ export default function Guests({
           </button>
         </div>
       )}
-      <div className={styles.grid}>
+      <div className={styles.grid} id="guest-list">
         <label>
           Rechercher un invité
-          <input value={query} onChange={(e) => setQuery(e.target.value)} />
+          <input
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setSelected([]);
+            }}
+          />
         </label>
         <label>
           Statut
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <select
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setSelected([]);
+            }}
+          >
             <option value="">Tous les statuts</option>
             {guestStatuses.map((s) => (
               <option key={s} value={s}>
@@ -201,13 +299,32 @@ export default function Guests({
         </label>
         <label>
           Filtrer par groupe
-          <select value={group} onChange={(e) => setGroup(e.target.value)}>
+          <select
+            value={group}
+            onChange={(e) => {
+              setGroup(e.target.value);
+              setSelected([]);
+            }}
+          >
             <option value="">Tous les groupes</option>
-            {[...new Set(book.guests.map((g) => g.group).filter(Boolean))].map(
-              (g) => (
-                <option key={g}>{g}</option>
-              ),
-            )}
+            {groups.map((g) => (
+              <option key={g.key}>{g.name}</option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Filtrer par foyer
+          <select
+            value={household}
+            onChange={(e) => {
+              setHousehold(e.target.value);
+              setSelected([]);
+            }}
+          >
+            <option value="">Tous les foyers</option>
+            {households.map((item) => (
+              <option key={item.key}>{item.name}</option>
+            ))}
           </select>
         </label>
       </div>
@@ -257,7 +374,13 @@ export default function Guests({
                     type={key === 'email' ? 'email' : 'text'}
                     value={editing[key as keyof typeof labels]}
                     onChange={(e) =>
-                      setEditing({ ...editing, [key]: e.target.value })
+                      setEditing({
+                        ...editing,
+                        [key]: e.target.value,
+                        ...(key === 'household'
+                          ? { householdAssigned: true }
+                          : {}),
+                      })
                     }
                   />
                 </label>
@@ -302,6 +425,32 @@ export default function Guests({
                 Annuler
               </button>
             </div>
+            {editing.responseId && (
+              <div>
+                <p>
+                  Une réponse du lien général a été rattachée à ce contact. En
+                  cas d’erreur, détachez-la pour choisir le bon contact. La
+                  réponse, le contact et son foyer seront conservés.
+                </p>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (
+                      await save({
+                        guests: book.guests.map((guest) =>
+                          guest.id === editing.id
+                            ? { ...guest, responseId: undefined }
+                            : guest,
+                        ),
+                      })
+                    )
+                      setEditing(null);
+                  }}
+                >
+                  Détacher la réponse
+                </button>
+              </div>
+            )}
           </fieldset>
         </form>
       )}
@@ -477,10 +626,9 @@ export default function Guests({
                 <td>{g.table || '—'}</td>
                 <td>{statuses[g.status]}</td>
                 <td>
-                  {responses.find((r) => r.guestId === g.id)?.presence === 'yes'
+                  {replyFor(g, responses)?.presence === 'yes'
                     ? 'Présent'
-                    : responses.find((r) => r.guestId === g.id)?.presence ===
-                        'no'
+                    : replyFor(g, responses)?.presence === 'no'
                       ? 'Absent'
                       : 'Sans réponse'}
                 </td>
@@ -517,9 +665,23 @@ export default function Guests({
         </table>
       </div>
       {!visible.length && <p>Aucun invité dans cette liste.</p>}
-      {!!selected.length && (
+      {!!chosen.length && (
         <fieldset disabled={busy} className={styles.card}>
-          <legend>{selected.length} invités sélectionnés</legend>
+          <legend>{chosen.length} invités sélectionnés</legend>
+          <label>
+            Nouveau foyer
+            <input
+              value={bulkHousehold}
+              onChange={(e) => setBulkHousehold(e.target.value)}
+              maxLength={150}
+              list="known-households"
+            />
+          </label>
+          <datalist id="known-households">
+            {households.map((item) => (
+              <option key={item.key} value={item.name} />
+            ))}
+          </datalist>
           <label>
             Nouveau groupe
             <input
@@ -531,20 +693,33 @@ export default function Guests({
           <div className={styles.stats}>
             <button
               onClick={() =>
-                save({
-                  guests: book.guests.map((g) =>
-                    selected.includes(g.id) ? { ...g, group: bulkGroup } : g,
+                save(
+                  assignCollection(
+                    book,
+                    chosen.map((g) => g.id),
+                    'household',
+                    bulkHousehold,
                   ),
-                })
+                )
+              }
+            >
+              Appliquer le foyer
+            </button>
+            <button
+              onClick={() =>
+                save(
+                  assignCollection(
+                    book,
+                    chosen.map((g) => g.id),
+                    'group',
+                    bulkGroup,
+                  ),
+                )
               }
             >
               Appliquer le groupe
             </button>
-            <button
-              onClick={() =>
-                download(book.guests.filter((g) => selected.includes(g.id)))
-              }
-            >
+            <button onClick={() => download(chosen)}>
               Exporter la sélection
             </button>
             <button
@@ -557,7 +732,7 @@ export default function Guests({
                   if (
                     await save({
                       guests: book.guests.filter(
-                        (g) => !selected.includes(g.id),
+                        (g) => !chosen.some((guest) => guest.id === g.id),
                       ),
                     })
                   )

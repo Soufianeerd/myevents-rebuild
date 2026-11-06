@@ -1,3 +1,4 @@
+import { responseColumns } from '@/core/guests/responses';
 import Link from 'next/link';
 import Guests from './Guests';
 import { guestState } from '@/server/guests/service';
@@ -15,7 +16,10 @@ export default async function GuestsPage({
     repository.responses(id, context.tenantId),
   ]);
   const contacts = await guestState(id);
-  const fields = record?.published?.fields ?? record?.draft.fields ?? [];
+  const fields = responseColumns(
+    record?.published?.fields ?? record?.draft.fields ?? [],
+    responses,
+  );
   return (
     <div className={styles.workspace}>
       <Link href={`/events/${id}`}>← {event.name}</Link>
@@ -34,10 +38,12 @@ export default async function GuestsPage({
       <div className={styles.stats}>
         <span>{responses.length} réponses</span>
         <span>
-          {responses.filter((r) => r.presence === 'yes').length} présents
+          {responses.filter((r) => r.presence === 'yes').length} réponses
+          positives
         </span>
         <span>
-          {responses.filter((r) => r.presence === 'no').length} absents
+          {responses.filter((r) => r.presence === 'no').length} réponses
+          négatives
         </span>
       </div>
       <a className={styles.link} href={`/events/${id}/invites/export`}>
@@ -49,7 +55,12 @@ export default async function GuestsPage({
           Studio, puis partagez son lien.
         </div>
       ) : (
-        <div className={styles.tableWrap}>
+        <div
+          className={styles.tableWrap}
+          role="region"
+          aria-label="Tableau des réponses reçues"
+          tabIndex={0}
+        >
           <table>
             <thead>
               <tr>
@@ -58,6 +69,7 @@ export default async function GuestsPage({
                 <th>Présence</th>
                 <th>Accompagnants</th>
                 <th>Contact associé</th>
+                <th>Foyer déclaré</th>
                 {fields.map((f) => (
                   <th key={f.id}>{f.label}</th>
                 ))}
@@ -72,8 +84,17 @@ export default async function GuestsPage({
                   <td>{r.presence === 'yes' ? 'Présent' : 'Absent'}</td>
                   <td>{r.companions ?? 0}</td>
                   <td>
-                    {contacts.document.guests.find((g) => g.id === r.guestId)
-                      ?.name ?? 'Lien général'}
+                    {contacts.document.guests.find(
+                      (g) => g.id === r.guestId || g.responseId === r.id,
+                    )?.name ??
+                      (r.guestId ? 'Contact retiré du carnet' : 'Lien général')}
+                  </td>
+                  <td>
+                    {r.household ||
+                      contacts.document.guests.find(
+                        (guest) => guest.id === r.guestId,
+                      )?.household ||
+                      '—'}
                   </td>
                   {fields.map((f) => (
                     <td key={f.id}>

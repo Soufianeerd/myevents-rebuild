@@ -1,6 +1,13 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ['pdfkit'],
+  outputFileTracingIncludes: {
+    '/events/*/cartes/pdf': [
+      './public/fonts/*.ttf',
+      './public/images/editorial/*.jpg',
+    ],
+  },
   async headers() {
     return ['/i/:path*', '/souvenirs/:path*'].map((source) => ({
       source,

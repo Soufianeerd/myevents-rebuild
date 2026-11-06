@@ -1,4 +1,9 @@
 export interface MediaStorage {
+  stream(
+    key: string,
+    signal?: AbortSignal,
+  ): Promise<ReadableStream<Uint8Array>>;
+  read(key: string): Promise<Uint8Array>;
   createUpload(
     key: string,
     mime: string,

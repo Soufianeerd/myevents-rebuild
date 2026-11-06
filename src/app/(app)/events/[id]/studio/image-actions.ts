@@ -32,3 +32,32 @@ export async function finishImageAction(
     };
   }
 }
+export async function beginMusicAction(id: string, input: unknown) {
+  try {
+    const { beginDesignAudio } = await import('@/server/media/service');
+    return { ok: true as const, data: await beginDesignAudio(id, input) };
+  } catch (error) {
+    return {
+      ok: false as const,
+      error: error instanceof Error ? error.message : 'Import impossible.',
+    };
+  }
+}
+export async function finishMusicAction(
+  eventId: string,
+  id: string,
+  secret: string,
+) {
+  try {
+    await finishUpload(id, secret);
+    const { designMusic } = await import('@/server/media/service');
+    const asset = (await designMusic(eventId)).find((item) => item.id === id);
+    if (!asset) throw new Error();
+    return { ok: true as const, asset };
+  } catch {
+    return {
+      ok: false as const,
+      error: 'La musique n’a pas pu être validée. Vérifiez son format.',
+    };
+  }
+}

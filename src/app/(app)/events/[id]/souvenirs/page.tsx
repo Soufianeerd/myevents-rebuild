@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { ownerMedia } from '@/server/media/service';
 import { tokenFor } from '@/server/experience/service';
 import { UploadForm } from '@/components/media/UploadForm';
-import { SpaceControls, MediaControls } from './Controls';
+import { Gallery } from './Gallery';
+import { storageAlert } from '@/core/media/models';
+import { SpaceControls } from './Controls';
 import styles from '../workspace.module.css';
 export default async function Page({
   params,
@@ -12,6 +14,7 @@ export default async function Page({
   const { id } = await params;
   const data = await ownerMedia(id);
   const products = data.products;
+  const usage = storageAlert(data.usage);
   return (
     <div className={styles.workspace}>
       <Link href={`/events/${id}`}>← Mon événement</Link>
@@ -80,33 +83,74 @@ export default async function Page({
       </div>
       <h2>Vos souvenirs reçus</h2>
       <p>
-        {data.items.filter((i) => i.status === 'ready').length} souvenirs ·{' '}
-        {(data.usedBytes / 1000000).toFixed(1)} Mo pour cet événement, images du
-        Studio comprises
+        {
+          data.items.filter(
+            (i) => i.status === 'ready' && i.purpose !== 'design',
+          ).length
+        }{' '}
+        souvenirs · {(data.usedBytes / 1000000).toFixed(1)} Mo pour cet
+        événement, images du Studio comprises
       </p>
-      <div className={styles.grid}>
-        {data.items.map((item) => (
-          <article className={styles.card} key={item.id}>
-            <h2>{item.name}</h2>
-            {item.url ? (
-              item.mime.startsWith('audio/') ? (
-                <audio controls src={item.url} />
-              ) : item.mime.startsWith('video/') ? (
-                <video controls src={item.url} style={{ width: '100%' }} />
-              ) : (
-                <img src={item.url} alt={item.name} style={{ width: '100%' }} />
-              )
-            ) : (
-              <p>Dépôt en attente de validation.</p>
-            )}
-            <p>
-              {item.author} ·{' '}
-              {new Date(item.createdAt).toLocaleDateString('fr-FR')}
-            </p>
-            <MediaControls eventId={id} item={item} />
-          </article>
-        ))}
-      </div>
+      <section className={styles.card} aria-label="Stockage du compte">
+        <h2>Votre stockage</h2>
+        <p>
+          {(data.usage.total / 1000000000).toFixed(2)} Go sur 3 Go · tous vos
+          événements
+        </p>
+        <progress
+          aria-label="Stockage utilisé"
+          value={data.usage.total}
+          max={data.usage.limit}
+          style={{ width: '100%', accentColor: '#701d2d' }}
+        />
+        <div className={styles.stats}>
+          {(
+            [
+              ['photos', 'Photos'],
+              ['videos', 'Vidéos'],
+              ['audio', 'Audio'],
+              ['studio', 'Studio'],
+            ] as const
+          ).map(([key, label]) => (
+            <span key={key}>
+              {label} : {(data.usage[key] / 1000000).toFixed(1)} Mo
+            </span>
+          ))}
+        </div>
+        {data.usage.pending > 0 && (
+          <p>
+            {(data.usage.pending / 1000000).toFixed(1)} Mo réservés par des
+            dépôts en attente.
+          </p>
+        )}
+        {usage.level !== 'normal' && (
+          <p role="status">
+            {usage.level === 'full'
+              ? 'Votre stockage est plein. Téléchargez puis supprimez des fichiers pour pouvoir en ajouter.'
+              : `Votre stockage atteint ${usage.percent} %. Pensez à libérer de l’espace.`}
+          </p>
+        )}
+      </section>
+      <section
+        className={`${styles.card} ${styles.exportCard}`}
+        aria-labelledby="export-title"
+      >
+        <h2 id="export-title">Emportez vos souvenirs</h2>
+        <p>
+          Retrouvez les photos, vidéos, messages audio et fichiers du Studio
+          dans une archive ZIP, avec vos invitations enregistrées, vos invités,
+          leurs réponses et votre organisation. Les dépôts en cours seront
+          disponibles dans un prochain export, une fois terminés.
+        </p>
+        <a className={styles.link} href={`/events/${id}/souvenirs/export`}>
+          Télécharger mes souvenirs (.zip)
+        </a>
+        <p>
+          Vos fichiers restent disponibles dans votre compte après le
+          téléchargement.
+        </p>
+      </section>
+      <Gallery eventId={id} items={data.items} />
     </div>
   );
 }

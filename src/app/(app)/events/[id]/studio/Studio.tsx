@@ -19,6 +19,8 @@ import {
   suspendDocumentAction,
 } from './actions';
 import styles from './studio.module.css';
+import { MusicControls } from './MusicControls';
+import { BackgroundControls, SectionAppearance } from './AppearanceControls';
 const labels: Record<InvitationSection['type'], string> = {
   identity: 'Identité',
   title: 'Titre',
@@ -26,13 +28,18 @@ const labels: Record<InvitationSection['type'], string> = {
   image: 'Photo',
   program: 'Programme',
   location: 'Lieu',
-  calendar: 'Date',
+  calendar: 'Calendrier',
+  countdown: 'Compte à rebours',
+  dress_code: 'Dress code',
   rsvp: 'RSVP',
   divider: 'Séparateur',
 };
 export function Studio({
   eventId,
   initialAssets,
+  initialMusicAssets,
+  eventStart,
+  eventTimezone,
   initial,
   initialRevision,
   history,
@@ -40,6 +47,9 @@ export function Studio({
   canPublish,
 }: {
   eventId: string;
+  eventStart: string;
+  eventTimezone: string;
+  initialMusicAssets: Array<{ id: string; name: string; url: string }>;
   initialAssets: Array<{ id: string; name: string; url: string }>;
   initial: InvitationDocument;
   initialRevision: number;
@@ -47,6 +57,8 @@ export function Studio({
   publicUrl: string | null;
   canPublish: boolean;
 }) {
+  const [musicAssets, setMusicAssets] = useState(initialMusicAssets);
+  const [showOpening, setShowOpening] = useState(false);
   const [assets, setAssets] = useState(initialAssets);
   const [document, setDocument] = useState(initial),
     [selected, setSelected] = useState(initial.sections[0].id),
@@ -344,6 +356,14 @@ export function Studio({
                 const next = sectionSchema.parse({
                   id: crypto.randomUUID(),
                   type: e.target.value,
+                  ...(['calendar', 'countdown'].includes(e.target.value)
+                    ? {
+                        calendar: {
+                          startAt: eventStart,
+                          timezone: eventTimezone,
+                        },
+                      }
+                    : {}),
                   title: labels[e.target.value as InvitationSection['type']],
                 });
                 change({ ...document, sections: [...document.sections, next] });
@@ -401,17 +421,30 @@ export function Studio({
               </button>
             ))}
           </div>
-          <div className={styles.preview}>
+          <p>
+            <button onClick={() => setShowOpening(!showOpening)}>
+              {showOpening ? 'Voir la carte' : 'Tester l’ouverture'}
+            </button>
+          </p>
+          <div
+            className={styles.preview}
+            role="region"
+            aria-label="Aperçu de l’invitation"
+          >
             <div
               className={styles.viewport}
               style={{ width, maxWidth: '100%' }}
             >
               <InvitationRenderer
+                key={`${showOpening}-${document.opening}`}
                 mediaUrls={Object.fromEntries(
-                  assets.map((asset) => [asset.id, asset.url]),
+                  [...assets, ...musicAssets].map((asset) => [
+                    asset.id,
+                    asset.url,
+                  ]),
                 )}
                 document={document}
-                preview
+                preview={!showOpening}
                 rsvp={<RsvpForm document={document} preview />}
               />
             </div>
@@ -444,10 +477,14 @@ export function Studio({
                 onChange={(e) => patchSection({ text: e.target.value })}
               />
             </label>
-            {section.type === 'image' && (
+            {['image', 'identity', 'location'].includes(section.type) && (
               <div>
                 <label>
-                  Photographie
+                  {section.type === 'identity'
+                    ? 'Logo ou image d’identité'
+                    : section.type === 'location'
+                      ? 'Aperçu cartographique importé'
+                      : 'Photographie'}
                   <select
                     value={
                       section.mediaId
@@ -466,15 +503,19 @@ export function Studio({
                     }
                   >
                     <option value="">Aucune</option>
-                    <option value="/images/editorial/jardin.jpg">
-                      Jardin fleuri
-                    </option>
-                    <option value="/images/editorial/reception.jpg">
-                      Réception au jardin
-                    </option>
-                    <option value="/images/editorial/anniversaire.jpg">
-                      Anniversaire
-                    </option>
+                    {section.type !== 'location' && (
+                      <>
+                        <option value="/images/editorial/jardin.jpg">
+                          Jardin fleuri
+                        </option>
+                        <option value="/images/editorial/reception.jpg">
+                          Réception au jardin
+                        </option>
+                        <option value="/images/editorial/anniversaire.jpg">
+                          Anniversaire
+                        </option>
+                      </>
+                    )}
                     {assets.map((asset) => (
                       <option key={asset.id} value={`asset:${asset.id}`}>
                         {asset.name}
@@ -571,6 +612,13 @@ export function Studio({
                 </button>
               </div>
             )}
+            <SectionAppearance
+              section={section}
+              patch={patchSection}
+              assets={assets}
+              startAt={eventStart}
+              timezone={eventTimezone}
+            />
             <label>
               Couleur du texte
               <input
@@ -718,8 +766,28 @@ export function Studio({
                 <option value="none">Directe</option>
                 <option value="envelope">Enveloppe</option>
                 <option value="curtains">Rideaux</option>
+                <option value="doors">Portes</option>
+                <option value="fold">Pliage</option>
+                <option value="box">Coffret</option>
+                <option value="scroll">Parchemin</option>
+                <option value="cinematic">Cinéma</option>
+                <option value="minimal">Minimaliste</option>
               </select>
             </label>
+            <MusicControls
+              eventId={eventId}
+              document={document}
+              change={change}
+              assets={musicAssets}
+              uploaded={(asset) =>
+                setMusicAssets((previous) => [...previous, asset])
+              }
+            />
+            <BackgroundControls
+              document={document}
+              change={change}
+              assets={assets}
+            />
             <h3>Réponses des invités</h3>
             <label>
               Activer le RSVP
@@ -760,6 +828,10 @@ export function Studio({
                             ? {
                                 ...f,
                                 type: e.target.value as typeof field.type,
+                                binding:
+                                  e.target.value === 'text'
+                                    ? f.binding
+                                    : undefined,
                                 options: ['choice', 'multiple'].includes(
                                   e.target.value,
                                 )
@@ -790,6 +862,33 @@ export function Studio({
                     ))}
                   </select>
                 </label>
+                {field.type === 'text' && (
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={field.binding === 'household'}
+                      onChange={(event) =>
+                        change({
+                          ...document,
+                          fields: document.fields.map((f, i) =>
+                            i === index
+                              ? {
+                                  ...f,
+                                  binding: event.target.checked
+                                    ? 'household'
+                                    : 'none',
+                                }
+                              : event.target.checked &&
+                                  f.binding === 'household'
+                                ? { ...f, binding: 'none' }
+                                : f,
+                          ),
+                        })
+                      }
+                    />{' '}
+                    Relier cette réponse au foyer de l’invité
+                  </label>
+                )}
                 {['choice', 'multiple'].includes(field.type) && (
                   <label>
                     Choix (un par ligne)

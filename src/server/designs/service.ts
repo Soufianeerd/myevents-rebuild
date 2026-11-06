@@ -15,7 +15,7 @@ import {
   validateDesignRights,
 } from '@/core/designs/models';
 import type { DesignRepository } from '@/providers/contracts/DesignRepository';
-async function repository(): Promise<DesignRepository> {
+export async function designRepository(): Promise<DesignRepository> {
   if (env.APP_MODE === 'local') {
     const { LocalDesignRepository } =
       await import('@/providers/local/LocalDesignRepository');
@@ -28,12 +28,15 @@ async function repository(): Promise<DesignRepository> {
     await (await import('@/server/neon/auth')).authenticatedNeonDatabase(),
   );
 }
+const repository = designRepository;
 export async function designState(id: string) {
   const { event, context, repository: experience } = await eventScope(id);
-  const [record, orders, media] = await Promise.all([
+  const [record, orders, media, invitation, requests] = await Promise.all([
     (await repository()).get(id, context.tenantId),
     experience.entitlements(id, context.tenantId),
     (await mediaRepository()).list(id, context.tenantId),
+    experience.get(id, context.tenantId),
+    (await repository()).requests(id, context.tenantId),
   ]);
   const products = orders;
   const images = media.filter(
@@ -49,12 +52,50 @@ export async function designState(id: string) {
         { width: 600, margin: 4 },
       );
   return {
+    requests,
+    invitationTheme: invitation
+      ? {
+          background: invitation.draft.background,
+          font: (
+            {
+              editorial: 'serif',
+              script: 'cursive',
+              sans: 'sans-serif',
+            } as const
+          )[invitation.draft.font],
+          color:
+            invitation.draft.sections.find(
+              (section) => section.type === 'title',
+            )?.style.color ?? '#641d2b',
+        }
+      : null,
     document: record?.document ?? newThankYou(event.name, randomUUID),
     revision: record?.revision ?? 0,
     products,
     assets,
     imageChoices: images.map((i) => ({ id: i.id, name: i.name })),
   };
+}
+
+export async function requestMaterial(id: string, input: unknown) {
+  const { materialRequestInputSchema } =
+    await import('@/core/designs/requests');
+  const request = materialRequestInputSchema.parse(input);
+  const { context } = await eventScope(id);
+  const repo = await repository();
+  const record = await repo.get(id, context.tenantId);
+  if (!record || record.revision !== request.revision)
+    throw new Error(
+      'La carte a changé. Enregistrez-la et vérifiez son aperçu avant de demander une impression.',
+    );
+  return repo.requestMaterial({
+    ...request,
+    eventId: id,
+    tenantId: context.tenantId,
+    document: record.document,
+    status: 'requested',
+    createdAt: new Date().toISOString(),
+  });
 }
 export async function saveDesign(
   id: string,
@@ -139,4 +180,77 @@ export async function orderPrint(id: string, input: unknown) {
       ...quote,
     },
   });
+}
+
+export async function exportDesignPdf(id: string, expectedRevision: unknown) {
+  const { context, repository: experience } = await eventScope(id);
+  const record = await (await repository()).get(id, context.tenantId);
+  if (
+    !record ||
+    record.revision !==
+      z.coerce.number().int().positive().parse(expectedRevision)
+  )
+    throw new Error(
+      'Enregistrez la carte puis rechargez-la avant de télécharger le PDF.',
+    );
+  const products = await experience.entitlements(id, context.tenantId);
+  if (!products.includes('thank_you'))
+    throw new Error(
+      'Activez les cartes de remerciement pour télécharger votre création.',
+    );
+  const media = (
+    await (await mediaRepository()).list(id, context.tenantId)
+  ).filter((item) => item.status === 'ready' && item.mime.startsWith('image/'));
+  validateDesignRights(
+    record.document,
+    products,
+    media.map((item) => item.id),
+  );
+  const { readFile } = await import('node:fs/promises');
+  const { join } = await import('node:path');
+  const { mediaStorage } = await import('@/server/media/service');
+  const assets: Record<string, Uint8Array> = {};
+  const spaces = await (await mediaRepository()).spaces(id, context.tenantId);
+  let bytes = 0;
+  for (const element of record.document.sides.flatMap(
+    (side) => side.elements,
+  )) {
+    if (element.type === 'qr') {
+      if (!spaces.some((space) => space.kind === element.qr && space.enabled))
+        throw new Error(
+          'Activez l’espace souvenirs avant de télécharger son QR.',
+        );
+      assets[element.qr] = await QRCode.toBuffer(
+        `${appOrigin()}/souvenirs/${tokenFor(id, element.qr)}`,
+        { width: 1200, margin: 4 },
+      );
+    } else if (
+      element.type === 'image' &&
+      element.image &&
+      !assets[element.image]
+    ) {
+      if (element.image.startsWith('/images/editorial/')) {
+        assets[element.image] = new Uint8Array(
+          await readFile(join(process.cwd(), 'public', element.image)),
+        );
+      } else {
+        const item = media.find((item) => item.id === element.image);
+        if (!item)
+          throw new Error('Une image de la carte n’est plus disponible.');
+        bytes += item.size;
+        if (bytes > 100 * 1024 * 1024)
+          throw new Error(
+            'Réduisez la taille des images de votre carte avant de l’exporter.',
+          );
+        assets[element.image] = await (
+          await mediaStorage()
+        ).read(item.objectKey);
+      }
+    }
+  }
+  const { renderDesignPdf } = await import('./pdf');
+  return {
+    bytes: await renderDesignPdf(record.document, assets),
+    name: record.document.name,
+  };
 }

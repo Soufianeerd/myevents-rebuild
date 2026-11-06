@@ -6,6 +6,10 @@ import {
 } from '@/core/designs/models';
 import type { DesignRepository } from '../contracts/DesignRepository';
 import type { ScopedDatabase } from './database';
+import {
+  materialRequestSchema,
+  type MaterialRequest,
+} from '@/core/designs/requests';
 function record(r: Record<string, unknown>): DesignRecord {
   return {
     eventId: String(r.event_id),
@@ -17,6 +21,22 @@ function record(r: Record<string, unknown>): DesignRecord {
 }
 export class NeonDesignRepository implements DesignRepository {
   constructor(private db: ScopedDatabase) {}
+  async requests(id: string, tenant: string) {
+    return (
+      await this.db.query(
+        sql`SELECT payload FROM myevents.material_requests WHERE event_id=${id} AND tenant_id=${tenant} ORDER BY created_at DESC`,
+      )
+    ).map((row) => materialRequestSchema.parse(row.payload));
+  }
+  async requestMaterial(input: MaterialRequest) {
+    const request = materialRequestSchema.parse(input);
+    const rows = await this.db.query(
+      sql`INSERT INTO myevents.material_requests(id,event_id,tenant_id,payload) VALUES(${request.id},${request.eventId},${request.tenantId},${JSON.stringify(request)}::jsonb) ON CONFLICT(id) DO UPDATE SET payload=myevents.material_requests.payload WHERE myevents.material_requests.event_id=excluded.event_id AND myevents.material_requests.tenant_id=excluded.tenant_id AND myevents.material_requests.payload-'createdAt'=excluded.payload-'createdAt' RETURNING payload`,
+    );
+    if (!rows[0])
+      throw new Error('Cette demande existe déjà avec un contenu différent.');
+    return materialRequestSchema.parse(rows[0].payload);
+  }
   async get(id: string, tenant: string) {
     const r = (
       await this.db.query(

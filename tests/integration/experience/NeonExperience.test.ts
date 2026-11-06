@@ -7,13 +7,16 @@ import { beforeAll, afterAll, it, expect } from 'vitest';
 import { NeonPlanningRepository } from '@/providers/neon/NeonPlanningRepository';
 import { NeonGuestRepository } from '@/providers/neon/NeonGuestRepository';
 import { guestSchema } from '@/core/guests/models';
+import { assignCollection } from '@/core/guests/groupings';
+import { reconcileResponse } from '@/core/guests/reconciliation';
+import { nonResponders, withHouseholds } from '@/core/guests/responses';
 import { planningSchema } from '@/core/planning/models';
 import { NeonDesignRepository } from '@/providers/neon/NeonDesignRepository';
 import { newThankYou } from '@/core/designs/models';
 import { NeonMediaRepository } from '@/providers/neon/NeonMediaRepository';
 import { NeonExperienceRepository } from '@/providers/neon/NeonExperienceRepository';
 import { createInvitationDocument } from '@/core/invitations/templates';
-import { testOffers, type Order } from '@/core/commerce/catalog';
+import { getCheckoutOffer, type Order } from '@/core/commerce/catalog';
 const db = new PGlite(),
   dialect = new PgDialect();
 const owner = randomUUID(),
@@ -68,6 +71,15 @@ beforeAll(async () => {
   await db.exec(
     await readFile('neon/migrations/0010_design_images.sql', 'utf8'),
   );
+  for (const file of [
+    '0011_media_photo_collaboration',
+    '0012_print_requests',
+    '0013_invitation_assets',
+    '0014_rsvp_context',
+    '0015_profile_names',
+    '0016_invitation_music',
+  ])
+    await db.exec(await readFile(`neon/migrations/${file}.sql`, 'utf8'));
   const profile = (
     await scoped(owner, session).query(
       sql`SELECT * FROM myevents.ensure_identity()`,
@@ -133,7 +145,7 @@ it('requires verified payment, is idempotent and keeps published data isolated f
     id: randomUUID(),
     eventId,
     tenantId: tenant,
-    offer: testOffers[0],
+    offer: getCheckoutOffer('invitation'),
     status: 'pending',
     sessionId: null,
     createdAt: new Date().toISOString(),
@@ -239,7 +251,7 @@ it('enforces purchased media, isolation, upload completion and gallery opening',
   await expect(
     media.configure(eventId, tenant, 'photo_video', hash, config),
   ).rejects.toThrow();
-  const offer = testOffers.find((o) => o.products.includes('photo_video'))!;
+  const offer = getCheckoutOffer('invitation-souvenirs');
   const id = randomUUID();
   await repo.createOrder({
     id,
@@ -524,6 +536,11 @@ it('keeps design images private until published and requires ownership without a
     otherMedia.reserveDesign(eventId, tenant, id, upload, input),
   ).rejects.toThrow();
   await media.reserveDesign(eventId, tenant, id, upload, input);
+  expect(await media.usage(tenant)).toMatchObject({
+    studio: 200,
+    pending: 200,
+  });
+  expect((await otherMedia.usage(tenant)).total).toBe(0);
   const key = `${tenant}/${eventId}/${randomUUID()}`;
   await publicMedia.complete(id, upload, 200, 'image/jpeg', key);
   expect(
@@ -574,4 +591,340 @@ it('keeps design images private until published and requires ownership without a
       new Date().toISOString(),
     ),
   ).rejects.toThrow();
+});
+
+it('denies audio gallery settings at adapter and SQL levels without removing contributions', async () => {
+  const media = new NeonMediaRepository(scoped(owner, session));
+  const offer = getCheckoutOffer('audio');
+  const order: Order = {
+    id: randomUUID(),
+    eventId,
+    tenantId: tenant,
+    offer,
+    status: 'pending',
+    sessionId: null,
+    createdAt: new Date().toISOString(),
+    paidAt: null,
+  };
+  await repo.createOrder(order);
+  await repo.attachSession(order.id, tenant, 'cs_test_audio_private');
+  await anonymous.fulfill(
+    order.id,
+    'cs_test_audio_private',
+    offer.amount,
+    new Date().toISOString(),
+    secret,
+  );
+  const config = {
+    enabled: true,
+    collaborative: false,
+    allowDownload: false,
+    availableAt: '2020-01-01T00:00:00.000Z',
+  };
+  await media.configure(eventId, tenant, 'audio', 'd'.repeat(64), config);
+  await expect(
+    media.configure(eventId, tenant, 'audio', 'd'.repeat(64), {
+      ...config,
+      collaborative: true,
+    }),
+  ).rejects.toThrow();
+  await expect(
+    scoped(owner, session).query(
+      sql`SELECT myevents.configure_media(${eventId},'audio',${'d'.repeat(64)},${JSON.stringify({ ...config, allowDownload: true })}::jsonb)`,
+    ),
+  ).rejects.toThrow();
+  expect(
+    await new NeonMediaRepository(scoped('', '')).shared('d'.repeat(64)),
+  ).toEqual([]);
+});
+it('keeps material requests immutable, idempotent and isolated by tenant', async () => {
+  const designs = new NeonDesignRepository(scoped(owner, session));
+  const record = (await designs.get(eventId, tenant))!;
+  const request = {
+    id: randomUUID(),
+    eventId,
+    tenantId: tenant,
+    document: record.document,
+    revision: record.revision,
+    material: 'Plexiglas',
+    quantity: 10,
+    finish: 'Transparent',
+    notes: '',
+    status: 'requested' as const,
+    createdAt: new Date().toISOString(),
+  };
+  expect((await designs.requestMaterial(request)).id).toBe(request.id);
+  expect((await designs.requestMaterial(request)).id).toBe(request.id);
+  expect(await designs.requests(eventId, tenant)).toHaveLength(1);
+  expect(
+    await new NeonDesignRepository(scoped(other, otherSession)).requests(
+      eventId,
+      tenant,
+    ),
+  ).toEqual([]);
+  await expect(
+    new NeonDesignRepository(scoped(other, otherSession)).requestMaterial({
+      ...request,
+      id: randomUUID(),
+    }),
+  ).rejects.toThrow();
+  await expect(
+    designs.requestMaterial({ ...request, quantity: 12 }),
+  ).rejects.toThrow();
+  await expect(
+    scoped(owner, session).query(
+      sql`UPDATE myevents.material_requests SET payload=payload||'{"status":"accepted"}'::jsonb WHERE id=${request.id}`,
+    ),
+  ).rejects.toThrow();
+});
+it('updates only the authenticated profile name, never its tenant, email or role', async () => {
+  const { NeonProfileRepository } =
+    await import('@/providers/neon/NeonProfileRepository');
+  await new NeonProfileRepository(scoped(owner, session)).updateNames(
+    owner,
+    tenant,
+    { firstName: 'Samira', lastName: 'Martin' },
+  );
+  expect(
+    (
+      await scoped(owner, session).query(
+        sql`SELECT first_name,last_name FROM myevents.profiles WHERE id=${owner}`,
+      )
+    )[0],
+  ).toMatchObject({ first_name: 'Samira', last_name: 'Martin' });
+  await expect(
+    new NeonProfileRepository(scoped(other, otherSession)).updateNames(
+      owner,
+      tenant,
+      { firstName: 'Intrus', lastName: 'Test' },
+    ),
+  ).rejects.toThrow();
+  await expect(
+    scoped(owner, session).query(
+      sql`UPDATE myevents.profiles SET member_role='admin' WHERE id=${owner}`,
+    ),
+  ).rejects.toThrow();
+});
+
+it('publishes only owned music and background assets and protects them from deletion', async () => {
+  const media = new NeonMediaRepository(scoped(owner, session)),
+    publicMedia = new NeonMediaRepository(scoped('', ''));
+  const musicId = randomUUID(),
+    backgroundId = randomUUID();
+  for (const [id, mime, hash] of [
+    [musicId, 'audio/wav', 'e'.repeat(64)],
+    [backgroundId, 'image/png', 'f'.repeat(64)],
+  ] as const) {
+    await media.reserveDesign(eventId, tenant, id, hash, {
+      name: 'Invitation asset',
+      mime,
+      size: 100,
+      author: 'Organisateur',
+      consent: true,
+    });
+    await publicMedia.complete(
+      id,
+      hash,
+      100,
+      mime,
+      `${tenant}/${eventId}/${randomUUID()}`,
+    );
+  }
+  let record = (await repo.get(eventId, tenant))!;
+  const document = createInvitationDocument(
+    {
+      name: 'Music test',
+      startAt: '2027-07-04T18:00:00.000Z',
+      timezone: 'Europe/Paris',
+    },
+    randomUUID,
+  );
+  document.music = { mediaId: musicId, volume: 0.5, loop: true };
+  document.backgroundMediaId = backgroundId;
+  record = await repo.save(
+    eventId,
+    tenant,
+    document,
+    record.revision,
+    new Date().toISOString(),
+  );
+  expect(
+    await publicMedia.publicInvitationImage('a'.repeat(64), musicId),
+  ).toBeNull();
+  await repo.publish(
+    eventId,
+    tenant,
+    record.revision,
+    'a'.repeat(64),
+    new Date().toISOString(),
+  );
+  expect(
+    await publicMedia.publicInvitationImage('a'.repeat(64), musicId),
+  ).toBeTruthy();
+  expect(
+    await publicMedia.publicInvitationImage('a'.repeat(64), backgroundId),
+  ).toBeTruthy();
+  await expect(
+    media.moderate(musicId, eventId, tenant, { status: 'deleted' }),
+  ).rejects.toThrow();
+  await expect(
+    media.moderate(backgroundId, eventId, tenant, { status: 'deleted' }),
+  ).rejects.toThrow();
+  record = await repo.save(
+    eventId,
+    tenant,
+    { ...document, music: { ...document.music, mediaId: backgroundId } },
+    record.revision,
+    new Date().toISOString(),
+  );
+  await expect(
+    repo.publish(
+      eventId,
+      tenant,
+      record.revision,
+      'a'.repeat(64),
+      new Date().toISOString(),
+    ),
+  ).rejects.toThrow();
+});
+
+it('persists household response links with CAS and RLS while preserving original replies after contact deletion', async () => {
+  const contacts = new NeonGuestRepository(scoped(owner, session));
+  const otherContacts = new NeonGuestRepository(scoped(other, otherSession));
+  const workspace = (
+    await scoped(owner, session).query(sql`SELECT id FROM myevents.workspaces`)
+  )[0];
+  const fieldId = 'household';
+  const now = new Date().toISOString();
+  await db.exec('UPDATE myevents.preview_settings SET enabled=true');
+  const fixtures = [];
+  for (let index = 0; index < 2; index++) {
+    const id = randomUUID(),
+      hash = createHash('sha256').update(randomUUID()).digest('hex');
+    await scoped(owner, session).query(
+      sql`INSERT INTO myevents.events(id,workspace_id,tenant_id,created_by,type,name,start_at,timezone,default_language) VALUES(${id},${String(workspace.id)},${tenant},${owner},'birthday','Foyers','2027-07-04T18:00Z','Europe/Paris','fr')`,
+    );
+    const document = createInvitationDocument(
+      {
+        name: 'Foyers',
+        startAt: '2027-07-04T18:00:00.000Z',
+        timezone: 'Europe/Paris',
+      },
+      randomUUID,
+    );
+    document.fields = [
+      {
+        id: fieldId,
+        type: 'text',
+        label: 'Votre foyer',
+        description: '',
+        required: false,
+        options: [],
+        binding: 'household',
+      },
+    ];
+    const invitation = await repo.save(id, tenant, document, 0, now);
+    await repo.activatePreview(id, tenant);
+    await repo.publish(id, tenant, invitation.revision, hash, now);
+    const response = {
+      id: randomUUID(),
+      name: 'Samira Martin',
+      email: 'samira@example.invalid',
+      presence: 'no' as const,
+      answers: { [fieldId]: 'Famille Martin' },
+      consent: true as const,
+    };
+    await anonymous.respond(hash, response, invitation.revision, now);
+    fixtures.push({ id, hash, response, revision: invitation.revision });
+  }
+  const [own, foreign] = fixtures;
+  const originalResponses = await repo.responses(own.id, tenant);
+  const linked = reconcileResponse(
+    { guests: [] },
+    originalResponses,
+    own.response.id,
+    null,
+    randomUUID,
+  );
+  let book = await contacts.save(own.id, tenant, linked, 0);
+  const guest = book.document.guests[0];
+  expect(
+    (await contacts.get(own.id, tenant))?.document.guests[0],
+  ).toMatchObject({
+    name: 'Samira Martin',
+    responseId: own.response.id,
+    household: 'Famille Martin',
+  });
+  expect(nonResponders(book.document.guests, originalResponses)).toEqual([]);
+  expect(await otherContacts.get(own.id, tenant)).toBeNull();
+  expect(await stranger.responses(own.id, tenant)).toEqual([]);
+  await expect(
+    otherContacts.save(own.id, tenant, { guests: [] }, book.revision),
+  ).rejects.toThrow();
+  for (const document of [
+    { guests: [{ ...guest, responseId: foreign.response.id }] },
+    { guests: [guest, { ...guest, id: randomUUID() }] },
+  ]) {
+    await expect(
+      contacts.save(own.id, tenant, document, book.revision),
+    ).rejects.toThrow();
+  }
+  book = await contacts.save(
+    own.id,
+    tenant,
+    assignCollection(book.document, [guest.id], 'household', ''),
+    book.revision,
+  );
+  await expect(
+    contacts.save(own.id, tenant, linked, book.revision - 1),
+  ).rejects.toThrow(/modifiée ailleurs/);
+  expect(
+    withHouseholds(
+      (await contacts.get(own.id, tenant))!.document,
+      originalResponses,
+    ).guests[0],
+  ).toMatchObject({
+    household: '',
+    householdAssigned: true,
+    responseId: own.response.id,
+  });
+
+  const personalGuest = guestSchema.parse({
+    id: randomUUID(),
+    name: 'Alice',
+    email: 'alice@example.invalid',
+  });
+  book = await contacts.save(
+    own.id,
+    tenant,
+    { guests: [...book.document.guests, personalGuest] },
+    book.revision,
+  );
+  const personalHash = createHash('sha256').update(randomUUID()).digest('hex');
+  await repo.issueGuestLink(own.id, tenant, personalGuest.id, personalHash);
+  const personalResponse = {
+    id: randomUUID(),
+    guestId: personalGuest.id,
+    name: personalGuest.name,
+    email: personalGuest.email,
+    presence: 'yes' as const,
+    answers: { [fieldId]: 'Foyer Alice' },
+    consent: true as const,
+  };
+  await anonymous.respond(personalHash, personalResponse, own.revision, now);
+  await expect(
+    contacts.save(
+      own.id,
+      tenant,
+      {
+        guests: [{ ...guest, responseId: personalResponse.id }, personalGuest],
+      },
+      book.revision,
+    ),
+  ).rejects.toThrow(/ne peut pas être rattachée/);
+  const allResponses = await repo.responses(own.id, tenant);
+  await contacts.save(own.id, tenant, { guests: [] }, book.revision);
+  expect((await contacts.get(own.id, tenant))?.document.guests).toEqual([]);
+  expect(await repo.responses(own.id, tenant)).toEqual(allResponses);
+  expect(await anonymous.getPublic(personalHash)).toBeNull();
 });

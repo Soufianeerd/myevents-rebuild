@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import type { MediaSpace } from '@/core/media/models';
+import { privateAudioSpace } from '@/core/media/models';
 import { configureAction, moderateAction } from './actions';
 export function SpaceControls({
   eventId,
@@ -9,63 +10,81 @@ export function SpaceControls({
   eventId: string;
   space: MediaSpace;
 }) {
-  const [value, setValue] = useState(space);
+  const [value, setValue] = useState(privateAudioSpace(space));
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   async function save() {
     setBusy(true);
-    const result = await configureAction(eventId, space.kind, {
-      enabled: value.enabled,
-      collaborative: value.collaborative,
-      availableAt: value.availableAt,
-      allowDownload: value.allowDownload,
-    });
-    setMessage(result.ok ? 'Réglages enregistrés.' : result.error);
-    setBusy(false);
+    setMessage('');
+    try {
+      const result = await configureAction(eventId, space.kind, {
+        enabled: value.enabled,
+        collaborative: value.collaborative,
+        availableAt: value.availableAt,
+        allowDownload: value.allowDownload,
+      });
+      setMessage(result.ok ? 'Réglages enregistrés.' : result.error);
+    } catch {
+      setMessage(
+        'Connexion interrompue. Réessayez pour enregistrer les réglages.',
+      );
+    } finally {
+      setBusy(false);
+    }
   }
   return (
     <div>
       {(['enabled', 'collaborative', 'allowDownload'] as const).map(
-        (key, index) => (
-          <p key={key}>
-            <label>
-              <input
-                type="checkbox"
-                checked={value[key]}
-                onChange={(e) =>
-                  setValue({ ...value, [key]: e.target.checked })
+        (key, index) =>
+          (space.kind === 'photo_video' || key === 'enabled') && (
+            <p key={key}>
+              <label>
+                <input
+                  type="checkbox"
+                  disabled={busy}
+                  checked={value[key]}
+                  onChange={(e) =>
+                    setValue({ ...value, [key]: e.target.checked })
+                  }
+                />
+                {
+                  [
+                    'Accepter les dépôts',
+                    'Ouvrir la galerie aux invités',
+                    'Autoriser les téléchargements',
+                  ][index]
                 }
-              />
-              {
-                [
-                  'Accepter les dépôts',
-                  'Ouvrir la galerie aux invités',
-                  'Autoriser les téléchargements',
-                ][index]
-              }
-            </label>
-          </p>
-        ),
+              </label>
+            </p>
+          ),
       )}
-      <label>
-        Ouverture de la galerie
-        <input
-          type="datetime-local"
-          value={new Date(
-            new Date(value.availableAt).getTime() -
-              new Date(value.availableAt).getTimezoneOffset() * 60000,
-          )
-            .toISOString()
-            .slice(0, 16)}
-          onChange={(e) => {
-            if (e.target.value)
-              setValue({
-                ...value,
-                availableAt: new Date(e.target.value).toISOString(),
-              });
-          }}
-        />
-      </label>
+      {space.kind === 'photo_video' ? (
+        <label>
+          Ouverture de la galerie
+          <input
+            type="datetime-local"
+            disabled={busy}
+            value={new Date(
+              new Date(value.availableAt).getTime() -
+                new Date(value.availableAt).getTimezoneOffset() * 60000,
+            )
+              .toISOString()
+              .slice(0, 16)}
+            onChange={(e) => {
+              if (e.target.value)
+                setValue({
+                  ...value,
+                  availableAt: new Date(e.target.value).toISOString(),
+                });
+            }}
+          />
+        </label>
+      ) : (
+        <p>
+          Les invités déposent leurs messages audio. Seuls vos accès de gestion
+          peuvent les écouter.
+        </p>
+      )}
       <p>
         <button disabled={busy} onClick={() => void save()}>
           Enregistrer les réglages
@@ -80,16 +99,30 @@ export function MediaControls({
   item,
 }: {
   eventId: string;
-  item: { id: string; name: string; hidden: boolean; favorite: boolean };
+  item: {
+    id: string;
+    name: string;
+    hidden: boolean;
+    favorite: boolean;
+    purpose?: string;
+    mime?: string;
+  };
 }) {
   const [name, setName] = useState(item.name);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   async function update(patch: unknown) {
     setBusy(true);
-    const result = await moderateAction(eventId, item.id, patch);
-    setMessage(result.ok ? 'Modification enregistrée.' : result.error);
-    setBusy(false);
+    try {
+      const result = await moderateAction(eventId, item.id, patch);
+      setMessage(result.ok ? 'Modification enregistrée.' : result.error);
+    } catch {
+      setMessage(
+        'Connexion interrompue. Rechargez la page pour vérifier ce fichier.',
+      );
+    } finally {
+      setBusy(false);
+    }
   }
   return (
     <div>
@@ -117,14 +150,16 @@ export function MediaControls({
           {item.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
         </button>
       </p>
-      <p>
-        <button
-          disabled={busy}
-          onClick={() => void update({ hidden: !item.hidden })}
-        >
-          {item.hidden ? 'Montrer aux invités' : 'Masquer aux invités'}
-        </button>
-      </p>
+      {item.purpose !== 'design' && !item.mime?.startsWith('audio/') && (
+        <p>
+          <button
+            disabled={busy}
+            onClick={() => void update({ hidden: !item.hidden })}
+          >
+            {item.hidden ? 'Montrer aux invités' : 'Masquer aux invités'}
+          </button>
+        </p>
+      )}
       <button
         disabled={busy}
         onClick={() => {

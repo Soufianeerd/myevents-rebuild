@@ -1,4 +1,6 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { createReadStream } from 'node:fs';
+import { Readable } from 'node:stream';
 import {
   mkdir,
   readFile,
@@ -84,6 +86,14 @@ export class LocalMediaStorage implements MediaStorage {
       JSON.stringify({ key, downloadName, expires: Date.now() + 60000 }),
     ).toString('base64url');
     return `${this.origin}/api/local-media/read?payload=${payload}&signature=${this.sign(payload)}`;
+  }
+  async read(key: string) {
+    return new Uint8Array(await readFile(this.path(key)));
+  }
+  async stream(key: string, signal?: AbortSignal) {
+    return Readable.toWeb(
+      createReadStream(this.path(key), { signal }),
+    ) as ReadableStream<Uint8Array>;
   }
   async readSigned(payload: string, signature: string) {
     const expected = this.sign(payload);

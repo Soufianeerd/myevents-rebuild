@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { LocalJsonStore } from './persistence/LocalJsonStore';
 import { LocalEventRepository } from './LocalEventRepository';
 import { LocalGuestRepository } from './LocalGuestRepository';
-import { bindGuestResponse } from '@/core/invitations/models';
+import { bindGuestResponse, validateRsvp } from '@/core/invitations/models';
 import type { ExperienceRepository } from '../contracts/ExperienceRepository';
 import type {
   InvitationDocument,
@@ -253,7 +253,10 @@ export class LocalExperienceRepository implements ExperienceRepository {
       )
         throw new Error('Invitation indisponible.');
       const rows = state.responses[record.eventId] ?? [];
-      const bound = bindGuestResponse(response, publicDoc.guest);
+      const bound = bindGuestResponse(
+        validateRsvp(record.published, response, new Date(now)),
+        publicDoc.guest,
+      );
       const index = rows.findIndex((r) =>
         publicDoc.guest ? r.guestId === publicDoc.guest.id : r.id === bound.id,
       );

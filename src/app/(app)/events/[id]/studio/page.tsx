@@ -10,7 +10,10 @@ export default async function StudioPage({
   return (
     <Studio
       initialAssets={state.assets}
+      initialMusicAssets={state.musicAssets}
       eventId={id}
+      eventStart={state.event.startAt}
+      eventTimezone={state.event.timezone}
       initial={state.document}
       initialRevision={state.record?.revision ?? 0}
       history={state.record?.history ?? []}

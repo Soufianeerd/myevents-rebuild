@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
+import AxeBuilder from '@axe-core/playwright';
+import { readFile } from 'node:fs/promises';
+import { readZip } from '../helpers/readZip';
 test('business preview: Studio → published invitation → guest RSVP → owner responses and purchased QR', async ({
   page,
   browser,
@@ -68,7 +71,9 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   await guest.getByRole('button', { name: /Envoyer/ }).click();
   await expect(guest.getByRole('status')).toContainText(/enregistr|merci/i);
   await page.goto(`${eventUrl}/invites`);
-  await expect(page.getByText('Invitée test')).toBeVisible();
+  await expect(
+    page.getByRole('cell', { name: 'Invitée test', exact: true }),
+  ).toBeVisible();
   await page.goto(`${eventUrl}/souvenirs`);
   await page
     .getByRole('button', { name: 'Enregistrer les réglages' })
@@ -93,10 +98,220 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   await expect(guest.getByRole('status')).toContainText('bien été enregistré');
   await page.reload();
   await expect(page.getByRole('heading', { name: 'jardin.jpg' })).toBeVisible();
+  const downloadUrl = (await page
+    .getByRole('link', { name: 'Télécharger jardin.jpg', exact: true })
+    .getAttribute('href'))!;
+  const mediaId = downloadUrl.split('/').at(-1)!.split('?')[0];
+  const privateGuestDownload = await guest.request.get(
+    `${galleryLink}/fichiers/${mediaId}?download=1`,
+  );
+  expect(privateGuestDownload.status()).toBe(404);
+  const anonymousOwnerDownload = await guest.request.get(downloadUrl);
+  expect(anonymousOwnerDownload.status()).toBe(404);
+  const downloaded = await page.request.get(downloadUrl);
+  expect(downloaded.status()).toBe(200);
+  expect(downloaded.headers()['content-disposition']).toContain('attachment');
+  const zipResponse = await page.request.get(`${eventUrl}/souvenirs/export`);
+  expect(zipResponse.status()).toBe(200);
+  expect(zipResponse.headers()['content-type']).toBe('application/zip');
+  expect(zipResponse.headers()['cache-control']).toContain('no-store');
+  const archive = await readZip(await zipResponse.body());
+  const photoPath = [...archive.keys()].find((path) =>
+    path.includes('/photos/'),
+  )!;
+  expect(archive.get(photoPath)).toEqual(
+    await readFile('public/images/editorial/jardin.jpg'),
+  );
+  expect(
+    [...archive.keys()].some((path) => path.includes('/creation/fichiers/')),
+  ).toBe(true);
+  expect(archive.get('Camille-Alex/rsvp/reponses.csv')!.toString()).toContain(
+    'Invitée test',
+  );
+  expect(archive.has('Camille-Alex/invitation/invitation.json')).toBe(true);
+  const manifest = archive
+    .get('Camille-Alex/exports/manifest.json')!
+    .toString();
+  expect(JSON.parse(manifest).files).toHaveLength(2);
+  expect(manifest).not.toMatch(/objectKey|tokenHash|uploadHash/);
+  expect(
+    (await guest.request.get(`${eventUrl}/souvenirs/export`)).status(),
+  ).toBe(404);
+  await page
+    .getByRole('button', { name: 'Agrandir jardin.jpg', exact: true })
+    .click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await page
+    .getByRole('button', { name: 'Fermer l’aperçu', exact: true })
+    .click();
+  await expect(
+    page.getByRole('button', { name: 'Agrandir jardin.jpg', exact: true }),
+  ).toBeFocused();
+  await page
+    .getByRole('checkbox', { name: 'Sélectionner jardin.jpg', exact: true })
+    .check();
+  const zipDownload = page.waitForEvent('download');
+  await page
+    .getByRole('link', { name: 'Télécharger la sélection (.zip)', exact: true })
+    .click();
+  const selectedDownload = await zipDownload;
+  const selectedArchive = await readZip(
+    await readFile((await selectedDownload.path())!),
+  );
+  expect(selectedDownload.suggestedFilename()).toBe('Camille-Alex.zip');
+  expect(
+    [...selectedArchive.keys()].filter((path) => path.includes('/photos/')),
+  ).toHaveLength(1);
+  expect(selectedArchive.has('Camille-Alex/rsvp/reponses.json')).toBe(false);
+  await page
+    .getByRole('button', { name: 'Mettre en favoris', exact: true })
+    .click();
+  await expect(
+    page.getByText('1 fichier modifié.', { exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole('checkbox', { name: 'Mes favoris uniquement', exact: true })
+    .check();
+  await expect(
+    page.getByRole('heading', { name: 'jardin.jpg', exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole('checkbox', { name: 'Mes favoris uniquement', exact: true })
+    .uncheck();
+  await page
+    .getByRole('combobox', { name: 'Type de média', exact: true })
+    .selectOption('studio');
+  await expect(
+    page.getByRole('heading', { name: 'reception.jpg', exact: true }),
+  ).toBeVisible();
+  await page
+    .getByRole('combobox', { name: 'Type de média', exact: true })
+    .selectOption('souvenirs');
+  await page
+    .getByRole('combobox', { name: 'Type de média', exact: true })
+    .scrollIntoViewIfNeeded();
   await page.screenshot({
     path: info.outputPath('souvenirs-desktop.png'),
     fullPage: true,
   });
+  await page
+    .getByRole('region', { name: 'Galerie de vos médias' })
+    .locator('article')
+    .first()
+    .screenshot({ path: info.outputPath('souvenir-carte-desktop.png') });
+  // A filter change must never leave invisible files selected for deletion.
+  await page.getByLabel('Sélectionner jardin.jpg', { exact: true }).check();
+  await page
+    .getByRole('combobox', { name: 'Type de média', exact: true })
+    .selectOption('studio');
+  await expect(
+    page.getByRole('button', { name: 'Supprimer la sélection', exact: true }),
+  ).toHaveCount(0);
+  await page.getByLabel('Sélectionner reception.jpg', { exact: true }).check();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page
+    .getByRole('button', { name: 'Supprimer la sélection', exact: true })
+    .click();
+  await expect(page.getByText(/1 non modifié/)).toBeVisible();
+  expect((await guest.request.get(imageUrl)).status()).toBe(200);
+  await page
+    .getByRole('combobox', { name: 'Type de média', exact: true })
+    .selectOption('souvenirs');
+
+  const photoSpace = page.locator('section').filter({
+    has: page.getByRole('heading', { name: 'Photos & vidéos', exact: true }),
+  });
+  await photoSpace
+    .getByLabel('Ouvrir la galerie aux invités', { exact: true })
+    .check();
+  await photoSpace
+    .getByLabel('Ouverture de la galerie', { exact: true })
+    .fill('2020-01-01T12:00');
+  await photoSpace
+    .getByRole('button', { name: 'Enregistrer les réglages' })
+    .click();
+  const guestFile = `${galleryLink}/fichiers/${mediaId}`;
+  await expect
+    .poll(async () => (await guest.request.get(guestFile)).status())
+    .toBe(200);
+  const blockedDownload = await guest.request.get(`${guestFile}?download=1`);
+  expect(blockedDownload.status()).toBe(404);
+  expect(blockedDownload.headers()['cache-control']).toContain('no-store');
+  await photoSpace
+    .getByLabel('Autoriser les téléchargements', { exact: true })
+    .check();
+  await photoSpace
+    .getByRole('button', { name: 'Enregistrer les réglages' })
+    .click();
+  await expect
+    .poll(async () =>
+      (await guest.request.get(`${guestFile}?download=1`)).status(),
+    )
+    .toBe(200);
+  await page.getByLabel('Sélectionner jardin.jpg', { exact: true }).check();
+  await page
+    .getByRole('button', { name: 'Masquer la sélection', exact: true })
+    .click();
+  await expect(
+    page.getByText('Masqué aux invités', { exact: true }),
+  ).toBeVisible();
+  expect((await guest.request.get(guestFile)).status()).toBe(404);
+  expect((await page.request.get(downloadUrl)).status()).toBe(200);
+  await page.getByLabel('Sélectionner jardin.jpg', { exact: true }).check();
+  await page
+    .getByRole('button', {
+      name: 'Montrer la sélection aux invités',
+      exact: true,
+    })
+    .click();
+  await expect
+    .poll(async () => (await guest.request.get(guestFile)).status())
+    .toBe(200);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page
+    .getByRole('combobox', { name: 'Type de média', exact: true })
+    .scrollIntoViewIfNeeded();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: info.outputPath('souvenirs-mobile.png'),
+    fullPage: true,
+  });
+  expect(
+    (
+      await new AxeBuilder({ page })
+        .include('section[aria-label="Galerie de vos médias"]')
+        .analyze()
+    ).violations,
+  ).toEqual([]);
+  await page
+    .getByRole('region', { name: 'Galerie de vos médias' })
+    .locator('article')
+    .first()
+    .screenshot({ path: info.outputPath('souvenir-carte-mobile.png') });
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.getByLabel('Sélectionner jardin.jpg', { exact: true }).check();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page
+    .getByRole('button', { name: 'Supprimer la sélection', exact: true })
+    .click();
+  await expect(
+    page.getByRole('heading', { name: 'jardin.jpg', exact: true }),
+  ).toHaveCount(0);
+  expect((await guest.request.get(guestFile)).status()).toBe(404);
+  expect((await page.request.get(downloadUrl)).status()).toBe(404);
+  expect(
+    (
+      await page.request.get(
+        `${eventUrl}/souvenirs/export?scope=selection&id=${mediaId}`,
+      )
+    ).status(),
+  ).toBe(404);
+  expect((await guest.request.get(imageUrl)).status()).toBe(200);
   await page.goto(`${eventUrl}/cartes`);
   await page
     .getByRole('textbox', { name: 'Texte', exact: true })
@@ -127,7 +342,13 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   await expect(
     page.getByRole('heading', { name: 'Réserver le lieu' }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Enregistrer', exact: true }),
+  ).toHaveCount(0);
   await page.getByRole('checkbox', { name: 'Tâche terminée' }).check();
+  await expect(
+    page.getByRole('checkbox', { name: 'Tâche terminée' }),
+  ).toBeEnabled();
   await expect(
     page.getByText('1/1 tâches terminées', { exact: true }),
   ).toBeVisible();
@@ -143,6 +364,9 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   await expect(
     page.getByRole('heading', { name: 'Location du lieu' }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Enregistrer', exact: true }),
+  ).toHaveCount(0);
   await page.reload();
   await expect(
     page.getByText('1/1 tâches terminées', { exact: true }),
@@ -183,13 +407,15 @@ test('business preview: Studio → published invitation → guest RSVP → owner
     ),
   });
   await page.getByRole('button', { name: 'Confirmer l’import' }).click();
-  await expect(page.getByRole('status')).toContainText(
-    '1 invités importés, 1 doublons ignorés',
-  );
+  await expect(
+    page.getByRole('status', { name: 'État du carnet' }),
+  ).toContainText('1 invités importés, 1 doublons ignorés');
   await page.getByLabel('Sélectionner Bob Martin', { exact: true }).check();
   await page.getByLabel('Nouveau groupe', { exact: true }).fill('Famille');
   await page.getByRole('button', { name: 'Appliquer le groupe' }).click();
-  await expect(page.getByRole('status')).toContainText('Liste enregistrée');
+  await expect(
+    page.getByRole('status', { name: 'État du carnet' }),
+  ).toContainText('Liste enregistrée');
   await page.reload();
   await page
     .getByRole('combobox', { name: 'Filtrer par groupe', exact: true })
@@ -221,7 +447,9 @@ test('business preview: Studio → published invitation → guest RSVP → owner
   await page
     .getByRole('button', { name: 'Lien pour Alice Martin', exact: true })
     .click();
-  await expect(page.getByRole('status')).toContainText('Lien personnel prêt');
+  await expect(
+    page.getByRole('status', { name: 'État du carnet' }),
+  ).toContainText('Lien personnel prêt');
   const personalUrl = await page
     .getByLabel('Lien personnel', { exact: true })
     .inputValue();

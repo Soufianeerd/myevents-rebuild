@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element -- Private signed media and embedded QR images must not pass through the public image optimizer. */
+import styles from './design.module.css';
 import type { Design, DesignElement } from '@/core/designs/models';
 export function DesignCanvas({
   document,
@@ -16,6 +17,7 @@ export function DesignCanvas({
   const face = document.sides[side];
   return (
     <div
+      className={styles.canvas}
       aria-label={`Carte ${face.name}`}
       style={{
         position: 'relative',
@@ -35,10 +37,16 @@ export function DesignCanvas({
           width: `${e.width}%`,
           height: `${e.height}%`,
           color: e.color,
-          fontFamily: e.font,
+          fontFamily:
+            e.font === 'serif'
+              ? 'MyEventsCardSerif, serif'
+              : e.font === 'cursive'
+                ? 'MyEventsCardScript, cursive'
+                : 'MyEventsCardSans, sans-serif',
           fontSize: `${e.fontSize / 5}cqw`,
           textAlign: e.align,
           whiteSpace: 'pre-wrap',
+          overflow: 'hidden',
           display: 'flex',
           alignItems: 'center',
           justifyContent:

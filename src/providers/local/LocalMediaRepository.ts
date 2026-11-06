@@ -1,7 +1,18 @@
+import {
+  invitationImageIds,
+  invitationAssetIds,
+} from '@/core/invitations/presentation';
 import { z } from 'zod';
 import { LocalJsonStore } from './persistence/LocalJsonStore';
 import { LocalEventRepository } from './LocalEventRepository';
 import { LocalExperienceRepository } from './LocalExperienceRepository';
+import {
+  summarizeMediaUsage,
+  validateSpace,
+  privateAudioSpace,
+  isGalleryOpen,
+  validateUpload,
+} from '@/core/media/models';
 import { assertProduct } from '@/core/commerce/catalog';
 import type { MediaRepository } from '../contracts/MediaRepository';
 import type {
@@ -29,6 +40,13 @@ export class LocalMediaRepository implements MediaRepository {
     this.events = new LocalEventRepository(directory);
     this.experience = new LocalExperienceRepository(directory);
   }
+  async usage(tenant: string) {
+    return summarizeMediaUsage(
+      ((await this.store.read())?.items ?? []).filter(
+        (i) => i.tenantId === tenant,
+      ),
+    );
+  }
   async configure(
     id: string,
     tenant: string,
@@ -39,6 +57,7 @@ export class LocalMediaRepository implements MediaRepository {
     const event = await this.events.findById(id as never, tenant as never);
     if (!event) throw new Error('Événement introuvable.');
     assertProduct(await this.experience.entitlements(id, tenant), kind);
+    const settings = validateSpace(kind, config);
     await this.store.update((data) => {
       const state = data ?? { spaces: [], items: [] };
       state.spaces = state.spaces.filter(
@@ -50,15 +69,15 @@ export class LocalMediaRepository implements MediaRepository {
         kind,
         hash,
         title: event.name,
-        ...config,
+        ...settings,
       });
       return state;
     });
   }
   async spaces(id: string, tenant: string) {
-    return ((await this.store.read())?.spaces ?? []).filter(
-      (s) => s.eventId === id && s.tenantId === tenant,
-    );
+    return ((await this.store.read())?.spaces ?? [])
+      .filter((s) => s.eventId === id && s.tenantId === tenant)
+      .map(privateAudioSpace);
   }
   async publicSpace(hash: string) {
     const space = (await this.store.read())?.spaces.find(
@@ -77,14 +96,14 @@ export class LocalMediaRepository implements MediaRepository {
       space.tenantId,
     );
     if (!products.includes(space.kind)) return null;
-    return {
+    return privateAudioSpace({
       eventId: space.eventId,
       kind: space.kind,
       title: space.title,
       collaborative: space.collaborative,
       availableAt: space.availableAt,
       allowDownload: space.allowDownload,
-    };
+    });
   }
   async reserveDesign(
     eventId: string,
@@ -98,8 +117,14 @@ export class LocalMediaRepository implements MediaRepository {
     const products = await this.experience.entitlements(eventId, tenant);
     if (!products.includes('invitation') && !products.includes('thank_you'))
       throw new Error('Activez votre invitation ou vos cartes.');
-    if (!input.mime.startsWith('image/') || input.size > 20 * 1024 * 1024)
-      throw new Error('Image invalide.');
+    const isMusic = input.mime.startsWith('audio/');
+    input = validateUpload(isMusic ? 'audio' : 'photo_video', input);
+    if (
+      isMusic
+        ? !products.includes('invitation')
+        : !input.mime.startsWith('image/')
+    )
+      throw new Error('Fichier de création invalide.');
     const key = `${tenant}/${eventId}/${id}`;
     await this.store.update((data) => {
       const state = data ?? { spaces: [], items: [] };
@@ -115,7 +140,7 @@ export class LocalMediaRepository implements MediaRepository {
         id,
         eventId,
         tenantId: tenant,
-        kind: 'photo_video',
+        kind: isMusic ? 'audio' : 'photo_video',
         purpose: 'design',
         objectKey: key,
         uploadHash,
@@ -133,9 +158,7 @@ export class LocalMediaRepository implements MediaRepository {
     const invitation = await this.experience.getPublic(hash);
     if (
       !invitation ||
-      !invitation.document.sections.some(
-        (s) => s.visible && s.type === 'image' && s.mediaId === id,
-      )
+      !invitationAssetIds(invitation.document, true).includes(id)
     )
       return null;
     const item = (await this.store.read())?.items.find(
@@ -143,7 +166,9 @@ export class LocalMediaRepository implements MediaRepository {
         i.id === id &&
         i.eventId === invitation.eventId &&
         i.status === 'ready' &&
-        i.mime.startsWith('image/'),
+        (invitationImageIds(invitation.document, true).includes(id)
+          ? i.mime.startsWith('image/')
+          : i.mime.startsWith('audio/') && i.purpose === 'design'),
     );
     return item?.objectKey ?? null;
   }
@@ -153,8 +178,9 @@ export class LocalMediaRepository implements MediaRepository {
     uploadHash: string,
     input: UploadRequest,
   ) {
-    if (!(await this.publicSpace(hash)))
-      throw new Error('Espace indisponible.');
+    const publicSpace = await this.publicSpace(hash);
+    if (!publicSpace) throw new Error('Espace indisponible.');
+    input = validateUpload(publicSpace.kind, input);
     let key = '';
     await this.store.update((data) => {
       const state = data ?? { spaces: [], items: [] };
@@ -244,11 +270,7 @@ export class LocalMediaRepository implements MediaRepository {
   }
   async shared(hash: string) {
     const space = await this.publicSpace(hash);
-    if (
-      !space?.collaborative ||
-      new Date(space.availableAt).getTime() > Date.now()
-    )
-      return [];
+    if (!space || !isGalleryOpen(space, Date.now())) return [];
     return ((await this.store.read())?.items ?? [])
       .filter(
         (i) =>

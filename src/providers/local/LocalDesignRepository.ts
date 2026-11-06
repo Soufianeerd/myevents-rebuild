@@ -7,6 +7,10 @@ import {
   type DesignRecord,
 } from '@/core/designs/models';
 import type { DesignRepository } from '../contracts/DesignRepository';
+import {
+  materialRequestSchema,
+  type MaterialRequest,
+} from '@/core/designs/requests';
 const record = z.object({
   eventId: z.uuid(),
   tenantId: z.uuid(),
@@ -17,13 +21,52 @@ const record = z.object({
 export class LocalDesignRepository implements DesignRepository {
   private store: LocalJsonStore<Record<string, DesignRecord>>;
   private events: LocalEventRepository;
+  private materialRequests: LocalJsonStore<MaterialRequest[]>;
   constructor(directory: string) {
+    this.materialRequests = new LocalJsonStore({
+      baseDir: directory,
+      collectionName: 'material-requests',
+      schema: z.array(materialRequestSchema),
+    });
     this.store = new LocalJsonStore({
       baseDir: directory,
       collectionName: 'designs',
       schema: z.record(z.string(), record),
     });
     this.events = new LocalEventRepository(directory);
+  }
+  async requests(id: string, tenant: string) {
+    await this.get(id, tenant);
+    return ((await this.materialRequests.read()) ?? []).filter(
+      (request) => request.eventId === id && request.tenantId === tenant,
+    );
+  }
+  async requestMaterial(input: MaterialRequest) {
+    const request = materialRequestSchema.parse(input);
+    await this.get(request.eventId, request.tenantId);
+    let result = request;
+    await this.materialRequests.update((data) => {
+      const requests = data ?? [];
+      const existing = requests.find((item) => item.id === request.id);
+      if (existing) {
+        if (
+          existing.eventId !== request.eventId ||
+          existing.tenantId !== request.tenantId ||
+          existing.revision !== request.revision ||
+          existing.material !== request.material ||
+          existing.quantity !== request.quantity ||
+          existing.finish !== request.finish ||
+          existing.notes !== request.notes
+        )
+          throw new Error(
+            'Cette demande existe déjà avec un contenu différent.',
+          );
+        result = existing;
+        return requests;
+      }
+      return [...requests, request];
+    });
+    return result;
   }
   async get(id: string, tenant: string) {
     if (!(await this.events.findById(id as never, tenant as never)))

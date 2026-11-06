@@ -306,6 +306,44 @@
   font-size: 31px;
   margin-bottom: 8px;
 }
+.occasionStories {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 1268px;
+  margin: 42px auto 0;
+  text-align: left;
+}
+.occasionStories figure {
+  margin: 0;
+}
+.occasionPhoto {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.occasionPhoto img {
+  object-fit: cover;
+}
+.occasionStories figcaption {
+  padding-top: 15px;
+}
+.occasionStories strong {
+  display: block;
+  color: var(--ink);
+  font:
+    400 25px/1.15 'MyEvents Editorial',
+    Georgia,
+    serif;
+}
+.occasionStories figcaption > span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #635d53;
+  margin-top: 8px;
+}
 .experience {
   max-width: 1280px;
   margin: auto;
@@ -452,6 +490,10 @@
   }
 }
 @media (max-width: 1000px) {
+  .occasionStories {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
   .header {
     gap: 16px;
     padding: 22px 4%;
@@ -486,6 +528,13 @@
   }
 }
 @media (max-width: 700px) {
+  .occasionStories {
+    gap: 24px 16px;
+    margin-top: 32px;
+  }
+  .occasionStories strong {
+    font-size: 22px;
+  }
   .header {
     flex-wrap: wrap;
     padding: 18px 20px;

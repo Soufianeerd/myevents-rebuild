@@ -30,6 +30,7 @@ export const rsvpFieldSchema = z
     label: z.string().trim().min(1).max(100),
     type: z.enum(fieldKinds),
     required: z.boolean(),
+    binding: z.enum(['none', 'household']).optional(),
     description: z.string().max(250).default(''),
     options: z.array(z.string().trim().min(1).max(100)).max(30).default([]),
   })
@@ -55,6 +56,8 @@ export const sectionSchema = z.object({
     'program',
     'location',
     'calendar',
+    'countdown',
+    'dress_code',
     'rsvp',
     'divider',
   ]),
@@ -62,6 +65,40 @@ export const sectionSchema = z.object({
   text: z.string().max(4000).default(''),
   visible: z.boolean().default(true),
   mediaId: z.uuid().optional(),
+  backgroundMediaId: z.uuid().optional(),
+  location: z
+    .object({
+      time: z.string().max(30).default(''),
+      navigation: z.enum(['google', 'waze']).default('google'),
+    })
+    .optional(),
+  calendar: z
+    .object({
+      startAt: z.iso.datetime(),
+      endAt: z.iso.datetime().optional(),
+      timezone: z
+        .string()
+        .max(80)
+        .refine((value) => {
+          try {
+            new Intl.DateTimeFormat('fr-FR', { timeZone: value });
+            return true;
+          } catch {
+            return false;
+          }
+        }, 'Fuseau horaire invalide.')
+        .default('Europe/Paris'),
+      location: z.string().max(500).default(''),
+      format: z
+        .enum(['days', 'hours', 'minutes', 'seconds'])
+        .default('minutes'),
+      afterText: z.string().max(250).default('L’événement a commencé.'),
+    })
+    .refine(
+      (value) => !value.endAt || value.endAt >= value.startAt,
+      'La fin doit suivre le début.',
+    )
+    .optional(),
   image: z
     .enum([
       '',
@@ -89,6 +126,15 @@ export const sectionSchema = z.object({
       fontSize: z.number().int().min(14).max(80).default(26),
       radius: z.number().int().min(0).max(80).default(0),
       animation: z.enum(['none', 'reveal', 'zoom']).default('none'),
+      opacity: z.number().min(0).max(1).optional(),
+      font: z.enum(['inherit', 'editorial', 'script', 'sans']).optional(),
+      fontWeight: z.enum(['normal', 'bold']).optional(),
+      italic: z.boolean().optional(),
+      letterSpacing: z.number().min(0).max(12).optional(),
+      lineHeight: z.number().min(1).max(2.5).optional(),
+      borderWidth: z.number().int().min(0).max(12).optional(),
+      borderColor: hex.optional(),
+      shadow: z.enum(['none', 'soft', 'strong']).optional(),
     })
     .default({
       background: '#faf7ee',
@@ -106,14 +152,78 @@ export const invitationDocumentSchema = z
     title: z.string().trim().min(1).max(180),
     theme: z.enum(['garden', 'garnet', 'editorial']),
     background: hex,
+    backgroundMediaId: z.uuid().optional(),
+    backgroundImage: z
+      .enum([
+        '',
+        '/images/editorial/jardin.jpg',
+        '/images/editorial/reception.jpg',
+        '/images/editorial/anniversaire.jpg',
+      ])
+      .optional(),
+    backgroundOpacity: z.number().min(0).max(1).optional(),
+    openingStyle: z
+      .object({
+        background: hex,
+        color: hex,
+        sealColor: hex,
+        sealText: z.string().max(12),
+        duration: z.number().min(0).max(3),
+      })
+      .optional(),
+    externalMusic: z
+      .discriminatedUnion('provider', [
+        z.object({
+          provider: z.literal('youtube'),
+          id: z.string().regex(/^[A-Za-z0-9_-]{11}$/),
+        }),
+        z.object({
+          provider: z.literal('spotify'),
+          id: z.string().regex(/^[A-Za-z0-9]{22}$/),
+        }),
+      ])
+      .optional(),
+    music: z
+      .object({
+        mediaId: z.uuid(),
+        volume: z.number().min(0).max(1).default(0.5),
+        loop: z.boolean().default(true),
+      })
+      .optional(),
     font: z.enum(['editorial', 'script', 'sans']),
-    opening: z.enum(['none', 'envelope', 'curtains']),
+    opening: z.enum([
+      'none',
+      'envelope',
+      'curtains',
+      'doors',
+      'fold',
+      'box',
+      'scroll',
+      'cinematic',
+      'minimal',
+    ]),
     sections: z.array(sectionSchema).min(1).max(50),
     fields: z.array(rsvpFieldSchema).max(30),
     rsvpEnabled: z.boolean(),
     deadline: z.iso.datetime().nullable(),
   })
   .superRefine((doc, ctx) => {
+    if (doc.music && doc.externalMusic)
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Choisissez une seule source musicale.',
+      });
+    const householdFields = doc.fields.filter(
+      (field) => field.binding === 'household',
+    );
+    if (
+      householdFields.length > 1 ||
+      householdFields.some((field) => field.type !== 'text')
+    )
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Le foyer doit correspondre à un seul champ texte.',
+      });
     if (new Set(doc.sections.map((s) => s.id)).size !== doc.sections.length)
       ctx.addIssue({
         code: 'custom',
@@ -150,6 +260,8 @@ export const rsvpResponseSchema = z.object({
   consent: z.literal(true),
   guestId: z.uuid().optional(),
   companions: z.number().int().min(0).max(50).optional(),
+  household: z.string().trim().max(150).optional(),
+  answerLabels: z.record(z.string(), z.string().max(100)).optional(),
 });
 export type RsvpResponse = z.infer<typeof rsvpResponseSchema>;
 export function validateRsvp(
@@ -206,7 +318,21 @@ export function validateRsvp(
     }
     if (!valid) throw new Error(`Vérifiez le champ « ${field.label} ».`);
   }
-  return response;
+  const householdField = document.fields.find(
+    (field) => field.binding === 'household',
+  );
+  const household = householdField
+    ? String(response.answers[householdField.id] ?? '').trim()
+    : '';
+  if (household.length > 150)
+    throw new Error('Le nom du foyer est limité à 150 caractères.');
+  return {
+    ...response,
+    household: household || undefined,
+    answerLabels: Object.fromEntries(
+      document.fields.map((field) => [field.id, field.label]),
+    ),
+  };
 }
 export interface InvitationRecord {
   eventId: string;

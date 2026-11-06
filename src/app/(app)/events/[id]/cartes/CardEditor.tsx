@@ -12,12 +12,21 @@ import styles from '../workspace.module.css';
 import { PrintOrderForm } from './PrintOrderForm';
 import type { PrintMaterial } from '@/core/designs/printing';
 import editor from './cards.module.css';
+import { MaterialRequestForm } from './MaterialRequestForm';
+import type { MaterialRequest } from '@/core/designs/requests';
+import { ImageUpload } from '@/components/invitation/ImageUpload';
 type Initial = {
   document: Design;
   revision: number;
   products: string[];
   assets: Record<string, string>;
   imageChoices: { id: string; name: string }[];
+  requests: MaterialRequest[];
+  invitationTheme: {
+    background: string;
+    font: DesignElement['font'];
+    color: string;
+  } | null;
 };
 export function CardEditor({
   eventId,
@@ -31,6 +40,8 @@ export function CardEditor({
   paymentAvailable: boolean;
 }) {
   const [document, setDocument] = useState(initial.document);
+  const [assets, setAssets] = useState(initial.assets);
+  const [imageChoices, setImageChoices] = useState(initial.imageChoices);
   const [revision, setRevision] = useState(initial.revision);
   const [side, setSide] = useState(0);
   const [selected, setSelected] = useState<string | undefined>(
@@ -94,14 +105,45 @@ export function CardEditor({
   }
   async function save() {
     setBusy(true);
-    const snapshot = document;
-    const result = await saveDesignAction(eventId, snapshot, revision);
-    if (result.ok) {
-      setRevision(result.record.revision);
-      setDirty(false);
-      setStatus('Carte enregistrée.');
-    } else setStatus(result.error);
-    setBusy(false);
+    try {
+      const result = await saveDesignAction(eventId, document, revision);
+      if (result.ok) {
+        setRevision(result.record.revision);
+        setDirty(false);
+        setStatus('Carte enregistrée.');
+      } else setStatus(result.error);
+    } catch {
+      setStatus(
+        'Connexion interrompue. Réessayez pour enregistrer votre carte.',
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  async function download() {
+    setBusy(true);
+    setStatus('Préparation du PDF…');
+    try {
+      const response = await fetch(
+        `/events/${eventId}/cartes/pdf?revision=${revision}`,
+      );
+      if (!response.ok) throw new Error(await response.text());
+      const url = URL.createObjectURL(await response.blob());
+      const link = window.document.createElement('a');
+      link.href = url;
+      link.download = 'myevents-remerciement.pdf';
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setStatus(
+        'PDF téléchargé. Vous pouvez le faire imprimer où vous le souhaitez.',
+      );
+    } catch (error) {
+      setStatus(
+        error instanceof Error ? error.message : 'Téléchargement impossible.',
+      );
+    } finally {
+      setBusy(false);
+    }
   }
   return (
     <div className={`${styles.workspace} ${editor.editor}`}>
@@ -122,7 +164,7 @@ export function CardEditor({
             : 'Votre création personnelle')}
       </p>
       <div className={editor.layout}>
-        <aside className={styles.card}>
+        <aside className={styles.card} aria-label="Composition de la carte">
           <h2>Votre création</h2>
           <label>
             Nom de la carte
@@ -167,6 +209,30 @@ export function CardEditor({
             />
           </label>
           <h2>Ajouter</h2>
+          {initial.invitationTheme && (
+            <p>
+              <button
+                disabled={busy}
+                onClick={() => {
+                  const theme = initial.invitationTheme!;
+                  change({
+                    ...document,
+                    sides: document.sides.map((face) => ({
+                      ...face,
+                      background: theme.background,
+                      elements: face.elements.map((element) =>
+                        element.type === 'text'
+                          ? { ...element, font: theme.font, color: theme.color }
+                          : element,
+                      ),
+                    })),
+                  });
+                }}
+              >
+                Reprendre le thème de mon invitation
+              </button>
+            </p>
+          )}
           {(['text', 'image', 'shape'] as const).map((type, i) => (
             <p key={type}>
               <button disabled={busy} onClick={() => add(type)}>
@@ -185,9 +251,17 @@ export function CardEditor({
             </p>
           ))}
           <p>Les QR utilisent les options achetées pour cet événement.</p>
-          <Link href={`/events/${eventId}/souvenirs`}>
-            Ajouter une photo à mes souvenirs
-          </Link>
+          <ImageUpload
+            eventId={eventId}
+            successMessage="Photo importée. Vous pouvez l’ajouter à votre carte."
+            onUploaded={(asset) => {
+              setAssets((items) => ({ ...items, [asset.id]: asset.url }));
+              setImageChoices((items) => [...items, asset]);
+              setStatus(
+                'Photo privée ajoutée. Choisissez-la dans un élément Photo ou logo.',
+              );
+            }}
+          />
         </aside>
         <section>
           <div className={editor.tabs}>
@@ -207,7 +281,7 @@ export function CardEditor({
           <DesignCanvas
             document={document}
             side={side}
-            assets={initial.assets}
+            assets={assets}
             selected={selected}
             onSelect={setSelected}
           />
@@ -221,7 +295,10 @@ export function CardEditor({
             </p>
           ))}
         </section>
-        <aside className={styles.card}>
+        <aside
+          className={styles.card}
+          aria-label="Personnalisation de la carte"
+        >
           <h2>Personnalisation</h2>
           {element ? (
             <fieldset disabled={busy} style={{ border: 0, padding: 0 }}>
@@ -300,7 +377,7 @@ export function CardEditor({
                     <option value="/images/editorial/reception.jpg">
                       Dîner aux chandelles
                     </option>
-                    {initial.imageChoices.map((i) => (
+                    {imageChoices.map((i) => (
                       <option key={i.id} value={i.id}>
                         {i.name}
                       </option>
@@ -406,6 +483,41 @@ export function CardEditor({
           )}
         </aside>
       </div>
+      <section className={styles.card}>
+        <h2>Télécharger ma carte</h2>
+        <p>
+          Un PDF au format choisi, avec une page par face. Aucune commande
+          d’impression n’est nécessaire.
+        </p>
+        <button
+          disabled={
+            busy ||
+            dirty ||
+            revision < 1 ||
+            !initial.products.includes('thank_you')
+          }
+          onClick={() => void download()}
+        >
+          Télécharger le PDF
+        </button>
+        {!initial.products.includes('thank_you') && (
+          <p>
+            <Link href={`/events/${eventId}/offres`}>
+              Activer les cartes de remerciement
+            </Link>{' '}
+            pour télécharger votre création.
+          </p>
+        )}
+        {(dirty || revision < 1) && (
+          <p>Enregistrez votre carte avant de la télécharger.</p>
+        )}
+      </section>
+      <MaterialRequestForm
+        eventId={eventId}
+        revision={revision}
+        disabled={dirty || revision < 1 || busy}
+        initial={initial.requests}
+      />
       <PrintOrderForm
         eventId={eventId}
         document={document}

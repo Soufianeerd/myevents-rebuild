@@ -18,8 +18,18 @@ export const offerSchema = z.object({
   print: printSnapshotSchema.optional(),
 });
 export type Offer = z.infer<typeof offerSchema>;
-// Sandbox seed amounts, explicitly not an approved production price list.
-export const testOffers: Offer[] = [
+export const catalogOfferSchema = z.discriminatedUnion('active', [
+  offerSchema.extend({ active: z.literal(true) }),
+  offerSchema.extend({
+    active: z.literal(false),
+    amount: offerSchema.shape.amount.nullable(),
+  }),
+]);
+export type CatalogOffer = z.infer<typeof catalogOfferSchema>;
+
+// Documented reference amounts, not an approved production price list.
+// Missing prices stay unconfigured; see docs/product/COMMERCIAL-SOURCES.md.
+export const testOffers: CatalogOffer[] = [
   {
     id: 'invitation',
     name: 'Invitation digitale',
@@ -33,7 +43,7 @@ export const testOffers: Offer[] = [
     id: 'audio',
     name: 'Livre d’or audio',
     products: ['audio'],
-    amount: 599,
+    amount: 1299,
     currency: 'eur',
     active: true,
     testOnly: true,
@@ -42,25 +52,34 @@ export const testOffers: Offer[] = [
     id: 'photo-video',
     name: 'Photos et vidéos',
     products: ['photo_video'],
-    amount: 799,
+    amount: null,
     currency: 'eur',
-    active: true,
+    active: false,
+    testOnly: true,
+  },
+  {
+    id: 'audio-photo-video',
+    name: 'Audio + Photos et vidéos',
+    products: ['audio', 'photo_video'],
+    amount: null,
+    currency: 'eur',
+    active: false,
     testOnly: true,
   },
   {
     id: 'invitation-audio',
     name: 'Invitation + Audio',
     products: ['invitation', 'audio'],
-    amount: 2098,
+    amount: null,
     currency: 'eur',
-    active: true,
+    active: false,
     testOnly: true,
   },
   {
     id: 'invitation-souvenirs',
     name: 'Invitation + Souvenirs',
     products: ['invitation', 'photo_video'],
-    amount: 2298,
+    amount: 2999,
     currency: 'eur',
     active: true,
     testOnly: true,
@@ -69,7 +88,7 @@ export const testOffers: Offer[] = [
     id: 'experience-complete',
     name: 'Expérience complète',
     products: ['invitation', 'audio', 'photo_video'],
-    amount: 2897,
+    amount: 3999,
     currency: 'eur',
     active: true,
     testOnly: true,
@@ -78,12 +97,27 @@ export const testOffers: Offer[] = [
     id: 'remerciements',
     name: 'Création de cartes de remerciement',
     products: ['thank_you'],
-    amount: 599,
+    amount: 799,
     currency: 'eur',
     active: true,
     testOnly: true,
   },
 ];
+
+/** An order must contain a configured, active price snapshot. */
+export function parseCheckoutOffer(input: unknown): Offer {
+  const result = offerSchema.safeParse(input);
+  if (!result.success || !result.data.active)
+    throw new Error('Cette offre n’est pas disponible au paiement.');
+  return result.data;
+}
+
+export function getCheckoutOffer(
+  id: string,
+  catalog: readonly CatalogOffer[] = testOffers,
+): Offer {
+  return parseCheckoutOffer(catalog.find((offer) => offer.id === id));
+}
 export type Order = {
   id: string;
   eventId: string;

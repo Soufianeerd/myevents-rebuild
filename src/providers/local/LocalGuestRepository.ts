@@ -7,6 +7,7 @@ import {
   type GuestBookRecord,
 } from '@/core/guests/models';
 import type { GuestRepository } from '../contracts/GuestRepository';
+import { validateResponseLinks } from '@/core/guests/reconciliation';
 const record = z.object({
   eventId: z.uuid(),
   tenantId: z.uuid(),
@@ -17,7 +18,7 @@ const record = z.object({
 export class LocalGuestRepository implements GuestRepository {
   private store: LocalJsonStore<Record<string, GuestBookRecord>>;
   private events: LocalEventRepository;
-  constructor(directory: string) {
+  constructor(private directory: string) {
     this.store = new LocalJsonStore({
       baseDir: directory,
       collectionName: 'guests',
@@ -38,6 +39,18 @@ export class LocalGuestRepository implements GuestRepository {
     revision: number,
   ) {
     await this.get(id, tenant);
+    document = guestBookSchema.parse(document);
+    if (document.guests.some((guest) => guest.responseId)) {
+      const { LocalExperienceRepository } =
+        await import('./LocalExperienceRepository');
+      validateResponseLinks(
+        document,
+        await new LocalExperienceRepository(this.directory).responses(
+          id,
+          tenant,
+        ),
+      );
+    }
     let result!: GuestBookRecord;
     await this.store.update((data) => {
       const state = data ?? {};

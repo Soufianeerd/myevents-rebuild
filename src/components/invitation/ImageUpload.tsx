@@ -7,9 +7,11 @@ import {
 export function ImageUpload({
   eventId,
   onUploaded,
+  successMessage = 'Photo importée. Elle sera visible après publication de l’invitation.',
 }: {
   eventId: string;
   onUploaded: (asset: { id: string; name: string; url: string }) => void;
+  successMessage?: string;
 }) {
   const [busy, setBusy] = useState(false),
     [message, setMessage] = useState('');
@@ -53,9 +55,7 @@ export function ImageUpload({
               );
               if (!complete.ok) throw new Error(complete.error);
               onUploaded(complete.asset);
-              setMessage(
-                'Photo importée. Elle sera visible après publication de l’invitation.',
-              );
+              setMessage(successMessage);
             } catch (error) {
               setMessage(
                 error instanceof Error ? error.message : 'Import impossible.',

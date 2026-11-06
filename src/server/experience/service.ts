@@ -5,6 +5,7 @@ import { getCurrentAccessContext } from '@/server/auth/getCurrentAccessContext';
 import { createEventContainer } from '@/server/container/events';
 import type { ExperienceRepository } from '@/providers/contracts/ExperienceRepository';
 import { createInvitationDocument } from '@/core/invitations/templates';
+import { invitationImageIds } from '@/core/invitations/presentation';
 import { assertProduct } from '@/core/commerce/catalog';
 import {
   invitationDocumentSchema,
@@ -75,6 +76,7 @@ export async function studioState(id: string) {
     event,
     record,
     assets: await (await import('@/server/media/service')).designImages(id),
+    musicAssets: await (await import('@/server/media/service')).designMusic(id),
     document: record?.draft ?? createInvitationDocument(event, randomUUID),
     products,
     publicUrl: record?.published
@@ -193,12 +195,24 @@ async function validateInvitationImages(
   tenant: string,
   document: InvitationDocument,
 ) {
-  const ids = document.sections.flatMap((s) => (s.mediaId ? [s.mediaId] : []));
-  if (!ids.length) return;
+  const ids = invitationImageIds(document);
+  if (!ids.length && !document.music) return;
   const { mediaRepository } = await import('@/server/media/service');
-  const images = (await (await mediaRepository()).list(id, tenant)).filter(
+  const all = await (await mediaRepository()).list(id, tenant);
+  const images = all.filter(
     (m) => m.status === 'ready' && m.mime.startsWith('image/'),
   );
+  if (
+    document.music &&
+    !all.some(
+      (m) =>
+        m.id === document.music!.mediaId &&
+        m.status === 'ready' &&
+        m.mime.startsWith('audio/') &&
+        m.purpose === 'design',
+    )
+  )
+    throw new Error('La musique importée n’est plus disponible.');
   if (ids.some((ref) => !images.some((image) => image.id === ref)))
     throw new Error(
       'Une image n’est plus disponible dans cet événement. Choisissez une autre photo.',
