@@ -20,7 +20,7 @@ Les écrans historiques indiquent un paiement unique par événement et un accè
 
 La clarification du 29 septembre, §3, exige les quatre produits indépendants et l'achat des deux QR sans invitation. Les packs décrits sont invitation seule, invitation + audio et invitation + audio + photo/vidéo. Le cahier §4 décrit aussi invitation + souvenirs photo/vidéo. Les packs restent des assemblages des mêmes produits techniques.
 
-Aucun montant exact n'a été retrouvé pour photo/vidéo seul, invitation + audio, ou les deux QR seuls. Aucun tarif n'est déduit par soustraction ou addition des packs historiques. Ces offres restent visibles mais inactives au paiement tant que leur prix n'est pas configuré. La démonstration des produits reste accessible indépendamment du tarif.
+Aucun montant exact n'a été retrouvé pour photo/vidéo seul, invitation + audio, ou les deux QR seuls. **Mise à jour du 6 novembre 2026** : à la demande du propriétaire, une grille a été proposée (DEC-PROD-007, statut `PROPOSED`) — 19,99 €, 24,99 € et 27,99 € — et activée dans le catalogue de test uniquement. Elle doit être approuvée avant toute vente réelle. La démonstration des produits reste accessible indépendamment du tarif.
 
 ## Stockage
 

@@ -45,7 +45,11 @@ export async function checkoutOffer(eventId: string, input: unknown) {
     {
       mode: 'payment',
       client_reference_id: order.id,
-      metadata: { order_id: order.id, event_id: event.id },
+      metadata: {
+        order_id: order.id,
+        event_id: event.id,
+        terms_and_waiver_accepted_at: order.createdAt,
+      },
       line_items: [
         {
           price_data: {

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { eventScope } from '@/server/experience/service';
 import { paymentReady, reconcileCheckout } from '@/server/payments/stripe';
-import { testOffers } from '@/core/commerce/catalog';
+import { productLabels, testOffers } from '@/core/commerce/catalog';
 import { CheckoutButton } from './CheckoutButton';
 import styles from '../workspace.module.css';
 export default async function OffersPage({
@@ -70,19 +70,7 @@ export default async function OffersPage({
                     currency: 'EUR',
                   })}
             </strong>
-            <p>
-              {offer.products
-                .map(
-                  (p) =>
-                    ({
-                      invitation: 'Invitation et RSVP',
-                      audio: 'QR Audio',
-                      photo_video: 'QR Photo / Vidéo',
-                      thank_you: 'Éditeur de cartes',
-                    })[p],
-                )
-                .join(' + ')}
-            </p>
+            <p>{offer.products.map((p) => productLabels[p]).join(' + ')}</p>
             {offer.products.every((p) => products.includes(p)) ? (
               <p className={styles.enabled}>Déjà activé</p>
             ) : !offer.active ? (

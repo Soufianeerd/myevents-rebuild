@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { InvitationCover } from '@/components/invitations/InvitationCover';
 import { invitationDemos } from '@/lib/invitations/demos';
+import { PublicFooterLinks } from '@/components/public/PublicShell';
 import styles from './home.module.css';
 
 export const metadata: Metadata = {
@@ -84,6 +85,7 @@ export default function Home() {
           <a href="#evenements">Événements</a>
           <a href="#modeles">Les modèles</a>
           <a href="#questions">Vos questions</a>
+          <Link href="/tarifs">Tarifs</Link>
         </nav>
         <Link href="/connexion" className={styles.secondary}>
           Se connecter
@@ -376,6 +378,7 @@ export default function Home() {
         <Link href="/connexion">
           Mon espace <span aria-hidden="true">↗</span>
         </Link>
+        <PublicFooterLinks className={styles.footerLegal} />
       </footer>
     </div>
   );

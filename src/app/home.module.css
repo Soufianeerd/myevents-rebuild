@@ -457,6 +457,7 @@
 }
 .footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 24px;
@@ -479,6 +480,12 @@
 .footer > a {
   font-size: 13px;
   padding: 10px;
+}
+.footerLegal {
+  flex-basis: 100%;
+  border-top: 1px solid rgb(239 224 199 / 0.25);
+  padding-top: 16px;
+  font-size: 13px;
 }
 .footer a:focus-visible {
   outline-color: #efe0c7;

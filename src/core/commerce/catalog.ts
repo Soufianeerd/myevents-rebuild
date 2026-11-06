@@ -7,6 +7,18 @@ export const productKeys = [
   'thank_you',
 ] as const;
 export type ProductKey = (typeof productKeys)[number];
+export const productLabels: Record<ProductKey, string> = {
+  invitation: 'Invitation et RSVP',
+  audio: 'QR Audio',
+  photo_video: 'QR Photo / Vidéo',
+  thank_you: 'Éditeur de cartes',
+};
+export function formatEuros(cents: number) {
+  return (cents / 100).toLocaleString('fr-FR', {
+    style: 'currency',
+    currency: 'EUR',
+  });
+}
 export const offerSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(1).max(150),
@@ -28,7 +40,8 @@ export const catalogOfferSchema = z.discriminatedUnion('active', [
 export type CatalogOffer = z.infer<typeof catalogOfferSchema>;
 
 // Documented reference amounts, not an approved production price list.
-// Missing prices stay unconfigured; see docs/product/COMMERCIAL-SOURCES.md.
+// photo-video, invitation-audio and audio-photo-video use the grid proposed in
+// DEC-PROD-007 (PROPOSED, test only); see docs/product/COMMERCIAL-SOURCES.md.
 export const testOffers: CatalogOffer[] = [
   {
     id: 'invitation',
@@ -52,27 +65,27 @@ export const testOffers: CatalogOffer[] = [
     id: 'photo-video',
     name: 'Photos et vidéos',
     products: ['photo_video'],
-    amount: null,
+    amount: 1999,
     currency: 'eur',
-    active: false,
+    active: true,
     testOnly: true,
   },
   {
     id: 'audio-photo-video',
     name: 'Audio + Photos et vidéos',
     products: ['audio', 'photo_video'],
-    amount: null,
+    amount: 2799,
     currency: 'eur',
-    active: false,
+    active: true,
     testOnly: true,
   },
   {
     id: 'invitation-audio',
     name: 'Invitation + Audio',
     products: ['invitation', 'audio'],
-    amount: null,
+    amount: 2499,
     currency: 'eur',
-    active: false,
+    active: true,
     testOnly: true,
   },
   {

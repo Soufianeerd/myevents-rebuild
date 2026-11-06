@@ -6,7 +6,7 @@ import {
   testOffers,
 } from '@/core/commerce/catalog';
 
-it('keeps documented prices as test references and refuses undefined prices at checkout', () => {
+it('keeps documented and proposed prices as test references and refuses undefined prices at checkout', () => {
   for (const offer of testOffers)
     expect(catalogOfferSchema.safeParse(offer).success).toBe(true);
   for (const [id, amount] of Object.entries({
@@ -15,16 +15,19 @@ it('keeps documented prices as test references and refuses undefined prices at c
     'invitation-souvenirs': 2999,
     'experience-complete': 3999,
     remerciements: 799,
+    'photo-video': 1999,
+    'invitation-audio': 2499,
+    'audio-photo-video': 2799,
   })) {
     expect(getCheckoutOffer(id)).toMatchObject({ amount, testOnly: true });
   }
-  for (const id of [
-    'photo-video',
-    'invitation-audio',
-    'audio-photo-video',
-    'unknown',
-  ])
-    expect(() => getCheckoutOffer(id)).toThrow();
+  expect(() => getCheckoutOffer('unknown')).toThrow();
+  const unconfigured = catalogOfferSchema.parse({
+    ...getCheckoutOffer('photo-video'),
+    active: false,
+    amount: null,
+  });
+  expect(() => getCheckoutOffer('photo-video', [unconfigured])).toThrow();
   expect(
     testOffers.find((offer) => offer.id === 'audio-photo-video')?.products,
   ).toEqual(['audio', 'photo_video']);
