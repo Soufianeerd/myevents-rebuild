@@ -1,6 +1,6 @@
 # Progression MyEvents vers la première vente
 
-Mis à jour le 1er octobre 2026. Le cahier et les décisions du propriétaire restent les sources fonctionnelles. Aucun pourcentage global de livraison n'est déduit du nombre de tests.
+Mis à jour le 6 novembre 2026. Le cahier et les décisions du propriétaire restent les sources fonctionnelles. Aucun pourcentage global de livraison n'est déduit du nombre de tests.
 
 ## Version disponible
 
@@ -29,11 +29,22 @@ Mis à jour le 1er octobre 2026. Le cahier et les décisions du propriétaire re
 
 Les tests locaux utilisent des données isolées et des providers locaux/PGlite. Le déploiement du code n'est pas une preuve de tous ces parcours avec une session Neon réelle.
 
+## Lot du 6 novembre 2026
+
+- Travail du 23 septembre au 1er octobre commité (4 commits) puis trois lots ajoutés sur `codex/neon-migration`.
+- **Tarifs publics** `/tarifs` générés depuis le catalogue ; grille proposée DEC-PROD-007 (`PROPOSED`, test uniquement) pour photo/vidéo seul 19,99 €, invitation + audio 24,99 €, deux QR 27,99 € ; stockage proposé en achat ponctuel.
+- **Pages légales** `/mentions-legales`, `/cgv`, `/confidentialite`, liées depuis l'accueil ; SIRET, adresse, contact, médiateur et durée de conservation affichés « à compléter » (variables `LEGAL_*`).
+- **Checkout** : acceptation des CGV et renonciation au droit de rétractation (L221-28) obligatoires, horodatage transmis à Stripe.
+- **En-têtes de sécurité** globaux : CSP, `nosniff`, `X-Frame-Options`, `Permissions-Policy` (micro autorisé pour le livre audio).
+- **Back-office** `/admin` (404 hors liste `OPERATOR_EMAILS`) : totaux, commandes, demandes d'impression et étapes (devis envoyé → accepté → fabrication → expédiée / refusée) ; le client voit l'étape et la note sur sa page Cartes. Migration `0017_operator` appliquée sur `migration-staging` ; secret opérateur généré dans `.env.operator.local` (0600), hash en base.
+- **Stripe Test** prêt à brancher : `dev:neon` charge `.env.payments.local` (clés Live refusées), webhook couvert par tests. Procédure : [STRIPE-TEST.md](./STRIPE-TEST.md).
+- `corepack pnpm check:full` : **240 tests** réussis (12 produit, 2 architecture, 125 unitaires, 64 intégration, 37 E2E), build inclus.
+
 ## Prochaines étapes pour la première vente
 
 1. Valider le parcours connecté avec deux comptes confirmés : création, publication, RSVP, médias privés, PDF et ZIP. Rattacher explicitement l'identité historique après confirmation.
-2. Obtenir un accès Stripe Test utilisable, configurer les secrets dans les emplacements privés, vérifier Checkout + webhook + attribution idempotente des produits. Le connecteur expose actuellement seulement **EL RHADI en Live**.
-3. Compléter le traitement des commandes et devis, les relances effectivement envoyées, le stockage payant et les tâches d'administration nécessaires au lancement.
+2. Renseigner les clés Stripe Test selon [STRIPE-TEST.md](./STRIPE-TEST.md) puis vérifier Checkout + webhook sur la Preview.
+3. Valider ou corriger DEC-PROD-007, compléter les informations légales (`LEGAL_*`). Restent à développer : achat de stockage, relances effectivement envoyées, paiement du devis d'impression.
 4. Achever les écarts du Studio et des invités, les conditions commerciales/légales, la conservation des données, la supervision et les contrôles navigateur supplémentaires.
 5. Exécuter le Revenue Gate avant l'ouverture de la vente. **Revenue Gate non atteint.**
 
