@@ -15,6 +15,7 @@ Le carrousel de maquettes ne constitue pas le Product Master fonctionnel à lui 
 ### 2. DECISION-REGISTER
 
 - [DECISION-REGISTER](./DECISION-REGISTER.md) : Seules les décisions explicitement validées par le propriétaire modifient le cahier des charges.
+- [Clarification du 29 septembre 2026](./CLARIFICATION-2026-09-29.md) : Studio, foyers/relances, produits autonomes, souvenirs communs, partage photo/vidéo uniquement, carte PDF/impression et nouveau prix du stockage. Les décisions DEC-PROD-001 à 006 prévalent sur les passages historiques incompatibles.
 
 ### 3. UI/UX REFERENCE = HOW IT LOOKS / HOW IT FEELS
 

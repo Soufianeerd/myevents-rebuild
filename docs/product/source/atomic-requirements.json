@@ -534,6 +534,38 @@
           "`).join('')}"
         ],
         "text": "Historique et envoi de messages (Email, WhatsApp) aux invités."
+      },
+      {
+        "id": "REQ-25-HOUSEHOLD-MEMBERS",
+        "description": "Regrouper, retrouver et modifier les membres nommés des foyers et groupes, avec leurs réponses reçues.",
+        "text": "Regrouper, retrouver et modifier les membres nommés des foyers et groupes, avec leurs réponses reçues.",
+        "kind": "action",
+        "status": "verified",
+        "sourceNeedles": [
+          "Foyers &amp; groupes",
+          "Rechercher un foyer"
+        ],
+        "implementation": [
+          "src/core/guests/groupings.ts",
+          "src/core/guests/reconciliation.ts",
+          "src/app/(app)/events/[id]/invites/GuestCollections.tsx",
+          "src/app/(app)/events/[id]/invites/Guests.tsx",
+          "src/server/guests/service.ts"
+        ],
+        "tests": [
+          "tests/unit/guests/Households.test.ts",
+          "tests/integration/product/Households.test.ts",
+          "tests/integration/experience/NeonExperience.test.ts",
+          "tests/e2e/households.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/foyers-2026-09-30/foyers-cartes-desktop.png",
+          "mobile": "docs/audit/foyers-2026-09-30/foyers-cartes-mobile.png",
+          "security": "docs/audit/FOYERS-2026-09-30.md"
+        },
+        "notes": [
+          "Sous-parcours nominatif vérifié localement ; ne valide pas le lien commun de foyer, les envois ni toute la maquette. Sources fonctionnelles : §20–23, CLA-29-03, DEC-PROD-006."
+        ]
       }
     ],
     "coverageNA": {
@@ -726,6 +758,32 @@
           "Carte de remerciement"
         ],
         "text": "Affichage du programme et de la timeline (Mobile)."
+      },
+      {
+        "id": "REQ-33-CARD-PDF",
+        "description": "Télécharger la carte de remerciement enregistrée en PDF recto/verso, sans commander une impression.",
+        "text": "Télécharger la carte de remerciement enregistrée en PDF recto/verso, sans commander une impression.",
+        "kind": "action",
+        "status": "verified",
+        "sourceNeedles": [
+          "Exporter PDF"
+        ],
+        "implementation": [
+          "src/server/designs/pdf.ts",
+          "src/server/designs/service.ts",
+          "src/app/(app)/events/[id]/cartes/pdf/route.ts"
+        ],
+        "tests": [
+          "tests/unit/designs/Pdf.test.ts",
+          "tests/e2e/product-clarifications.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md",
+          "security": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md"
+        },
+        "notes": [
+          "Sous-parcours vérifié localement le 29 septembre 2026 ; ne valide pas tout l’écran ni un déploiement connecté. Voir les limites de l’audit."
+        ]
       }
     ],
     "coverageNA": {
@@ -799,11 +857,59 @@
         "id": "REQ-35-MEMORIES-EXPORT",
         "description": "Action pour télécharger ou exporter tous les souvenirs.",
         "kind": "action",
-        "status": "planned",
+        "status": "verified",
         "sourceNeedles": [
           "Profil"
         ],
-        "text": "Action pour télécharger ou exporter tous les souvenirs."
+        "text": "Action pour télécharger ou exporter tous les souvenirs.",
+        "implementation": [
+          "src/core/media/export.ts",
+          "src/server/media/export.ts",
+          "src/server/media/zip.ts",
+          "src/app/(app)/events/[id]/souvenirs/export/route.ts",
+          "src/app/(app)/events/[id]/souvenirs/page.tsx",
+          "src/app/(app)/events/[id]/souvenirs/Gallery.tsx"
+        ],
+        "tests": [
+          "tests/unit/media/Export.test.ts",
+          "tests/integration/product/Archive.test.ts",
+          "tests/e2e/exports.test.ts",
+          "tests/e2e/experience.test.ts"
+        ],
+        "evidence": {
+          "audit": "docs/audit/EXPORT-CATALOGUE-2026-09-30.md",
+          "visual": "docs/audit/export-2026-09-30/export-card-mobile.png"
+        },
+        "notes": [
+          "Vérifié en local : export ZIP complet et sélection, fichiers originaux, CSV/JSON, isolation entre comptes, annulation et source manquante. Comparaison visuelle écran31 ; intégration dans l’espace commun selon DEC-PROD-003. Les volumes de plusieurs Go et le téléchargement authentifié connecté restent à mesurer."
+        ]
+      },
+      {
+        "id": "REQ-35-PROFILE-NAMES",
+        "description": "Modifier et enregistrer le prénom et le nom du profil connecté.",
+        "text": "Modifier et enregistrer le prénom et le nom du profil connecté.",
+        "kind": "action",
+        "status": "verified",
+        "sourceNeedles": [
+          "Prénom",
+          "Enregistrer les modifications"
+        ],
+        "implementation": [
+          "src/server/profile/service.ts",
+          "src/app/(app)/profil/ProfileForm.tsx",
+          "src/providers/neon/NeonProfileRepository.ts"
+        ],
+        "tests": [
+          "tests/integration/experience/NeonExperience.test.ts",
+          "tests/e2e/product-clarifications.test.ts"
+        ],
+        "evidence": {
+          "visual": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md",
+          "security": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md"
+        },
+        "notes": [
+          "Sous-parcours vérifié localement le 29 septembre 2026 ; ne valide pas tout l’écran ni un déploiement connecté. Voir les limites de l’audit."
+        ]
       }
     ],
     "coverageNA": {
@@ -1115,11 +1221,26 @@
         "id": "REQ-43-GUEST-GALLERY",
         "description": "Galerie privée pour un invité permettant de voir les photos et vidéos partagées.",
         "kind": "structure",
-        "status": "planned",
+        "status": "implemented_unverified",
         "sourceNeedles": [
           "GALERIE PRIVÉE"
         ],
-        "text": "Galerie privée pour un invité permettant de voir les photos et vidéos partagées."
+        "text": "Galerie privée pour un invité permettant de voir les photos et vidéos partagées.",
+        "implementation": [
+          "src/app/souvenirs/[token]/page.tsx",
+          "src/app/souvenirs/[token]/fichiers/[mediaId]/route.ts",
+          "src/server/media/service.ts"
+        ],
+        "tests": [
+          "tests/e2e/experience.test.ts",
+          "tests/integration/experience/NeonExperience.test.ts"
+        ],
+        "evidence": {
+          "security": "docs/audit/GALLERY-2026-09-27.md"
+        },
+        "notes": [
+          "Accès et téléchargement invités verified en local (27 septembre) : mode collaboratif, masquage, autorisation de téléchargement et suppression. Conformité visuelle complète de l’écran 43 et validation connectée encore ouvertes."
+        ]
       },
       {
         "id": "REQ-43-GUEST-STATS",

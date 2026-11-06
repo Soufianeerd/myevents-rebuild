@@ -93,7 +93,7 @@ cible et transforme la connexion poolée. Toutes les fixtures sont annulées.
 
 La Preview a été déployée avec succès (commit `d6982b9`, déploiement `dpl_7g1gnhFGDJB7cgCJoroAESG9dmF1`) et son alias est https://myevents-staging-el-rhadis-projects.vercel.app. Le parcours avec e-mail, le rattachement propriétaire et la persistance après redéploiement restent à vérifier.
 
-## Périmètre restant
+## Périmètre restant au 20 septembre (historique)
 
 Les médias applicatifs, Stripe Test, emails transactionnels, Sentry et PostHog
 ne sont pas actifs. Aucun objet Storage source n'était à migrer. Ne pas annoncer
@@ -101,3 +101,32 @@ le stockage média disponible avant les contrôles d'accès, MIME, taille et quo
 Le Studio, le RSVP, le commerce et le print restent des livraisons fonctionnelles
 à réaliser. La production et Stripe Live restent verrouillés jusqu'au parcours
 complet validé et à l'autorisation de mise en production.
+
+## Mise à jour du 30 septembre 2026
+
+Déploiement Preview `dpl_BA7rDsAZBRf6XBusWMGKoZcuoVpR`, état `READY`, depuis le workspace local validé, sans nouveau commit ni déploiement Production. URL immuable : https://myevents-idfrh8xzm-el-rhadis-projects.vercel.app. L'alias stable https://myevents-staging-el-rhadis-projects.vercel.app pointe maintenant vers ce déploiement. Aucun changement d'origine Auth/CORS nécessaire.
+
+Validation : 211 tests locaux réussis, build Vercel réussi, 41 traces serveur contrôlées. Le dry-run de déploiement comprend 291 fichiers et exclut les `.env*`, données locales, sauvegardes, docs et rapports de tests. Neon staging est aligné sur les migrations `0001`–`0016` ; sauvegarde et contrôles post-migration documentés dans `docs/audit/CONNECTED-READINESS-2026-09-30.md`.
+
+Contrôles après déploiement : accueil, connexion, inscription et nouvelles photographies HTTP 200 ; dashboard et routes privées d'export/PDF redirigés vers l'authentification en accès anonyme ; `/dev/mailbox` HTTP 404. L'accueil a été inspecté au navigateur en 390 et 1440 px, toutes images chargées, sans débordement ni erreur JavaScript. Les captures sont dans `docs/audit/export-2026-09-30/`.
+
+Les fonctions Studio, RSVP, médias, cartes et ZIP sont désormais dans cette Preview. Le parcours authentifié Neon, les transferts de plusieurs Go, Stripe Test, les envois réels et le traitement opérateur des commandes restent à valider/compléter. Voir `docs/PROGRESS.md` pour le périmètre actuel ; les paragraphes historiques précédents ne décrivent plus l'intégralité des capacités livrées. Production et Stripe Live restent verrouillés.
+
+## Mise à jour du 1er octobre 2026 — foyers et RSVP
+
+Preview `dpl_EUVexBbWJ2AZXUsucBwLpsiizXUs`, état READY, workspace local validé
+avec 221 tests (12 produit, 2 architecture, 119 unitaires, 63 intégration, 25
+E2E). Déploiement immuable : https://myevents-fz5yzn2jm-el-rhadis-projects.vercel.app.
+L’alias stable pointe vers cette version. 296 fichiers livrés, build distant
+réussi, aucune migration supplémentaire. Les secrets et données locales sont
+toujours exclus du déploiement.
+
+L’appel initial sans scope a renvoyé « Not authorized » malgré une session
+valide. Cibler explicitement l’équipe liée au projet pour ces commandes :
+`vercel deploy --target preview --scope el-rhadis-projects --yes`, puis
+`vercel alias set <URL-Preview-validée> myevents-staging-el-rhadis-projects.vercel.app --scope el-rhadis-projects`.
+Ne pas employer `--prod` : le verrou de vente reste actif.
+
+Contrôles HTTP après déploiement et détail fonctionnel :
+[FOYERS-2026-09-30](./audit/FOYERS-2026-09-30.md). Aucun nouveau commit ni push
+inclus dans cette livraison manuelle.

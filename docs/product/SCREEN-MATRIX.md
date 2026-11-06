@@ -29,7 +29,7 @@
 | 22 | Studio · Historique de versions | STUDIO | s-studio.js | 1440 | 1024 | TBD | planned | No | No | STUDIO-22-001 | - |
 | 23 | Invités (CRM) | GUEST | s-guests.js | 1440 | 1024 | TBD | planned | No | No | GUEST-23-001, GUEST-23-002, GUEST-23-003, GUEST-23-004 | - |
 | 24 | Fiche invité (drawer) | GUEST | s-guests.js | 1440 | 1024 | TBD | planned | No | No | GUEST-24-001 | - |
-| 25 | Foyers & groupes | GUEST | s-guests.js | 1440 | 1024 | TBD | planned | No | No | GUEST-25-001 | - |
+| 25 | Foyers & groupes | GUEST | s-guests.js | 1440 | 1024 | TBD | planned | No | No | GUEST-25-001, GUEST-25-002 | - |
 | 26 | Import CSV (assistant) | GUEST | s-guests.js | 1440 | 1024 | TBD | planned | No | No | GUEST-26-001 | - |
 | 27 | Gestion RSVP | RSVP | s-guests.js | 1440 | 1024 | TBD | planned | No | No | RSVP-27-001 | - |
 | 28 | Centre d’envois | SEND | s-guests.js | 1440 | 1024 | TBD | planned | No | No | SEND-28-001 | - |
@@ -37,9 +37,9 @@
 | 30 | QR Codes | QR | s-memories.js | 1440 | 1024 | TBD | planned | No | No | QR-30-001 | - |
 | 31 | Photos & vidéos | MEDIA | s-memories.js | 1440 | 1180 | TBD | planned | No | No | MEDIA-31-001 | - |
 | 32 | Livre d’or audio | MEDIA | s-memories.js | 1440 | 1024 | TBD | planned | No | No | MEDIA-32-001 | - |
-| 33 | Éditeur carte de remerciement | SEND | s-memories.js | 1440 | 1024 | TBD | planned | No | No | SEND-33-001 | - |
+| 33 | Éditeur carte de remerciement | SEND | s-memories.js | 1440 | 1024 | TBD | planned | No | No | SEND-33-001, SEND-33-002 | - |
 | 34 | Offres & produits | BILLING | s-memories.js | 1440 | 1180 | TBD | planned | No | No | BILLING-34-001 | - |
-| 35 | Profil & préférences | PROD | s-memories.js | 1440 | 1024 | TBD | planned | No | No | PROD-35-001, PROD-35-002, PROD-35-003, PROD-35-004 | - |
+| 35 | Profil & préférences | PROD | s-memories.js | 1440 | 1024 | TBD | planned | No | No | PROD-35-001, PROD-35-002, PROD-35-003, PROD-35-004, PROD-35-005 | - |
 | 36 | Équipe & rôles | B2B | s-memories.js | 1440 | 1024 | TBD | planned | No | No | B2B-36-001 | - |
 | 37 | Facturation & achats | BILLING | s-memories.js | 1440 | 1024 | TBD | planned | No | No | BILLING-37-001, BILLING-37-002 | - |
 | 38 | Confidentialité & données | LEGAL | s-memories.js | 1440 | 1024 | TBD | planned | No | No | LEGAL-38-001, LEGAL-38-002, LEGAL-38-003 | - |
@@ -47,5 +47,5 @@
 | 40 | RSVP invité | RSVP | s-mobile.js | 390 | 1560 | TBD | planned | No | No | RSVP-40-001 | - |
 | 41 | QR Livre d’or audio · enregistrement | MEDIA | s-mobile.js | 390 | 844 | TBD | planned | No | No | MEDIA-41-001, MEDIA-41-002, MEDIA-41-003, MEDIA-41-004, MEDIA-41-005 | - |
 | 42 | QR Photos & vidéos · dépôt | MEDIA | s-mobile.js | 390 | 844 | TBD | planned | No | No | MEDIA-42-001, MEDIA-42-002, MEDIA-42-003, MEDIA-42-004, MEDIA-42-005 | - |
-| 43 | Galerie privée (invité) | MEDIA | s-mobile.js | 390 | 1180 | TBD | planned | No | No | MEDIA-43-001, MEDIA-43-002, MEDIA-43-003, MEDIA-43-004 | - |
+| 43 | Galerie privée (invité) | MEDIA | s-mobile.js | 390 | 1180 | TBD | implemented_unverified | No | No | MEDIA-43-001, MEDIA-43-002, MEDIA-43-003, MEDIA-43-004 | - |
 | 44 | Planche des états UI | UX | s-states.js | 1440 | 1720 | TBD | planned | No | No | UX-44-001 | - |

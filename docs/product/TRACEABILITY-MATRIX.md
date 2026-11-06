@@ -58,6 +58,7 @@
 | GUEST-23-004 | 23 | docs/myevents/s-guests.js | planned | - | - | - | - | - | - | - | - |
 | GUEST-24-001 | 24 | docs/myevents/s-guests.js | planned | - | - | - | - | - | - | - | - |
 | GUEST-25-001 | 25 | docs/myevents/s-guests.js | planned | - | - | - | - | - | - | - | - |
+| GUEST-25-002 | 25 | docs/myevents/s-guests.js | verified | src/core/guests/groupings.ts, src/core/guests/reconciliation.ts, src/app/(app)/events/[id]/invites/GuestCollections.tsx, src/app/(app)/events/[id]/invites/Guests.tsx, src/server/guests/service.ts | tests/unit/guests/Households.test.ts | tests/integration/product/Households.test.ts, tests/integration/experience/NeonExperience.test.ts | tests/e2e/households.test.ts | docs/audit/foyers-2026-09-30/foyers-cartes-desktop.png | - | docs/audit/FOYERS-2026-09-30.md | Sous-parcours nominatif vérifié localement ; ne valide pas le lien commun de foyer, les envois ni toute la maquette. Sources fonctionnelles : §20–23, CLA-29-03, DEC-PROD-006. |
 | GUEST-26-001 | 26 | docs/myevents/s-guests.js | planned | - | - | - | - | - | - | - | - |
 | RSVP-27-001 | 27 | docs/myevents/s-guests.js | planned | - | - | - | - | - | - | - | - |
 | SEND-28-001 | 28 | docs/myevents/s-guests.js | planned | - | - | - | - | - | - | - | - |
@@ -66,11 +67,13 @@
 | MEDIA-31-001 | 31 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
 | MEDIA-32-001 | 32 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
 | SEND-33-001 | 33 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
+| SEND-33-002 | 33 | docs/myevents/s-memories.js | verified | src/server/designs/pdf.ts, src/server/designs/service.ts, src/app/(app)/events/[id]/cartes/pdf/route.ts | tests/unit/designs/Pdf.test.ts | - | tests/e2e/product-clarifications.test.ts | docs/audit/COHERENCE-PRODUIT-2026-09-29.md | - | docs/audit/COHERENCE-PRODUIT-2026-09-29.md | Sous-parcours vérifié localement le 29 septembre 2026 ; ne valide pas tout l’écran ni un déploiement connecté. Voir les limites de l’audit. |
 | BILLING-34-001 | 34 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
 | PROD-35-001 | 35 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
 | PROD-35-002 | 35 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
 | PROD-35-003 | 35 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
-| PROD-35-004 | 35 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
+| PROD-35-004 | 35 | docs/myevents/s-memories.js | verified | src/core/media/export.ts, src/server/media/export.ts, src/server/media/zip.ts, src/app/(app)/events/[id]/souvenirs/export/route.ts, src/app/(app)/events/[id]/souvenirs/page.tsx, src/app/(app)/events/[id]/souvenirs/Gallery.tsx | tests/unit/media/Export.test.ts | tests/integration/product/Archive.test.ts | tests/e2e/exports.test.ts, tests/e2e/experience.test.ts | docs/audit/export-2026-09-30/export-card-mobile.png | - | - | Vérifié en local : export ZIP complet et sélection, fichiers originaux, CSV/JSON, isolation entre comptes, annulation et source manquante. Comparaison visuelle écran31 ; intégration dans l’espace commun selon DEC-PROD-003. Les volumes de plusieurs Go et le téléchargement authentifié connecté restent à mesurer. |
+| PROD-35-005 | 35 | docs/myevents/s-memories.js | verified | src/server/profile/service.ts, src/app/(app)/profil/ProfileForm.tsx, src/providers/neon/NeonProfileRepository.ts | - | tests/integration/experience/NeonExperience.test.ts | tests/e2e/product-clarifications.test.ts | docs/audit/COHERENCE-PRODUIT-2026-09-29.md | - | docs/audit/COHERENCE-PRODUIT-2026-09-29.md | Sous-parcours vérifié localement le 29 septembre 2026 ; ne valide pas tout l’écran ni un déploiement connecté. Voir les limites de l’audit. |
 | B2B-36-001 | 36 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
 | BILLING-37-001 | 37 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
 | BILLING-37-002 | 37 | docs/myevents/s-memories.js | planned | - | - | - | - | - | - | - | - |
@@ -90,7 +93,7 @@
 | MEDIA-42-003 | 42 | docs/myevents/s-mobile.js | planned | - | - | - | - | - | - | - | - |
 | MEDIA-42-004 | 42 | docs/myevents/s-mobile.js | planned | - | - | - | - | - | - | - | - |
 | MEDIA-42-005 | 42 | docs/myevents/s-mobile.js | planned | - | - | - | - | - | - | - | - |
-| MEDIA-43-001 | 43 | docs/myevents/s-mobile.js | planned | - | - | - | - | - | - | - | - |
+| MEDIA-43-001 | 43 | docs/myevents/s-mobile.js | implemented_unverified | src/app/souvenirs/[token]/page.tsx, src/app/souvenirs/[token]/fichiers/[mediaId]/route.ts, src/server/media/service.ts | - | tests/integration/experience/NeonExperience.test.ts | tests/e2e/experience.test.ts | - | - | docs/audit/GALLERY-2026-09-27.md | Accès et téléchargement invités verified en local (27 septembre) : mode collaboratif, masquage, autorisation de téléchargement et suppression. Conformité visuelle complète de l’écran 43 et validation connectée encore ouvertes. |
 | MEDIA-43-002 | 43 | docs/myevents/s-mobile.js | planned | - | - | - | - | - | - | - | - |
 | MEDIA-43-003 | 43 | docs/myevents/s-mobile.js | planned | - | - | - | - | - | - | - | - |
 | MEDIA-43-004 | 43 | docs/myevents/s-mobile.js | planned | - | - | - | - | - | - | - | - |

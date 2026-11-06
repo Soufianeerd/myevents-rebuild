@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-09-30T22:03:17.808Z",
+  "origin": "https://myevents-staging-el-rhadis-projects.vercel.app",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "expected": 200,
+      "ok": true,
+      "redirect": null
+    },
+    {
+      "path": "/modeles/jardin-lumiere",
+      "status": 200,
+      "expected": 200,
+      "ok": true,
+      "redirect": null
+    },
+    {
+      "path": "/connexion",
+      "status": 200,
+      "expected": 200,
+      "ok": true,
+      "redirect": null
+    },
+    {
+      "path": "/dashboard",
+      "status": 307,
+      "expected": 307,
+      "ok": true,
+      "redirect": "/connexion"
+    },
+    {
+      "path": "/events/00000000-0000-4000-8000-000000000000/invites",
+      "status": 307,
+      "expected": 307,
+      "ok": true,
+      "redirect": "/connexion"
+    },
+    {
+      "path": "/dev/mailbox",
+      "status": 404,
+      "expected": 404,
+      "ok": true,
+      "redirect": null
+    }
+  ]
+}

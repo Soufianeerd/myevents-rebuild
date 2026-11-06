@@ -1946,7 +1946,7 @@
       "evidence": {},
       "coverage": {
         "structural": true,
-        "actions": false,
+        "actions": true,
         "states": true,
         "dataShown": true
       },
@@ -1955,6 +1955,57 @@
         "`).join('')}"
       ],
       "notes": []
+    },
+    {
+      "id": "GUEST-25-002",
+      "title": "Foyers & groupes - Regrouper, retrouver et modifi...",
+      "statement": "Regrouper, retrouver et modifier les membres nommés des foyers et groupes, avec leurs réponses reçues.",
+      "category": "GUEST",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-guests.js",
+        "section": "Screen 25"
+      },
+      "appliesTo": [
+        "local",
+        "connected"
+      ],
+      "status": "verified",
+      "implementation": [
+        "src/core/guests/groupings.ts",
+        "src/core/guests/reconciliation.ts",
+        "src/app/(app)/events/[id]/invites/GuestCollections.tsx",
+        "src/app/(app)/events/[id]/invites/Guests.tsx",
+        "src/server/guests/service.ts"
+      ],
+      "tests": [
+        "tests/unit/guests/Households.test.ts",
+        "tests/integration/product/Households.test.ts",
+        "tests/integration/experience/NeonExperience.test.ts",
+        "tests/e2e/households.test.ts"
+      ],
+      "screens": [
+        "25"
+      ],
+      "evidence": {
+        "visual": "docs/audit/foyers-2026-09-30/foyers-cartes-desktop.png",
+        "mobile": "docs/audit/foyers-2026-09-30/foyers-cartes-mobile.png",
+        "security": "docs/audit/FOYERS-2026-09-30.md"
+      },
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "kind": "action",
+      "sourceNeedles": [
+        "Foyers &amp; groupes",
+        "Rechercher un foyer"
+      ],
+      "notes": [
+        "Sous-parcours nominatif vérifié localement ; ne valide pas le lien commun de foyer, les envois ni toute la maquette. Sources fonctionnelles : §20–23, CLA-29-03, DEC-PROD-006."
+      ]
     },
     {
       "id": "GUEST-26-001",
@@ -2210,7 +2261,7 @@
       "evidence": {},
       "coverage": {
         "structural": true,
-        "actions": false,
+        "actions": true,
         "states": true,
         "dataShown": true
       },
@@ -2219,6 +2270,51 @@
         "Carte de remerciement"
       ],
       "notes": []
+    },
+    {
+      "id": "SEND-33-002",
+      "title": "Éditeur carte de remerciement - Télécharger la carte de remerc...",
+      "statement": "Télécharger la carte de remerciement enregistrée en PDF recto/verso, sans commander une impression.",
+      "category": "SEND",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 33"
+      },
+      "appliesTo": [
+        "local",
+        "connected"
+      ],
+      "status": "verified",
+      "implementation": [
+        "src/server/designs/pdf.ts",
+        "src/server/designs/service.ts",
+        "src/app/(app)/events/[id]/cartes/pdf/route.ts"
+      ],
+      "tests": [
+        "tests/unit/designs/Pdf.test.ts",
+        "tests/e2e/product-clarifications.test.ts"
+      ],
+      "screens": [
+        "33"
+      ],
+      "evidence": {
+        "visual": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md",
+        "security": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md"
+      },
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "kind": "action",
+      "sourceNeedles": [
+        "Exporter PDF"
+      ],
+      "notes": [
+        "Sous-parcours vérifié localement le 29 septembre 2026 ; ne valide pas tout l’écran ni un déploiement connecté. Voir les limites de l’audit."
+      ]
     },
     {
       "id": "BILLING-34-001",
@@ -2366,13 +2462,28 @@
         "local",
         "connected"
       ],
-      "status": "planned",
-      "implementation": [],
-      "tests": [],
+      "status": "verified",
+      "implementation": [
+        "src/core/media/export.ts",
+        "src/server/media/export.ts",
+        "src/server/media/zip.ts",
+        "src/app/(app)/events/[id]/souvenirs/export/route.ts",
+        "src/app/(app)/events/[id]/souvenirs/page.tsx",
+        "src/app/(app)/events/[id]/souvenirs/Gallery.tsx"
+      ],
+      "tests": [
+        "tests/unit/media/Export.test.ts",
+        "tests/integration/product/Archive.test.ts",
+        "tests/e2e/exports.test.ts",
+        "tests/e2e/experience.test.ts"
+      ],
       "screens": [
         "35"
       ],
-      "evidence": {},
+      "evidence": {
+        "audit": "docs/audit/EXPORT-CATALOGUE-2026-09-30.md",
+        "visual": "docs/audit/export-2026-09-30/export-card-mobile.png"
+      },
       "coverage": {
         "structural": true,
         "actions": true,
@@ -2383,7 +2494,55 @@
       "sourceNeedles": [
         "Profil"
       ],
-      "notes": []
+      "notes": [
+        "Vérifié en local : export ZIP complet et sélection, fichiers originaux, CSV/JSON, isolation entre comptes, annulation et source manquante. Comparaison visuelle écran31 ; intégration dans l’espace commun selon DEC-PROD-003. Les volumes de plusieurs Go et le téléchargement authentifié connecté restent à mesurer."
+      ]
+    },
+    {
+      "id": "PROD-35-005",
+      "title": "Profil & préférences - Modifier et enregistrer le pré...",
+      "statement": "Modifier et enregistrer le prénom et le nom du profil connecté.",
+      "category": "PROD",
+      "level": "MUST",
+      "source": {
+        "document": "docs/myevents/s-memories.js",
+        "section": "Screen 35"
+      },
+      "appliesTo": [
+        "local",
+        "connected"
+      ],
+      "status": "verified",
+      "implementation": [
+        "src/server/profile/service.ts",
+        "src/app/(app)/profil/ProfileForm.tsx",
+        "src/providers/neon/NeonProfileRepository.ts"
+      ],
+      "tests": [
+        "tests/integration/experience/NeonExperience.test.ts",
+        "tests/e2e/product-clarifications.test.ts"
+      ],
+      "screens": [
+        "35"
+      ],
+      "evidence": {
+        "visual": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md",
+        "security": "docs/audit/COHERENCE-PRODUIT-2026-09-29.md"
+      },
+      "coverage": {
+        "structural": true,
+        "actions": true,
+        "states": true,
+        "dataShown": true
+      },
+      "kind": "action",
+      "sourceNeedles": [
+        "Prénom",
+        "Enregistrer les modifications"
+      ],
+      "notes": [
+        "Sous-parcours vérifié localement le 29 septembre 2026 ; ne valide pas tout l’écran ni un déploiement connecté. Voir les limites de l’audit."
+      ]
     },
     {
       "id": "B2B-36-001",
@@ -3030,13 +3189,22 @@
         "local",
         "connected"
       ],
-      "status": "planned",
-      "implementation": [],
-      "tests": [],
+      "status": "implemented_unverified",
+      "implementation": [
+        "src/app/souvenirs/[token]/page.tsx",
+        "src/app/souvenirs/[token]/fichiers/[mediaId]/route.ts",
+        "src/server/media/service.ts"
+      ],
+      "tests": [
+        "tests/e2e/experience.test.ts",
+        "tests/integration/experience/NeonExperience.test.ts"
+      ],
       "screens": [
         "43"
       ],
-      "evidence": {},
+      "evidence": {
+        "security": "docs/audit/GALLERY-2026-09-27.md"
+      },
       "coverage": {
         "structural": true,
         "actions": true,
@@ -3047,7 +3215,9 @@
       "sourceNeedles": [
         "GALERIE PRIVÉE"
       ],
-      "notes": []
+      "notes": [
+        "Accès et téléchargement invités verified en local (27 septembre) : mode collaboratif, masquage, autorisation de téléchargement et suppression. Conformité visuelle complète de l’écran 43 et validation connectée encore ouvertes."
+      ]
     },
     {
       "id": "MEDIA-43-002",

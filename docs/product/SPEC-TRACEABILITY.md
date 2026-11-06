@@ -71,3 +71,52 @@ Sous-parcours **verified** : émission d’un lien par contact du propriétaire,
 ### §10 / §34 / §45 — images personnelles (23 septembre 2026)
 
 Sous-parcours **verified** : import de photo propriétaire dans une section image, sauvegarde par référence, publication, lecture invitée, confidentialité du brouillon et séparation des souvenirs collaboratifs. Évidences : migration 0010, `ImageUpload`, `validateInvitationImages`, `NeonExperience.test.ts`, `experience.test.ts`, audit et capture Studio. La personnalisation globale, les fonds vidéo, le recadrage et la gestion complète de bibliothèque restent partiels.
+
+### Galerie privée et stockage — 27 septembre 2026
+
+§32, §34–35, §52–53 / RULE-011, RULE-013, RULE-016 : sous-parcours **verified**
+en local. Galerie propriétaire filtrable, favoris, aperçu accessible, modération
+multiple et téléchargement contrôlé ; comptage par catégorie et alertes
+75/90/100 %. Isolation RLS testée via PGlite. `check:full` : 185 tests réussis.
+Voir [GALLERY-2026-09-27](../audit/GALLERY-2026-09-27.md) pour les preuves et la
+comparaison au carrousel. Conformité graphique complète, ZIP, extension du quota,
+notifications et validation connectée restent ouverts.
+
+### Clarification produit — 29 septembre 2026
+
+DEC-PROD-001 à 006 : règles approuvées et documentées dans
+[CLARIFICATION-2026-09-29](./CLARIFICATION-2026-09-29.md), **sous-parcours alignés et vérifiés localement**. Nouveau tarif du stockage, partage invité photo/vidéo
+uniquement, produits indépendants et espace souvenirs commun, carte PDF autonome
+ou impression sur demande, détails Studio et correspondance foyer/relance.
+Les validations historiques ne prouvent pas la conformité à ces nouvelles règles.
+Les implémentations et leurs limites sont détaillées ci-dessous.
+
+### Implémentation des clarifications — 29 septembre 2026
+
+| Référence                | Périmètre vérifié                                                                          | État global / suite                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| CLA-29-02 / §7–20        | Calendrier ICS, compte à rebours, dress code, musique importée publiée et accès aux assets | Studio partiel ; carte automatique, animations détaillées et conformité visuelle ouvertes |
+| CLA-29-03 / §20–23       | Foyer dérivé du champ configuré, anciennes colonnes, refus exclus des relances             | Préparation des relances seulement ; membres de foyer et envoi automatique ouverts        |
+| DEC-PROD-002 / CLA-29-06 | Rejet du partage invité audio dans core, local, Neon et SQL ; accès dépôt conservé         | Règle verified local + PGlite ; migration distante non exécutée                           |
+| DEC-PROD-004 / CLA-29-07 | Carte indépendante, PDF autonome et demande de matériau immuable                           | PDF et demande verified local ; faisabilité/devis/commande/livraison à compléter          |
+| CLA-29-08 / §48          | Noms du profil, isolation du compte et affichage du stockage                               | Sous-parcours verified ; profil complet et achat de stockage ouverts                      |
+
+Preuves : [COHERENCE-PRODUIT-2026-09-29](../audit/COHERENCE-PRODUIT-2026-09-29.md).
+Exigences atomiques ajoutées sans changer les identifiants existants : SEND-33-002
+(PDF autonome) et PROD-35-005 (noms du profil). Les descriptions anciennes mal
+rattachées à certains écrans ne servent pas à revendiquer leur conformité.
+
+### Export, catalogue et photographies — 30 septembre 2026
+
+- §54, RULE-016/017 et PROD-35-004 : export ZIP complet ou sélection, fichiers originaux et données CSV/JSON, contrôles d'accès et lecture en flux vérifiés localement. [Audit et limites](../audit/EXPORT-CATALOGUE-2026-09-30.md). §55 et les transferts de plusieurs Go en connecté restent à valider.
+- §3–4, RULE-003/004/015 : montants du catalogue de test rattachés aux [sources commerciales retrouvées](./COMMERCIAL-SOURCES.md), refus du checkout sans prix, offre deux QR sans invitation représentée. Catalogue administrable de production non déclaré terminé.
+- §1/5 : photographies réelles henné/entreprise sur la landing, crédits et droits d'usage référencés ; responsive et accessibilité couverts par les E2E de l'accueil.
+
+### Foyers et correspondance RSVP — 30 septembre 2026
+
+CLA-29-03, DEC-PROD-006 et §20–23 : gestion nominative des foyers/groupes,
+rattachement explicite des réponses du lien général, retrait de foyer
+persistant et relances tenant compte des réponses associées. Implémentation
+et preuves : [FOYERS-2026-09-30](../audit/FOYERS-2026-09-30.md).
+Sous-parcours **verified** localement, GUEST-25-002 ; lien commun et réponse collective de foyer,
+envois externes et conformité globale des écrans restent ouverts.
