@@ -28,6 +28,26 @@ try {
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
 }
+// Stripe Test is optional: only test-mode keys and a strong fulfillment secret
+// are forwarded. Live keys are refused before the server starts.
+let payments = {};
+try {
+  if ((await stat('.env.payments.local')).mode & 0o077)
+    throw new Error('Payment configuration must have permissions 0600.');
+  const values = parseEnv(await readFile('.env.payments.local', 'utf8'));
+  if (
+    values.STRIPE_SECRET_KEY &&
+    !/^(sk|rk)_test_/.test(values.STRIPE_SECRET_KEY)
+  )
+    throw new Error('Only Stripe Test keys are accepted locally.');
+  payments = Object.fromEntries(
+    ['STRIPE_SECRET_KEY', 'STRIPE_WEBHOOK_SECRET', 'PAYMENT_FULFILLMENT_SECRET']
+      .filter((key) => values[key])
+      .map((key) => [key, values[key]]),
+  );
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 const child = spawn(
   process.execPath,
   [
@@ -40,7 +60,13 @@ const child = spawn(
   ],
   {
     stdio: 'inherit',
-    env: { ...process.env, ...config, ...media, BUSINESS_PREVIEW: 'true' },
+    env: {
+      ...process.env,
+      ...config,
+      ...media,
+      ...payments,
+      BUSINESS_PREVIEW: 'true',
+    },
   },
 );
 for (const signal of ['SIGINT', 'SIGTERM'])
